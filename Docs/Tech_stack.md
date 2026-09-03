@@ -11,6 +11,15 @@
 ## Backend
 - Node.js: 24.19.0 LTS
 
+DOCKER:
+Docker version 29.6.1, build 8900f1d
+PARA INICIAR docker compose up -d --build
+CONFERIR:
+docker ps
+DEVERA APARECER ALGO ASSIM:
+chiron_academy_backend
+chiron_academy_database
+
 ## Version commands
 
 Node:
