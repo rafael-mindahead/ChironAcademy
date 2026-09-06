@@ -2,11 +2,14 @@ FROM node:22-alpine
 
 WORKDIR /app
 
-COPY package*.json ./
+# Copia primeiro os arquivos de dependências do backend
+COPY Backend/package*.json ./
 
-RUN npm install
+# Instala exatamente as dependências do package-lock.json
+RUN npm ci
 
-COPY . .
+# Copia somente o código do backend
+COPY Backend/src ./src
 
 EXPOSE 3000
 
