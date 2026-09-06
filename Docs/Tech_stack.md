@@ -7,6 +7,14 @@
 ## Frontend
 - React: 19.2.8
 - React DOM: 19.2.8
+react
+react-dom
+vite
+@vitejs/plugin-react
+tailwindcss
+@tailwindcss/vite
+lucide-react
+tw-animate-css usados no projeto
 
 ## Backend
 - Node.js: 24.19.0 LTS
