@@ -127,3 +127,4 @@ VALUES (
     1
 );
 SELECT * FROM Aluno;
+SELECT * FROM Usuario;

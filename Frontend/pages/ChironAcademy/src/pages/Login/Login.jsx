@@ -121,7 +121,41 @@ function Login() {
       // REDIRECIONAMENTO TEMPORÁRIO
       // ================================================
 
-      navigate('/sistema')
+      switch (resposta.usuario.perfil) {
+
+      case 'GESTOR':
+
+        navigate(
+          '/sistema/gestor'
+        )
+
+        break
+
+
+      case 'PROFESSOR':
+
+        navigate(
+          '/sistema/professor'
+        )
+
+        break
+
+
+      case 'ALUNO':
+
+        navigate(
+          '/sistema/aluno'
+        )
+
+        break
+
+
+      default:
+
+        navigate(
+          '/acesso-negado'
+        )
+}
 
 
     } catch (error) {

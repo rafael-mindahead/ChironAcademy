@@ -20,6 +20,18 @@ import RecuperarSenha
 import AreaInterna
   from './pages/AreaInterna/AreaInterna.jsx'
 
+import AreaAluno
+  from './pages/AreaAluno/AreaAluno.jsx'
+
+import AreaProfessor
+  from './pages/AreaProfessor/AreaProfessor.jsx'
+
+import AreaGestor
+  from './pages/AreaGestor/AreaGestor.jsx'
+
+import AcessoNegado
+  from './pages/AcessoNegado/AcessoNegado.jsx'
+
 import ProtectedRoute
   from './components/ProtectedRoute/ProtectedRoute.jsx'
 
@@ -32,52 +44,96 @@ function App() {
 
       <Routes>
 
-
-        {/* HOME */}
+        {/* PÚBLICAS */}
 
         <Route
           path="/"
           element={<Home />}
         />
 
-
-        {/* LOGIN */}
-
         <Route
           path="/login"
           element={<Login />}
         />
-
-
-        {/* CADASTRO */}
 
         <Route
           path="/cadastro"
           element={<Cadastro />}
         />
 
-
-        {/* RECUPERAÇÃO */}
-
         <Route
           path="/esqueci-senha"
           element={<RecuperarSenha />}
         />
 
+        <Route
+          path="/acesso-negado"
+          element={<AcessoNegado />}
+        />
 
-        {/* ÁREA PROTEGIDA */}
+
+        {/* INTERNA GENÉRICA */}
 
         <Route
           path="/sistema"
+
           element={
             <ProtectedRoute>
-
               <AreaInterna />
-
             </ProtectedRoute>
           }
         />
 
+
+        {/* ALUNO */}
+
+        <Route
+          path="/sistema/aluno"
+
+          element={
+            <ProtectedRoute
+              perfisPermitidos={[
+                'ALUNO'
+              ]}
+            >
+              <AreaAluno />
+            </ProtectedRoute>
+          }
+        />
+
+
+        {/* PROFESSOR */}
+
+        <Route
+          path="/sistema/professor"
+
+          element={
+            <ProtectedRoute
+              perfisPermitidos={[
+                'PROFESSOR'
+              ]}
+            >
+              <AreaProfessor />
+            </ProtectedRoute>
+          }
+        />
+
+
+        {/* GESTOR */}
+
+        <Route
+          path="/sistema/gestor"
+
+          element={
+            <ProtectedRoute
+              perfisPermitidos={[
+                'GESTOR'
+              ]}
+            >
+              <AreaGestor />
+            </ProtectedRoute>
+          }
+        />
 
       </Routes>
 
