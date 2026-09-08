@@ -4,6 +4,10 @@ import {
 } from 'react'
 
 import {
+  useNavigate
+} from 'react-router-dom'
+
+import {
   cadastrarCurso,
   listarCursos,
   atualizarCurso,
@@ -47,6 +51,8 @@ function converterModalidadeParaTela(modalidade) {
 
 
 function CursosPage() {
+
+  const navigate = useNavigate()
 
   const [form, setForm] =
     useState(formInicial)
@@ -300,28 +306,64 @@ function CursosPage() {
             CABEÇALHO
         ================================================== */}
 
-        <div className="mb-8">
+        <div className="
+          mb-8
+          flex
+          items-start
+          justify-between
+          gap-4
+        ">
 
-          <h1 className="
-            text-3xl
-            font-bold
-            tracking-tight
-            text-foreground
-          ">
+          <div>
 
-            Cursos
+            <h1 className="
+              text-3xl
+              font-bold
+              tracking-tight
+              text-foreground
+            ">
 
-          </h1>
+              Cursos
 
-          <p className="
-            mt-2
-            text-sm
-            text-muted-foreground
-          ">
+            </h1>
 
-            Gerencie os cursos cadastrados no sistema.
+            <p className="
+              mt-2
+              text-sm
+              text-muted-foreground
+            ">
 
-          </p>
+              Gerencie os cursos cadastrados no sistema.
+
+            </p>
+
+          </div>
+
+
+          <button
+            type="button"
+
+            onClick={() =>
+              navigate('/sistema/gestor')
+            }
+
+            className="
+              h-10
+              rounded-lg
+              border
+              border-border
+              px-4
+              text-sm
+              font-medium
+              text-foreground
+              transition
+              hover:bg-secondary
+            "
+          >
+
+            ← Voltar ao menu
+
+          </button>
 
         </div>
 
@@ -595,6 +637,7 @@ function CursosPage() {
 
               <button
                 type="button"
+
                 onClick={cancelarEdicao}
 
                 className="
@@ -681,6 +724,7 @@ function CursosPage() {
               ">
 
                 {cursos.length}{' '}
+
                 {cursos.length === 1
                   ? 'curso cadastrado'
                   : 'cursos cadastrados'
@@ -889,6 +933,7 @@ function CursosPage() {
                       ">
 
                         {curso.duracaoSemestres}{' '}
+
                         {curso.duracaoSemestres === 1
                           ? 'semestre'
                           : 'semestres'

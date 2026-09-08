@@ -20,7 +20,7 @@ import {
 } from '../../services/authService'
 
 
-function AreaInterna() {
+function AreaInterna({ children }) {
 
   const navigate =
     useNavigate()
@@ -175,6 +175,10 @@ function AreaInterna() {
       "
     >
 
+      {/* ====================================================
+          CABEÇALHO
+      ==================================================== */}
+
       <header
         className="
           border-b
@@ -236,6 +240,10 @@ function AreaInterna() {
       </header>
 
 
+      {/* ====================================================
+          CONTEÚDO PRINCIPAL
+      ==================================================== */}
+
       <main
         className="
           mx-auto
@@ -255,6 +263,10 @@ function AreaInterna() {
             p-8
           "
         >
+
+          {/* ====================================================
+              INFORMAÇÕES DO USUÁRIO
+          ==================================================== */}
 
           <div
             className="
@@ -307,6 +319,10 @@ function AreaInterna() {
 
           </div>
 
+
+          {/* ====================================================
+              DADOS DO USUÁRIO
+          ==================================================== */}
 
           <div
             className="
@@ -374,30 +390,50 @@ function AreaInterna() {
           </div>
 
 
-          <div
-            className="
-              mt-8
-              rounded-lg
-              border
-              border-border
-              bg-background
-              p-5
-            "
-          >
+          {/* ====================================================
+              CONTEÚDO ESPECÍFICO DA ÁREA
+          ==================================================== */}
 
-            <p
+          {children ? (
+
+            <div className="mt-8">
+
+              {children}
+
+            </div>
+
+          ) : (
+
+            /* ====================================================
+               TELA PADRÃO PARA ÁREAS AINDA NÃO IMPLEMENTADAS
+            ==================================================== */
+
+            <div
               className="
-                text-sm
-                leading-relaxed
-                text-muted-foreground
+                mt-8
+                rounded-lg
+                border
+                border-border
+                bg-background
+                p-5
               "
             >
-              Sua sessão foi validada pelo servidor.
-              As funcionalidades acadêmicas serão adicionadas
-              conforme os PBIs da Sprint 1.
-            </p>
 
-          </div>
+              <p
+                className="
+                  text-sm
+                  leading-relaxed
+                  text-muted-foreground
+                "
+              >
+                Sua sessão foi validada pelo servidor.
+                As funcionalidades acadêmicas serão adicionadas
+                conforme os PBIs da Sprint 1.
+              </p>
+
+            </div>
+
+          )}
 
         </div>
 

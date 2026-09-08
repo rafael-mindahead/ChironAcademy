@@ -3,10 +3,11 @@ console.log("bem vindo ao inicio do backend")
 import express from 'express'
 import cors from 'cors'
 import dotenv from 'dotenv'
-
 import database from './config/database.js'
+
 import authRoutes from './routes/authRoutes.js'
 import cursoRoutes from './routes/cursoRoutes.js'
+import periodoRoutes from './routes/periodoRoutes.js'
 
 dotenv.config()
 
@@ -19,7 +20,7 @@ app.use(express.json())
 
 app.use('/api/auth', authRoutes)
 app.use('/api/cursos', cursoRoutes)
-
+app.use('/api/periodos', periodoRoutes)
 
 app.get('/', (req, res)=>{
     res.json({

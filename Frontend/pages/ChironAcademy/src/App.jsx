@@ -37,6 +37,9 @@ import ProtectedRoute
 import CursosPage
   from './pages/Cursos/CursosPage.jsx'
 
+import PeriodosPage
+  from './pages/Periodo/PeriodosPage.jsx'
+
 function App() {
 
   return (
@@ -140,10 +143,19 @@ function App() {
           path="/sistema/gestor/cursos"
 
           element={
-            <ProtectedRoute>
+            <ProtectedRoute perfisPermitidos={['GESTOR']}>
               <CursosPage />
             </ProtectedRoute>
-        }
+          }
+        />
+
+        <Route
+          path="/sistema/gestor/periodos"
+          element={
+            <ProtectedRoute perfisPermitidos={['GESTOR']}>
+              <PeriodosPage />
+            </ProtectedRoute>
+          }
         />
 
       </Routes>
