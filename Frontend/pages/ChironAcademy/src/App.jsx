@@ -140,7 +140,7 @@ function App() {
           path="/sistema/gestor/cursos"
 
           element={
-            <ProtectedRoute>
+            <ProtectedRoute perfisPermitidos={['GESTOR']}>
               <CursosPage />
             </ProtectedRoute>
         }
