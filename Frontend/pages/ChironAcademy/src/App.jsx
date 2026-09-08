@@ -4,7 +4,6 @@ import {
   Route
 } from 'react-router-dom'
 
-
 import Home
   from './pages/Home/home.jsx'
 
@@ -35,6 +34,8 @@ import AcessoNegado
 import ProtectedRoute
   from './components/ProtectedRoute/ProtectedRoute.jsx'
 
+import CursosPage
+  from './pages/Cursos/CursosPage.jsx'
 
 function App() {
 
@@ -133,6 +134,16 @@ function App() {
               <AreaGestor />
             </ProtectedRoute>
           }
+        />
+
+        <Route
+          path="/sistema/gestor/cursos"
+
+          element={
+            <ProtectedRoute>
+              <CursosPage />
+            </ProtectedRoute>
+        }
         />
 
       </Routes>

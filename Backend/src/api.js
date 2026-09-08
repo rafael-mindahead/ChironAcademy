@@ -6,6 +6,7 @@ import dotenv from 'dotenv'
 
 import database from './config/database.js'
 import authRoutes from './routes/authRoutes.js'
+import cursoRoutes from './routes/cursoRoutes.js'
 
 dotenv.config()
 
@@ -17,6 +18,7 @@ app.use(cors())
 app.use(express.json())
 
 app.use('/api/auth', authRoutes)
+app.use('/api/cursos', cursoRoutes)
 
 
 app.get('/', (req, res)=>{
