@@ -1,0 +1,97 @@
+COMO: Gestor Acadêmico
+POSSO: manter o cadastro das disciplinas
+PARA: organizar as disciplinas oferecidas pela instituição e vinculá-las corretamente aos cursos e períodos acadêmicos.
+
+CRITÉRIO 1 — CADASTRAR DISCIPLINA
+DADO QUE: o Gestor Acadêmico esteja autenticado e acesse a funcionalidade de disciplinas.
+QUANDO: preencher os campos obrigatórios com dados válidos, selecionar o curso e o período acadêmico correspondentes e confirmar o cadastro.
+ENTÃO: o sistema deverá registrar a disciplina e disponibilizá-la para consulta.
+
+CRITÉRIO 2 — ALTERAR DISCIPLINA
+DADO QUE: exista uma disciplina previamente cadastrada.
+QUANDO: o Gestor Acadêmico editar os dados permitidos e confirmar a alteração.
+ENTÃO: o sistema deverá atualizar as informações da disciplina e apresentar os novos dados na consulta.
+
+CRITÉRIO 3 — EXCLUIR DISCIPLINA
+DADO QUE: exista uma disciplina cadastrada.
+QUANDO: o Gestor Acadêmico solicitar sua exclusão.
+ENTÃO: o sistema deverá excluir a disciplina caso não existam turmas, matrículas, avaliações ou outros vínculos associados; caso existam, deverá impedir a exclusão e informar o motivo.
+
+
+
+
+    Criar página de disciplinas
+
+    Criar formulário de cadastro
+
+    Campo código da disciplina
+
+    Campo nome da disciplina
+
+    Campo tipo da disciplina
+
+    Campo carga horária
+
+    Seleção do curso
+
+    Criar opção de editar
+
+    Seleção do período acadêmico
+
+    Criar listagem de disciplinas
+
+    Criar opção de excluir
+
+    Exibir mensagens de sucesso e erro
+
+    Criar rota para cadastrar disciplina
+
+    Criar rota para listar disciplinas
+
+    Criar rota para buscar disciplina
+
+    Criar rota para atualizar disciplina
+
+    Criar rota para excluir disciplina
+
+    Validar campos obrigatórios
+
+    Validar existência do curso
+
+    Validar existência do período
+
+    Impedir código de disciplina duplicado
+
+    Tratar erros da aplicação
+
+    Integrar com a tabela Disciplina
+
+    Validar vínculo com Curso
+
+    Validar vínculo com Periodo
+
+    Testar INSERT
+
+    Testar SELECT
+
+    Testar UPDATE
+
+    Testar DELETE
+
+    Validar integridade das chaves estrangeiras
+
+    Testar cadastro válido
+
+    Testar cadastro com campos vazios
+
+    Testar código duplicado
+
+    Testar edição
+
+    Testar exclusão
+
+    Testar exclusão de disciplina vinculada
+
+    Validar os 3 critérios de aceite
+
+    Revisar código
