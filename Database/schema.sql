@@ -51,6 +51,49 @@ CREATE TABLE IF NOT EXISTS Periodo (
         FOREIGN KEY (idCurso)
         REFERENCES Curso(idCurso)
 );
+CREATE TABLE IF NOT EXISTS Turma (
+    idTurma INT AUTO_INCREMENT PRIMARY KEY,
+
+    localTurma VARCHAR(150) NOT NULL,
+
+    turnoTurma ENUM(
+        'MANHA',
+        'TARDE',
+        'NOITE'
+    ) NOT NULL,
+
+    idCurso INT NOT NULL,
+
+    CONSTRAINT fk_turma_curso
+        FOREIGN KEY (idCurso)
+        REFERENCES Curso(idCurso)
+);
+
+CREATE TABLE IF NOT EXISTS Disciplina (
+    codDisciplina VARCHAR(50) PRIMARY KEY,
+
+    nomeDisciplina VARCHAR(150) NOT NULL,
+
+    tipoDisciplina ENUM(
+        'OBRIGATORIA',
+        'OPTATIVA'
+    ) NOT NULL,
+
+    cargaHoraria INT NOT NULL,
+
+    idPeriodo INT NOT NULL,
+
+    idCurso INT NOT NULL,
+
+    CONSTRAINT fk_disciplina_periodo
+        FOREIGN KEY (idPeriodo)
+        REFERENCES Periodo(idPeriodo),
+
+    CONSTRAINT fk_disciplina_curso
+        FOREIGN KEY (idCurso)
+        REFERENCES Curso(idCurso)
+);
+
 CREATE TABLE IF NOT EXISTS Professor (
     idProfessor INT AUTO_INCREMENT PRIMARY KEY,
 
@@ -58,7 +101,32 @@ CREATE TABLE IF NOT EXISTS Professor (
 
     telefone VARCHAR(20),
 
-    email VARCHAR(255) NOT NULL
+    email VARCHAR(255) NOT NULL,
+
+    CONSTRAINT uq_professor_email
+        UNIQUE (email)
+);
+
+CREATE TABLE IF NOT EXISTS ProfessorTurma (
+    idProfessorTurma INT AUTO_INCREMENT PRIMARY KEY,
+
+    idProfessor INT NOT NULL,
+
+    idTurma INT NOT NULL,
+
+    codDisciplina VARCHAR(50) NOT NULL,
+
+    CONSTRAINT fk_professor_turma_professor
+        FOREIGN KEY (idProfessor)
+        REFERENCES Professor(idProfessor),
+
+    CONSTRAINT fk_professor_turma_turma
+        FOREIGN KEY (idTurma)
+        REFERENCES Turma(idTurma),
+
+    CONSTRAINT fk_professor_turma_disciplina
+        FOREIGN KEY (codDisciplina)
+        REFERENCES Disciplina(codDisciplina)
 );
 CREATE TABLE IF NOT EXISTS Aluno (
     idAluno INT AUTO_INCREMENT PRIMARY KEY,

@@ -25,17 +25,25 @@ import AreaAluno
 import AreaProfessor
   from './pages/AreaProfessor/AreaProfessor.jsx'
 
-import AreaGestor
-  from './pages/AreaGestor/AreaGestor.jsx'
-
 import AcessoNegado
   from './pages/AcessoNegado/AcessoNegado.jsx'
 
 import ProtectedRoute
   from './components/ProtectedRoute/ProtectedRoute.jsx'
 
+<<<<<<< Updated upstream
 import CursosPage
   from './pages/Cursos/CursosPage.jsx'
+=======
+  import DisciplinasPage
+  from './pages/Disciplinas/DisciplinasPage.jsx'
+
+  import TurmasPage
+    from './pages/Turmas/TurmasPage.jsx'
+
+  import ProfessoresPage
+    from './pages/Professores/ProfessoresPage.jsx'
+>>>>>>> Stashed changes
 
 function App() {
 
@@ -131,7 +139,51 @@ function App() {
                 'GESTOR'
               ]}
             >
-              <AreaGestor />
+              <AreaProfessor
+                modoGestor
+              />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/sistema/gestor/disciplinas"
+
+          element={
+            <ProtectedRoute
+              perfisPermitidos={[
+                'GESTOR'
+              ]}
+            >
+              <DisciplinasPage />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/sistema/gestor/turmas"
+
+          element={
+            <ProtectedRoute
+              perfisPermitidos={[
+                'GESTOR'
+              ]}
+            >
+              <TurmasPage />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/sistema/gestor/professores"
+
+          element={
+            <ProtectedRoute
+              perfisPermitidos={[
+                'GESTOR'
+              ]}
+            >
+              <ProfessoresPage />
             </ProtectedRoute>
           }
         />

@@ -139,3 +139,21 @@
     cursor: pointer;
   }
 }
+
+@layer components {
+  .campo {
+    @apply h-11 w-full rounded-md border border-input bg-background px-3 text-sm outline-none focus:border-primary focus:ring-1 focus:ring-primary;
+  }
+
+  .botao-principal {
+    @apply flex items-center justify-center gap-2 rounded-md bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground hover:opacity-90 disabled:opacity-60;
+  }
+
+  .botao-secundario {
+    @apply rounded-md border border-border px-4 py-2.5 text-sm font-medium hover:bg-secondary;
+  }
+
+  .botao-perigo {
+    @apply rounded-md bg-destructive px-4 py-2.5 text-sm font-semibold text-destructive-foreground hover:opacity-90 disabled:opacity-60;
+  }
+}
