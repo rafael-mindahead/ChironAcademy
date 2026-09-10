@@ -819,34 +819,30 @@ function PeriodosPage() {
               md:col-span-3
             ">
 
-              {periodoEmEdicao && (
+              <button
+                type="button"
 
-                <button
-                  type="button"
+                onClick={
+                  limparFormulario
+                }
 
-                  onClick={
-                    limparFormulario
-                  }
+                className="
+                  h-11
+                  rounded-lg
+                  border
+                  border-border
+                  px-5
+                  text-sm
+                  font-medium
+                  text-foreground
+                  transition
+                  hover:bg-secondary
+                "
+              >
 
-                  className="
-                    h-11
-                    rounded-lg
-                    border
-                    border-border
-                    px-5
-                    text-sm
-                    font-medium
-                    text-foreground
-                    transition
-                    hover:bg-secondary
-                  "
-                >
+                Redefinir
 
-                  Cancelar
-
-                </button>
-
-              )}
+              </button>
 
 
               <button
