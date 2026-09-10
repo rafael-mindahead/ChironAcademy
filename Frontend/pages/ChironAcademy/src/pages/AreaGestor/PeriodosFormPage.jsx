@@ -12,11 +12,11 @@ import {
   listarPeriodos,
   atualizarPeriodo,
   excluirPeriodo
-} from '../../services/periodoService.js'
+} from '../../services/periodoFormService.js'
 
 import {
   listarCursos
-} from '../../services/cursoService.js'
+} from '../../services/cursoFormService.js'
 
 
 function PeriodosPage() {

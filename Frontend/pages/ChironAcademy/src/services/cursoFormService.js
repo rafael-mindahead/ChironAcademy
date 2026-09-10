@@ -55,6 +55,8 @@ export async function cadastrarCurso(
 // LISTAR
 // ======================================================
 
+
+
 export async function listarCursos() {
   const token = obterToken()
 
@@ -83,6 +85,8 @@ export async function listarCursos() {
 // ======================================================
 // BUSCAR POR ID
 // ======================================================
+
+// esse bloco de código ele vai fazer a requisição para a API, enviando o id do curso que queremos buscar. Ele usa o método GET, que é o método HTTP usado para buscar recursos existentes.
 
 export async function buscarCurso(idCurso) {
   const token = obterToken()
@@ -121,12 +125,16 @@ export async function atualizarCurso(
 ) {
   const token = obterToken()
 
+  // teste para ver se realmente está recebendo os dados corretos 
+
   console.log({
     idCurso,
     nomeCurso,
     modalidade,
     duracaoSemestres
   })
+
+  // esse bloco ele vai fazer a requisição para a API, enviando os dados do curso que queremos atualizar. Ele usa o método PUT, que é o método HTTP usado para atualizar recursos existentes.
 
   const response = await fetch(
     `${API_URL}/api/cursos/${idCurso}`,

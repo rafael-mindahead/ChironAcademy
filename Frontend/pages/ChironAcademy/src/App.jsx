@@ -35,10 +35,10 @@ import ProtectedRoute
   from './components/ProtectedRoute/ProtectedRoute.jsx'
 
 import CursosPage
-  from './pages/Cursos/CursosPage.jsx'
+  from './pages/AreaGestor/CursosFormPage.jsx'
 
 import PeriodosPage
-  from './pages/Periodo/PeriodosPage.jsx'
+  from './pages/AreaGestor/PeriodosFormPage.jsx'
 
 function App() {
 

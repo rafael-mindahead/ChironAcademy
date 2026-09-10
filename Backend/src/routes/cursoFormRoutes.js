@@ -6,7 +6,7 @@ import {
   buscarCurso,
   atualizarCurso,
   excluirCurso
-} from '../controllers/cursoController.js'
+} from '../controllers/cursoFormController.js'
 
 import {
   autenticarToken
