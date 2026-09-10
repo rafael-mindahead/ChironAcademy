@@ -40,6 +40,9 @@ import CursosPage
 import PeriodosPage
   from './pages/AreaGestor/PeriodosFormPage.jsx'
 
+import AlunosPage
+  from './pages/AreaGestor/AlunosFormPage.jsx'
+
 function App() {
 
   return (
@@ -157,6 +160,17 @@ function App() {
             </ProtectedRoute>
           }
         />
+
+        <Route
+          path="/sistema/gestor/alunos"
+          element={
+            <ProtectedRoute perfisPermitidos={['GESTOR']}>
+              <AlunosPage />
+            </ProtectedRoute>
+          }
+        />
+
+        
 
       </Routes>
 

@@ -34,6 +34,7 @@ function AreaGestor() {
             grid
             gap-4
             md:grid-cols-2
+            lg:grid-cols-3
           "
         >
 
@@ -124,6 +125,52 @@ function AreaGestor() {
               "
             >
               Cadastrar e gerenciar períodos dos cursos.
+            </p>
+
+          </button>
+
+
+          {/* ====================================================
+              ALUNOS
+          ==================================================== */}
+
+          <button
+            type="button"
+
+            onClick={() =>
+              navigate('/sistema/gestor/alunos')
+            }
+
+            className="
+              rounded-xl
+              border
+              border-border
+              bg-background
+              p-5
+              text-left
+              transition
+              hover:bg-secondary
+            "
+          >
+
+            <h3
+              className="
+                font-semibold
+                text-foreground
+              "
+            >
+              Alunos
+            </h3>
+
+
+            <p
+              className="
+                mt-1
+                text-sm
+                text-muted-foreground
+              "
+            >
+              Cadastrar e gerenciar alunos.
             </p>
 
           </button>
