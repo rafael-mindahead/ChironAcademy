@@ -6,13 +6,10 @@ import dotenv from 'dotenv'
 
 import database from './config/database.js'
 import authRoutes from './routes/authRoutes.js'
-<<<<<<< Updated upstream
 import cursoRoutes from './routes/cursoRoutes.js'
-=======
 import professorRoutes from './routes/professorRoutes.js'
 import disciplinaRoutes from './routes/disciplinaRoutes.js'
 import turmaRoutes from './routes/turmaRoutes.js'
->>>>>>> Stashed changes
 
 dotenv.config()
 
@@ -24,13 +21,11 @@ app.use(cors())
 app.use(express.json())
 
 app.use('/api/auth', authRoutes)
-<<<<<<< Updated upstream
 app.use('/api/cursos', cursoRoutes)
-=======
 app.use('/api/professores', professorRoutes)
 app.use('/api/disciplinas', disciplinaRoutes)
 app.use('/api/turmas', turmaRoutes)
->>>>>>> Stashed changes
+
 
 
 app.get('/', (req, res)=>{

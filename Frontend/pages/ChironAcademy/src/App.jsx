@@ -31,10 +31,8 @@ import AcessoNegado
 import ProtectedRoute
   from './components/ProtectedRoute/ProtectedRoute.jsx'
 
-<<<<<<< Updated upstream
 import CursosPage
   from './pages/Cursos/CursosPage.jsx'
-=======
   import DisciplinasPage
   from './pages/Disciplinas/DisciplinasPage.jsx'
 
@@ -43,7 +41,6 @@ import CursosPage
 
   import ProfessoresPage
     from './pages/Professores/ProfessoresPage.jsx'
->>>>>>> Stashed changes
 
 function App() {
 
