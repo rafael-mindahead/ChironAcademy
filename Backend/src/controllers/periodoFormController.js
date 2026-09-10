@@ -203,28 +203,44 @@ export async function listarPeriodos(req, res) {
 
   try {
 
+    const { curso } = req.query
+
+    let query = `
+      SELECT
+        p.idPeriodo,
+        p.numeroPeriodo,
+        p.nomePeriodo,
+        p.idCurso,
+        c.nomeCurso
+
+      FROM Periodo p
+
+      INNER JOIN Curso c
+        ON p.idCurso = c.idCurso
+    `
+
+    const parametros = []
+
+    // Filtrar por curso quando informado
+    if (curso) {
+      query += `
+        WHERE p.idCurso = ?
+      `
+
+      parametros.push(curso)
+    }
+
+    query += `
+      ORDER BY
+        p.numeroPeriodo ASC
+    `
+
     const [periodos] = await database.execute(
-      `
-        SELECT
-          p.idPeriodo,
-          p.numeroPeriodo,
-          p.nomePeriodo,
-          p.idCurso,
-          c.nomeCurso
-
-        FROM Periodo p
-
-        INNER JOIN Curso c
-          ON p.idCurso = c.idCurso
-
-        ORDER BY
-          p.numeroPeriodo ASC
-      `
+      query,
+      parametros
     )
 
-
     return res.status(200).json(periodos)
-
 
   } catch (error) {
 
@@ -232,7 +248,6 @@ export async function listarPeriodos(req, res) {
       'Erro ao listar períodos:',
       error
     )
-
 
     return res.status(500).json({
       message:
