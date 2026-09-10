@@ -34,13 +34,13 @@ import ProtectedRoute
 import CursosPage
   from './pages/Cursos/CursosPage.jsx'
   import DisciplinasPage
-  from './pages/Disciplinas/DisciplinasPage.jsx'
+    from './pages/AreaGestor/DisciplinasPage.jsx'
 
   import TurmasPage
-    from './pages/Turmas/TurmasPage.jsx'
+      from './pages/AreaGestor/TurmasPage.jsx'
 
   import ProfessoresPage
-    from './pages/Professores/ProfessoresPage.jsx'
+      from './pages/AreaGestor/ProfessoresPage.jsx'
 
 function App() {
 
