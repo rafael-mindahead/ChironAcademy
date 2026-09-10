@@ -15,14 +15,22 @@ export const cadastrarAluno = async (req, res) => {
             idPeriodo
         } = req.body
 
-        // Validação dos campos obrigatórios
         if (!nome || !email || !numeroMatricula || !idCurso || !idPeriodo) {
             return res.status(400).json({
                 mensagem: 'Nome, e-mail, matrícula, curso e período são obrigatórios.'
             })
         }
 
-        // Validar formato do e-mail
+        // Validação do nome
+        const nomeValido = /[A-Za-zÀ-ÿ]/.test(nome)
+
+        if (!nomeValido) {
+            return res.status(400).json({
+                mensagem: 'O nome deve conter pelo menos uma letra.'
+            })
+        }
+
+        // Validação do e-mail
         const formatoEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
         if (!formatoEmail.test(email)) {
@@ -31,7 +39,7 @@ export const cadastrarAluno = async (req, res) => {
             })
         }
 
-        // Verificar se a matrícula já existe
+        // Verifica matrícula duplicada
         const [matriculaExistente] = await database.execute(
             'SELECT idAluno FROM Aluno WHERE numeroMatricula = ?',
             [numeroMatricula]
@@ -43,7 +51,7 @@ export const cadastrarAluno = async (req, res) => {
             })
         }
 
-        // Verificar se o e-mail já existe
+        // Verifica e-mail duplicado
         const [emailExistente] = await database.execute(
             'SELECT idAluno FROM Aluno WHERE email = ?',
             [email]
@@ -55,7 +63,21 @@ export const cadastrarAluno = async (req, res) => {
             })
         }
 
-        // Verificar se o curso existe
+        // Verifica telefone duplicado
+        if (telefone) {
+            const [telefoneExistente] = await database.execute(
+                'SELECT idAluno FROM Aluno WHERE telefone = ?',
+                [telefone]
+            )
+
+            if (telefoneExistente.length > 0) {
+                return res.status(400).json({
+                    mensagem: 'Já existe um aluno com esse telefone.'
+                })
+            }
+        }
+
+        // Verifica se o curso existe
         const [curso] = await database.execute(
             'SELECT idCurso FROM Curso WHERE idCurso = ?',
             [idCurso]
@@ -67,9 +89,12 @@ export const cadastrarAluno = async (req, res) => {
             })
         }
 
-        // Verificar se o período existe e pertence ao curso
+        // Verifica se o período pertence ao curso
         const [periodo] = await database.execute(
-            'SELECT idPeriodo FROM Periodo WHERE idPeriodo = ? AND idCurso = ?',
+            `SELECT idPeriodo
+             FROM Periodo
+             WHERE idPeriodo = ?
+             AND idCurso = ?`,
             [idPeriodo, idCurso]
         )
 
@@ -79,7 +104,7 @@ export const cadastrarAluno = async (req, res) => {
             })
         }
 
-        // Inserir aluno
+        // Cadastra o aluno
         const [resultado] = await database.execute(
             `INSERT INTO Aluno
             (nome, telefone, email, numeroMatricula, idCurso, idPeriodo)
@@ -144,6 +169,7 @@ export const listarAlunos = async (req, res) => {
     }
 }
 
+
 // =====================================================
 // BUSCAR ALUNO
 // =====================================================
@@ -152,7 +178,6 @@ export const buscarAluno = async (req, res) => {
     try {
         const { id } = req.params
 
-        // Validar se o ID foi informado
         if (!id) {
             return res.status(400).json({
                 mensagem: 'ID do aluno é obrigatório.'
@@ -178,7 +203,6 @@ export const buscarAluno = async (req, res) => {
             [id]
         )
 
-        // Verificar se o aluno existe
         if (alunos.length === 0) {
             return res.status(404).json({
                 mensagem: 'Aluno não encontrado.'
@@ -195,6 +219,7 @@ export const buscarAluno = async (req, res) => {
         })
     }
 }
+
 
 // =====================================================
 // ATUALIZAR ALUNO
@@ -213,7 +238,7 @@ export const atualizarAluno = async (req, res) => {
             idPeriodo
         } = req.body
 
-        // Verificar se o aluno existe
+        // Verifica se o aluno existe
         const [alunoExistente] = await database.execute(
             'SELECT idAluno FROM Aluno WHERE idAluno = ?',
             [id]
@@ -225,14 +250,23 @@ export const atualizarAluno = async (req, res) => {
             })
         }
 
-        // Validação dos campos obrigatórios
+        // Verifica campos obrigatórios
         if (!nome || !email || !numeroMatricula || !idCurso || !idPeriodo) {
             return res.status(400).json({
                 mensagem: 'Nome, e-mail, matrícula, curso e período são obrigatórios.'
             })
         }
 
-        // Validar formato do e-mail
+        // Validação do nome
+        const nomeValido = /[A-Za-zÀ-ÿ]/.test(nome)
+
+        if (!nomeValido) {
+            return res.status(400).json({
+                mensagem: 'O nome deve conter pelo menos uma letra.'
+            })
+        }
+
+        // Validação do e-mail
         const formatoEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
         if (!formatoEmail.test(email)) {
@@ -241,7 +275,7 @@ export const atualizarAluno = async (req, res) => {
             })
         }
 
-        // Verificar se a matrícula pertence a outro aluno
+        // Verifica matrícula duplicada
         const [matriculaExistente] = await database.execute(
             `SELECT idAluno
              FROM Aluno
@@ -256,7 +290,7 @@ export const atualizarAluno = async (req, res) => {
             })
         }
 
-        // Verificar se o e-mail pertence a outro aluno
+        // Verifica e-mail duplicado
         const [emailExistente] = await database.execute(
             `SELECT idAluno
              FROM Aluno
@@ -271,7 +305,24 @@ export const atualizarAluno = async (req, res) => {
             })
         }
 
-        // Verificar se o curso existe
+        // Verifica telefone duplicado
+        if (telefone) {
+            const [telefoneExistente] = await database.execute(
+                `SELECT idAluno
+                 FROM Aluno
+                 WHERE telefone = ?
+                 AND idAluno != ?`,
+                [telefone, id]
+            )
+
+            if (telefoneExistente.length > 0) {
+                return res.status(400).json({
+                    mensagem: 'Já existe outro aluno com esse telefone.'
+                })
+            }
+        }
+
+        // Verifica se o curso existe
         const [curso] = await database.execute(
             'SELECT idCurso FROM Curso WHERE idCurso = ?',
             [idCurso]
@@ -283,7 +334,7 @@ export const atualizarAluno = async (req, res) => {
             })
         }
 
-        // Verificar se o período existe e pertence ao curso
+        // Verifica se o período pertence ao curso
         const [periodo] = await database.execute(
             `SELECT idPeriodo
              FROM Periodo
@@ -298,7 +349,7 @@ export const atualizarAluno = async (req, res) => {
             })
         }
 
-        // Atualizar aluno
+        // Atualiza o aluno
         await database.execute(
             `UPDATE Aluno
              SET nome = ?,
@@ -332,6 +383,7 @@ export const atualizarAluno = async (req, res) => {
     }
 }
 
+
 // =====================================================
 // EXCLUIR ALUNO
 // =====================================================
@@ -340,7 +392,6 @@ export const excluirAluno = async (req, res) => {
     try {
         const { id } = req.params
 
-        // Verificar se o aluno existe
         const [alunoExistente] = await database.execute(
             'SELECT idAluno FROM Aluno WHERE idAluno = ?',
             [id]
@@ -352,7 +403,6 @@ export const excluirAluno = async (req, res) => {
             })
         }
 
-        // Excluir aluno
         await database.execute(
             'DELETE FROM Aluno WHERE idAluno = ?',
             [id]
