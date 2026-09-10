@@ -6,8 +6,9 @@ import dotenv from 'dotenv'
 import database from './config/database.js'
 
 import authRoutes from './routes/authRoutes.js'
-import cursoRoutes from './routes/cursoFormRoutes.js'
-import periodoRoutes from './routes/periodoFormRoutes.js'
+import cursoFormRoutes from './routes/cursoFormRoutes.js'
+import periodoFormRoutes from './routes/periodoFormRoutes.js'
+import alunoFormRoutes from './routes/alunoFormRoutes.js'
 
 dotenv.config()
 
@@ -21,6 +22,7 @@ app.use(express.json())
 app.use('/api/auth', authRoutes)
 app.use('/api/cursos', cursoFormRoutes)
 app.use('/api/periodos', periodoFormRoutes)
+app.use('/api/alunos', alunoFormRoutes)
 
 app.get('/', (req, res)=>{
     res.json({
