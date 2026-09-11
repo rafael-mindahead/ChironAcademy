@@ -272,7 +272,7 @@ function ProfessoresPage() {
                 <input required value={formulario.nome} onChange={(evento) => atualizarCampo('nome', evento.target.value)} placeholder="Nome completo" className="field-input" />
               </Field>
               <Field label="Telefone" required>
-                <input required value={formulario.telefone} onChange={(evento) => atualizarCampo('telefone', evento.target.value)} placeholder="(41) 90000-0000" className="field-input" />
+                <input value={formulario.telefone} onChange={(evento) => atualizarCampo('telefone', evento.target.value)} placeholder="(41) 90000-0000" className="field-input" />
               </Field>
               <Field label="E-mail" required>
                 <input required type="email" value={formulario.email} onChange={(evento) => atualizarCampo('email', evento.target.value)} placeholder="nome@chironacademy.edu" className="field-input" />
