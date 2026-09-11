@@ -14,7 +14,7 @@ import {
   atualizarProfessor,
   excluirProfessor,
   listarProfessores
-} from '../controllers/gestorControllers/professorFormController.js'
+} from '../../controllers/gestorControllers/professorFormController.js'
 
 
 const router = express.Router()

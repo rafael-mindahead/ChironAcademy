@@ -9,7 +9,7 @@ import {
   criarDisciplina,
   atualizarDisciplina,
   excluirDisciplina
-} from '../controllers/gestorControllers/disciplinaFormController.js'
+} from '../../controllers/gestorControllers/disciplinaFormController.js'
 
 
 const router = express.Router()

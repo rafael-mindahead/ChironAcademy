@@ -9,7 +9,7 @@ import {
   criarTurma,
   atualizarTurma,
   excluirTurma
-} from '../controllers/gestorControllers/turmaFormController.js'
+} from '../../controllers/gestorControllers/turmaFormController.js'
 
 
 const router = express.Router()

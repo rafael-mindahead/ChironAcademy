@@ -6,7 +6,7 @@ import {
   buscarPeriodo,
   atualizarPeriodo,
   excluirPeriodo
-} from '../controllers/gestorControllers/periodoFormController.js'
+} from '../../controllers/gestorControllers/periodoFormController.js'
 
 import {
   autenticarToken
