@@ -175,6 +175,51 @@ function AreaGestor() {
 
           </button>
 
+          {/* ====================================================
+              PROFESSORES
+          ==================================================== */}
+
+          <button
+            type="button"
+
+            onClick={() =>
+              navigate('/sistema/gestor/professores')
+            }
+
+            className="
+              rounded-xl
+              border
+              border-border
+              bg-background
+              p-5
+              text-left
+              transition
+              hover:bg-secondary
+            "
+          >
+
+            <h3
+              className="
+                font-semibold
+                text-foreground
+              "
+            >
+              Professores
+            </h3>
+
+
+            <p
+              className="
+                mt-1
+                text-sm
+                text-muted-foreground
+              "
+            >
+              Cadastrar e gerenciar professores.
+            </p>
+
+          </button>
+
         </div>
 
       </div>
