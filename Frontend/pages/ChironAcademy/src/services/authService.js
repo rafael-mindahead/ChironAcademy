@@ -48,6 +48,37 @@ export async function cadastrarUsuario(
 }
 
 
+export async function validarAcessoProfessor() {
+
+  const token = sessionStorage.getItem('chiron_token')
+
+  if (!token) {
+    throw new Error('Usuário não autenticado.')
+  }
+
+  const response = await fetch(
+    `${API_URL}/api/auth/test/professor`,
+    {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
+  )
+
+  const data = await response.json()
+
+  if (!response.ok) {
+    throw new Error(
+      data.message ||
+      'Não foi possível validar o acesso de professor.'
+    )
+  }
+
+  return data
+}
+
+
 // ======================================================
 // LOGIN
 // ======================================================

@@ -9,6 +9,7 @@ import authRoutes from './routes/authRoutes.js'
 import cursoFormRoutes from './routes/cursoFormRoutes.js'
 import periodoFormRoutes from './routes/periodoFormRoutes.js'
 import alunoFormRoutes from './routes/alunoFormRoutes.js'
+import professorFormRoutes from './routes/professorFormRoutes.js'
 
 dotenv.config()
 
@@ -23,6 +24,7 @@ app.use('/api/auth', authRoutes)
 app.use('/api/cursos', cursoFormRoutes)
 app.use('/api/periodos', periodoFormRoutes)
 app.use('/api/alunos', alunoFormRoutes)
+app.use('/api/professores', professorFormRoutes)
 
 app.get('/', (req, res)=>{
     res.json({
