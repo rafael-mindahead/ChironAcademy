@@ -19,7 +19,7 @@ async function requisicao(caminho, opcoes = {}) {
 
   if (!resposta.ok) {
     const erro = new Error(
-      dados.message || 'Não foi possível realizar a operação.'
+      dados.message || 'Não foi possível realizar a operaçãos.'
     )
     erro.codigo = dados.code
     throw erro

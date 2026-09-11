@@ -35,7 +35,7 @@ function responderErroBanco(error, res) {
 
   console.error('Erro no CRUD de professores:', error)
   return res.status(500).json({
-    message: 'Não foi possível realizar a operação.'
+    message: 'Não foi possível realizar a operaçãos.'
   })
 }
 

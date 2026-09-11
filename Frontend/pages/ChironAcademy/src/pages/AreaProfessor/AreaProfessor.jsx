@@ -65,8 +65,8 @@ function GestorDashboard() {
 
           <section className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             <ProfessorAreaItem icon={<UsersRound className="size-5" />} title="Cadastrar professores" description="Mantenha os dados do corpo docente." to="/sistema/gestor/professores" />
-            <ProfessorAreaItem icon={<BookOpen className="size-5" />} title="Disciplinas" description="Organize disciplinas por curso e período." to="/sistema/gestor/disciplinas" />
-            <ProfessorAreaItem icon={<ClipboardCheck className="size-5" />} title="Turmas" description="Organize as turmas da instituição." to="/sistema/gestor/turmas" />
+            <ProfessorAreaItem icon={<BookOpen className="size-5" />} title="Disciplinas" description="Organize disciplinas por curso e período em breve." to="/sistema/gestor/disciplinas" />
+            <ProfessorAreaItem icon={<ClipboardCheck className="size-5" />} title="Turmas" description="Organize as turmas da instituição em breve." to="/sistema/gestor/turmas" />
           </section>
         </section>
       </main>

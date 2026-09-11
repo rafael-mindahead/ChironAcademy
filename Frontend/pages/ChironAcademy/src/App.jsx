@@ -4,6 +4,7 @@ import {
   Route
 } from 'react-router-dom'
 
+
 import Home
   from './pages/Home/home.jsx'
 
@@ -31,19 +32,9 @@ import AcessoNegado
 import ProtectedRoute
   from './components/ProtectedRoute/ProtectedRoute.jsx'
 
-<<<<<<< Updated upstream
-import CursosPage
-  from './pages/Cursos/CursosPage.jsx'
-=======
-  import DisciplinasPage
-  from './pages/Disciplinas/DisciplinasPage.jsx'
-
-  import TurmasPage
-    from './pages/Turmas/TurmasPage.jsx'
 
   import ProfessoresPage
     from './pages/Professores/ProfessoresPage.jsx'
->>>>>>> Stashed changes
 
 function App() {
 
@@ -146,33 +137,6 @@ function App() {
           }
         />
 
-        <Route
-          path="/sistema/gestor/disciplinas"
-
-          element={
-            <ProtectedRoute
-              perfisPermitidos={[
-                'GESTOR'
-              ]}
-            >
-              <DisciplinasPage />
-            </ProtectedRoute>
-          }
-        />
-
-        <Route
-          path="/sistema/gestor/turmas"
-
-          element={
-            <ProtectedRoute
-              perfisPermitidos={[
-                'GESTOR'
-              ]}
-            >
-              <TurmasPage />
-            </ProtectedRoute>
-          }
-        />
 
         <Route
           path="/sistema/gestor/professores"
@@ -186,16 +150,6 @@ function App() {
               <ProfessoresPage />
             </ProtectedRoute>
           }
-        />
-
-        <Route
-          path="/sistema/gestor/cursos"
-
-          element={
-            <ProtectedRoute perfisPermitidos={['GESTOR']}>
-              <CursosPage />
-            </ProtectedRoute>
-        }
         />
 
       </Routes>

@@ -68,7 +68,7 @@ function ProfessoresPage() {
       setEstado('sucesso')
     } catch {
       setEstado('erro')
-      setErro('Não foi possível carregar os professores.')
+      setErro('Não foi possível carregar o professor.')
     }
   }
 
