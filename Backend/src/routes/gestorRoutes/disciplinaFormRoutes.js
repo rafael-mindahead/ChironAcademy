@@ -1,7 +1,7 @@
 import express from 'express'
 
-import { autenticarToken } from '../middlewares/authMiddleware.js'
-import { autorizarPerfis } from '../middlewares/authorizationMiddleware.js'
+import { autenticarToken } from '../../middlewares/authMiddleware.js'
+import { autorizarPerfis } from '../../middlewares/authorizationMiddleware.js'
 import {
   listarOpcoes,
   listarDisciplinas,
@@ -9,7 +9,7 @@ import {
   criarDisciplina,
   atualizarDisciplina,
   excluirDisciplina
-} from '../controllers/disciplinaFormController.js'
+} from '../controllers/gestorControllers/disciplinaFormController.js'
 
 
 const router = express.Router()

@@ -1,4 +1,4 @@
-import database from '../config/database.js'
+import database from '../../config/database.js'
 
 
 const turnosValidos = ['MANHA', 'TARDE', 'NOITE']

@@ -12,7 +12,7 @@ import {
   listarCursos,
   atualizarCurso,
   excluirCurso
-} from '../../services/cursoFormService'
+} from '../../services/gestorServices/cursoFormService'
 
 
 const MODALIDADES = [

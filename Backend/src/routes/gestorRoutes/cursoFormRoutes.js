@@ -6,15 +6,15 @@ import {
   buscarCurso,
   atualizarCurso,
   excluirCurso
-} from '../controllers/cursoFormController.js'
+} from '../controllers/gestorControllers/cursoFormController.js'
 
 import {
   autenticarToken
-} from '../middlewares/authMiddleware.js'
+} from '../../middlewares/authMiddleware.js'
 
 import {
   autorizarPerfis
-} from '../middlewares/authorizationMiddleware.js'
+} from '../../middlewares/authorizationMiddleware.js'
 
 
 const router = express.Router()

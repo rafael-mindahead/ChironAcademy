@@ -6,15 +6,15 @@ import {
   buscarPeriodo,
   atualizarPeriodo,
   excluirPeriodo
-} from '../controllers/periodoFormController.js'
+} from '../controllers/gestorControllers/periodoFormController.js'
 
 import {
   autenticarToken
-} from '../middlewares/authMiddleware.js'
+} from '../../middlewares/authMiddleware.js'
 
 import {
   autorizarPerfis
-} from '../middlewares/authorizationMiddleware.js'
+} from '../../middlewares/authorizationMiddleware.js'
 
 
 const router = express.Router()

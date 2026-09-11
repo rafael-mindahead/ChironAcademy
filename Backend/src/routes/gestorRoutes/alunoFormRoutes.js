@@ -6,10 +6,10 @@ import {
     buscarAluno,
     atualizarAluno,
     excluirAluno
-} from '../controllers/alunoFormController.js'
+} from '../controllers/gestorControllers/alunoFormController.js'
 
-import { autenticarToken } from '../middlewares/authMiddleware.js'
-import { autorizarPerfis } from '../middlewares/authorizationMiddleware.js'
+import { autenticarToken } from '../../middlewares/authMiddleware.js'
+import { autorizarPerfis } from '../../middlewares/authorizationMiddleware.js'
 
 const router = express.Router()
 

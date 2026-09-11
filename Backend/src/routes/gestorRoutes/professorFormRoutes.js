@@ -2,11 +2,11 @@ import express from 'express'
 
 import {
   autenticarToken
-} from '../middlewares/authMiddleware.js'
+} from '../../middlewares/authMiddleware.js'
 
 import {
   autorizarPerfis
-} from '../middlewares/authorizationMiddleware.js'
+} from '../../middlewares/authorizationMiddleware.js'
 
 import {
   buscarProfessor,
@@ -14,7 +14,7 @@ import {
   atualizarProfessor,
   excluirProfessor,
   listarProfessores
-} from '../controllers/professorFormController.js'
+} from '../controllers/gestorControllers/professorFormController.js'
 
 
 const router = express.Router()

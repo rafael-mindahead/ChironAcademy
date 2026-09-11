@@ -12,7 +12,7 @@ import {
   listarAlunos,
   atualizarAluno,
   excluirAluno
-} from '../../services/alunoFormService'
+} from '../../services/gestorServices/alunoFormService'
 
 
 const API_URL =

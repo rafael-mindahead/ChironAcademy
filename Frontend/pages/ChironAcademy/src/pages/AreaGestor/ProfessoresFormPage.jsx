@@ -13,7 +13,7 @@ import {
   criarProfessor,
   excluirProfessor,
   listarProfessores
-} from '../../services/professorFormService'
+} from '../../services/gestorServices/professorFormService'
 
 
 const professorVazio = {

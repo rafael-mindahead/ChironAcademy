@@ -6,7 +6,7 @@ import {
   excluirDisciplina,
   listarDisciplinas,
   listarOpcoesDisciplina
-} from '../../services/disciplinaFormService'
+} from '../../services/gestorServices/disciplinaFormService'
 
 const vazio = {
   codDisciplina: '',

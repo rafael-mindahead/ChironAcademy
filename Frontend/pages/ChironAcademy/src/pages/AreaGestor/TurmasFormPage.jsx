@@ -6,7 +6,7 @@ import {
   excluirTurma,
   listarOpcoesTurma,
   listarTurmas
-} from '../../services/turmaFormService'
+} from '../../services/gestorServices/turmaFormService'
 
 const vazio = {
   localTurma: '',

@@ -1,7 +1,7 @@
 import express from 'express'
 
-import { autenticarToken } from '../middlewares/authMiddleware.js'
-import { autorizarPerfis } from '../middlewares/authorizationMiddleware.js'
+import { autenticarToken } from '../../middlewares/authMiddleware.js'
+import { autorizarPerfis } from '../../middlewares/authorizationMiddleware.js'
 import {
   listarOpcoes,
   listarTurmas,
@@ -9,7 +9,7 @@ import {
   criarTurma,
   atualizarTurma,
   excluirTurma
-} from '../controllers/turmaFormController.js'
+} from '../controllers/gestorControllers/turmaFormController.js'
 
 
 const router = express.Router()
