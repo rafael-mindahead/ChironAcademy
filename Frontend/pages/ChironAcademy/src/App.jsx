@@ -37,6 +37,9 @@ import ProtectedRoute
 import CursosPage
   from './pages/AreaGestor/CursosFormPage.jsx'
 
+import DisciplinasPage
+  from './pages/AreaGestor/DisciplinasFormPage.jsx'
+
 import PeriodosPage
   from './pages/AreaGestor/PeriodosFormPage.jsx'
 
@@ -44,7 +47,7 @@ import AlunosPage
   from './pages/AreaGestor/AlunosFormPage.jsx'
 
 import ProfessoresFormPage
-  from './pages/AreaGestor/ProfessoresFormPage.jsx'
+    from './pages/AreaGestor/ProfessoresFormPage.jsx'
 
 function App() {
 
@@ -145,7 +148,6 @@ function App() {
           }
         />
 
-
         <Route
           path="/sistema/gestor/cursos"
 
@@ -179,6 +181,24 @@ function App() {
           element={
             <ProtectedRoute perfisPermitidos={['GESTOR']}>
               <ProfessoresFormPage />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/sistema/gestor/turmas"
+          element={
+            <ProtectedRoute perfisPermitidos={['GESTOR']}>
+              <TurmasFormPage />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/sistema/gestor/disciplinas"
+          element={
+            <ProtectedRoute perfisPermitidos={['GESTOR']}>
+              <DisciplinasFormPage/>
             </ProtectedRoute>
           }
         />

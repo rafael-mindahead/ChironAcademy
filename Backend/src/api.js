@@ -10,6 +10,8 @@ import cursoFormRoutes from './routes/cursoFormRoutes.js'
 import periodoFormRoutes from './routes/periodoFormRoutes.js'
 import alunoFormRoutes from './routes/alunoFormRoutes.js'
 import professorFormRoutes from './routes/professorFormRoutes.js'
+import disciplinaFormRoutes from './routes/disciplinaFormRoutes.js'
+import turmaFormRoutes from './routes/turmaFormRoutes.js'
 
 dotenv.config()
 
@@ -21,10 +23,15 @@ app.use(cors())
 app.use(express.json())
 
 app.use('/api/auth', authRoutes)
+
 app.use('/api/cursos', cursoFormRoutes)
 app.use('/api/periodos', periodoFormRoutes)
 app.use('/api/alunos', alunoFormRoutes)
 app.use('/api/professores', professorFormRoutes)
+app.use('/api/disciplinas', disciplinaFormRoutes)
+app.use('/api/turmas', turmaFormRoutes)
+
+
 
 app.get('/', (req, res)=>{
     res.json({
