@@ -220,6 +220,96 @@ function AreaGestor() {
 
           </button>
 
+          {/* ====================================================
+              Disciplina
+          ==================================================== */}
+
+          <button
+            type="button"
+
+            onClick={() =>
+              navigate('/sistema/gestor/disciplinas')
+            }
+
+            className="
+              rounded-xl
+              border
+              border-border
+              bg-background
+              p-5
+              text-left
+              transition
+              hover:bg-secondary
+            "
+          >
+
+            <h3
+              className="
+                font-semibold
+                text-foreground
+              "
+            >
+              Disciplinas
+            </h3>
+
+
+            <p
+              className="
+                mt-1
+                text-sm
+                text-muted-foreground
+              "
+            >
+              Cadastrar e gerencie as disciplinas atrelada aos cursos.
+            </p>
+
+          </button>
+
+          {/* ====================================================
+              Turmas
+          ==================================================== */}
+
+          <button
+            type="button"
+
+            onClick={() =>
+              navigate('/sistema/gestor/turmas')
+            }
+
+            className="
+              rounded-xl
+              border
+              border-border
+              bg-background
+              p-5
+              text-left
+              transition
+              hover:bg-secondary
+            "
+          >
+
+            <h3
+              className="
+                font-semibold
+                text-foreground
+              "
+            >
+              Turmas
+            </h3>
+
+
+            <p
+              className="
+                mt-1
+                text-sm
+                text-muted-foreground
+              "
+            >
+              Cadastrar e gerenciar turmas.
+            </p>
+
+          </button>
+
         </div>
 
       </div>
