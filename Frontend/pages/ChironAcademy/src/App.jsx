@@ -23,13 +23,18 @@ import AreaInterna
 import AreaAluno
   from './pages/AreaAluno/AreaAluno.jsx'
 
-
+import AreaProfessor
+  from './pages/AreaProfessor/AreaProfessor.jsx'
 
 import AcessoNegado
   from './pages/AcessoNegado/AcessoNegado.jsx'
 
 import ProtectedRoute
   from './components/ProtectedRoute/ProtectedRoute.jsx'
+
+import ProfessoresPage
+  from './pages/AreaGestor/ProfessoresPage.jsx'
+
 
 
 
@@ -99,7 +104,21 @@ function App() {
         />
 
 
+        {/* PROFESSOR */}
 
+        <Route
+          path="/sistema/professor"
+
+          element={
+            <ProtectedRoute
+              perfisPermitidos={[
+                'PROFESSOR'
+              ]}
+            >
+              <AreaProfessor />
+            </ProtectedRoute>
+          }
+        />
 
 
         {/* GESTOR */}
@@ -119,7 +138,19 @@ function App() {
             </ProtectedRoute>
           }
         />
+      <Route
+          path="/sistema/gestor/professores"
 
+          element={
+            <ProtectedRoute
+              perfisPermitidos={[
+                'GESTOR'
+              ]}
+            >
+              <ProfessoresPage />
+            </ProtectedRoute>
+          }
+        />
 
    
    
