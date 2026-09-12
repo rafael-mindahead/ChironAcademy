@@ -175,6 +175,7 @@ function AreaGestor() {
 
           </button>
 
+
           {/* ====================================================
               PROFESSORES
           ==================================================== */}
@@ -220,8 +221,9 @@ function AreaGestor() {
 
           </button>
 
+
           {/* ====================================================
-              Disciplina
+              DISCIPLINAS
           ==================================================== */}
 
           <button
@@ -260,13 +262,14 @@ function AreaGestor() {
                 text-muted-foreground
               "
             >
-              Cadastrar e gerencie as disciplinas atrelada aos cursos.
+              Cadastrar e gerenciar as disciplinas atreladas aos cursos.
             </p>
 
           </button>
 
+
           {/* ====================================================
-              Turmas
+              TURMAS
           ==================================================== */}
 
           <button
@@ -306,6 +309,53 @@ function AreaGestor() {
               "
             >
               Cadastrar e gerenciar turmas.
+            </p>
+
+          </button>
+
+
+          {/* ====================================================
+              VÍNCULOS
+          ==================================================== */}
+
+          <button
+            type="button"
+
+            onClick={() =>
+              navigate('/sistema/gestor/vinculos')
+            }
+
+            className="
+              rounded-xl
+              border-2
+              border-primary
+              bg-primary/5
+              p-5
+              text-left
+              shadow-sm
+              transition
+              hover:bg-primary/10
+            "
+          >
+
+            <h3
+              className="
+                font-semibold
+                text-foreground
+              "
+            >
+              Vínculos
+            </h3>
+
+
+            <p
+              className="
+                mt-1
+                text-sm
+                text-muted-foreground
+              "
+            >
+              Vincular professores, turmas e disciplinas.
             </p>
 
           </button>
