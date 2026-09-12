@@ -6,7 +6,7 @@ import {
     buscarVinculo,
     criarVinculo,
     excluirVinculo
-} from '../../controllers/vinculoFormController.js'
+} from '../../controllers/gestorControllers/vinculosFormController.js'
 
 import { autenticarToken } from '../middlewares/authMiddleware.js'
 import { autorizarPerfis } from '../middlewares/authorizationMiddleware.js'
