@@ -52,6 +52,9 @@ import AlunosFormPage
 import ProfessoresFormPage
     from './pages/AreaGestor/ProfessoresFormPage.jsx'
 
+import VinculosFormPage
+    from './pages/AreaGestor/VinculosFormPage.jsx'
+
 function App() {
 
   return (
@@ -202,6 +205,15 @@ function App() {
           element={
             <ProtectedRoute perfisPermitidos={['GESTOR']}>
               <DisciplinasFormPage/>
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/sistema/gestor/vinculos"
+          element={
+            <ProtectedRoute perfisPermitidos={['GESTOR']}>
+              <VinculosFormPage/>
             </ProtectedRoute>
           }
         />
