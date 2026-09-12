@@ -12,6 +12,7 @@ import alunoFormRoutes from './routes/gestorRoutes/alunoFormRoutes.js'
 import professorFormRoutes from './routes/gestorRoutes/professorFormRoutes.js'
 import disciplinaFormRoutes from './routes/gestorRoutes/disciplinaFormRoutes.js'
 import turmaFormRoutes from './routes/gestorRoutes/turmaFormRoutes.js'
+import vinculosFormRoutes from './routes/gestorRoutes/vinculosFormRoutes.js'
 
 dotenv.config()
 
@@ -30,6 +31,7 @@ app.use('/api/alunos', alunoFormRoutes)
 app.use('/api/professores', professorFormRoutes)
 app.use('/api/disciplinas', disciplinaFormRoutes)
 app.use('/api/turmas', turmaFormRoutes)
+app.use('/api/vinculos', vinculosFormRoutes)
 
 
 
