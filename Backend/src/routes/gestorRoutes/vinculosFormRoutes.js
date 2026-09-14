@@ -8,8 +8,8 @@ import {
     excluirVinculo
 } from '../../controllers/gestorControllers/vinculosFormController.js'
 
-import { autenticarToken } from '../middlewares/authMiddleware.js'
-import { autorizarPerfis } from '../middlewares/authorizationMiddleware.js'
+import { autenticarToken } from '../../middlewares/authMiddleware.js'
+import { autorizarPerfis } from '../../middlewares/authorizationMiddleware.js'
 
 const router = express.Router()
 
