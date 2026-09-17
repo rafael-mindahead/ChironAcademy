@@ -3,10 +3,16 @@ console.log("bem vindo ao inicio do backend")
 import express from 'express'
 import cors from 'cors'
 import dotenv from 'dotenv'
-
 import database from './config/database.js'
+
 import authRoutes from './routes/authRoutes.js'
-import professorRoutes from './routes/professorRoutes.js'
+import cursoFormRoutes from './routes/gestorRoutes/cursoFormRoutes.js'
+import periodoFormRoutes from './routes/gestorRoutes/periodoFormRoutes.js'
+import alunoFormRoutes from './routes/gestorRoutes/alunoFormRoutes.js'
+import professorFormRoutes from './routes/gestorRoutes/professorFormRoutes.js'
+import disciplinaFormRoutes from './routes/gestorRoutes/disciplinaFormRoutes.js'
+import turmaFormRoutes from './routes/gestorRoutes/turmaFormRoutes.js'
+import vinculosFormRoutes from './routes/gestorRoutes/vinculosFormRoutes.js'
 
 dotenv.config()
 
@@ -18,7 +24,14 @@ app.use(cors())
 app.use(express.json())
 
 app.use('/api/auth', authRoutes)
-app.use('/api/professores', professorRoutes)
+
+app.use('/api/cursos', cursoFormRoutes)
+app.use('/api/periodos', periodoFormRoutes)
+app.use('/api/alunos', alunoFormRoutes)
+app.use('/api/professores', professorFormRoutes)
+app.use('/api/disciplinas', disciplinaFormRoutes)
+app.use('/api/turmas', turmaFormRoutes)
+app.use('/api/vinculos', vinculosFormRoutes)
 
 
 

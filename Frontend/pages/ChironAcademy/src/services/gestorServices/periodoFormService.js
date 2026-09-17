@@ -2,185 +2,233 @@ const API_URL =
   import.meta.env.VITE_API_URL ||
   'http://localhost:3000'
 
+
 function obterToken() {
-  const token = sessionStorage.getItem('chiron_token')
+
+  const token =
+    sessionStorage.getItem('chiron_token')
 
   if (!token) {
     throw new Error('Usuário não autenticado.')
   }
 
   return token
+
 }
+
 
 // ======================================================
 // CADASTRAR
 // ======================================================
 
-export async function cadastrarCurso(
-  nomeCurso,
-  modalidade,
-  duracaoSemestres
+export async function cadastrarPeriodo(
+  numeroPeriodo,
+  nomePeriodo,
+  idCurso
 ) {
+
   const token = obterToken()
 
   const response = await fetch(
-    `${API_URL}/api/cursos`,
+    `${API_URL}/api/periodos`,
     {
       method: 'POST',
+
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`
       },
+
       body: JSON.stringify({
-        nomeCurso,
-        modalidade,
-        duracaoSemestres
+        numeroPeriodo,
+        nomePeriodo,
+        idCurso
       })
     }
   )
 
+
   const data = await response.json()
 
+
   if (!response.ok) {
+
     throw new Error(
       data.message ||
-      'Não foi possível cadastrar o curso.'
+      'Não foi possível cadastrar o período.'
     )
+
   }
 
+
   return data
+
 }
+
 
 // ======================================================
 // LISTAR
 // ======================================================
 
-export async function listarCursos() {
+export async function listarPeriodos() {
+
   const token = obterToken()
 
   const response = await fetch(
-    `${API_URL}/api/cursos`,
+    `${API_URL}/api/periodos`,
     {
       method: 'GET',
+
       headers: {
         Authorization: `Bearer ${token}`
       }
     }
   )
 
+
   const data = await response.json()
 
+
   if (!response.ok) {
+
     throw new Error(
       data.message ||
-      'Não foi possível carregar os cursos.'
+      'Não foi possível carregar os períodos.'
     )
+
   }
 
+
   return data
+
 }
+
 
 // ======================================================
 // BUSCAR POR ID
 // ======================================================
 
-export async function buscarCurso(idCurso) {
+export async function buscarPeriodo(
+  idPeriodo
+) {
+
   const token = obterToken()
 
   const response = await fetch(
-    `${API_URL}/api/cursos/${idCurso}`,
+    `${API_URL}/api/periodos/${idPeriodo}`,
     {
       method: 'GET',
+
       headers: {
         Authorization: `Bearer ${token}`
       }
     }
   )
 
+
   const data = await response.json()
 
+
   if (!response.ok) {
+
     throw new Error(
       data.message ||
-      'Não foi possível buscar o curso.'
+      'Não foi possível buscar o período.'
     )
+
   }
 
+
   return data
+
 }
+
 
 // ======================================================
 // ATUALIZAR
 // ======================================================
 
-export async function atualizarCurso(
-  idCurso,
-  nomeCurso,
-  modalidade,
-  duracaoSemestres
+export async function atualizarPeriodo(
+  idPeriodo,
+  numeroPeriodo,
+  nomePeriodo,
+  idCurso
 ) {
+
   const token = obterToken()
 
-  console.log({
-    idCurso,
-    nomeCurso,
-    modalidade,
-    duracaoSemestres
-  })
-
   const response = await fetch(
-    `${API_URL}/api/cursos/${idCurso}`,
+    `${API_URL}/api/periodos/${idPeriodo}`,
     {
       method: 'PUT',
+
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`
       },
+
       body: JSON.stringify({
-        nomeCurso,
-        modalidade,
-        duracaoSemestres
+        numeroPeriodo,
+        nomePeriodo,
+        idCurso
       })
     }
   )
 
+
   const data = await response.json()
 
+
   if (!response.ok) {
+
     throw new Error(
       data.message ||
-      'Não foi possível atualizar o curso.'
+      'Não foi possível atualizar o período.'
     )
+
   }
 
+
   return data
+
 }
+
 
 // ======================================================
 // EXCLUIR
 // ======================================================
 
-export async function excluirCurso(idCurso) {
+export async function excluirPeriodo(
+  idPeriodo
+) {
+
   const token = obterToken()
 
   const response = await fetch(
-    `${API_URL}/api/cursos/${idCurso}`,
+    `${API_URL}/api/periodos/${idPeriodo}`,
     {
       method: 'DELETE',
+
       headers: {
         Authorization: `Bearer ${token}`
       }
     }
   )
 
+
   const data = await response.json()
 
+
   if (!response.ok) {
+
     throw new Error(
       data.message ||
-      'Não foi possível excluir o curso.'
+      'Não foi possível excluir o período.'
     )
+
   }
 
+
   return data
+
 }

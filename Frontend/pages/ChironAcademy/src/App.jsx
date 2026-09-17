@@ -4,7 +4,6 @@ import {
   Route
 } from 'react-router-dom'
 
-
 import Home
   from './pages/Home/home.jsx'
 
@@ -26,15 +25,39 @@ import AreaAluno
 import AreaProfessor
   from './pages/AreaProfessor/AreaProfessor.jsx'
 
+import AreaGestor
+  from './pages/AreaGestor/AreaGestor.jsx'
+
 import AcessoNegado
   from './pages/AcessoNegado/AcessoNegado.jsx'
 
 import ProtectedRoute
   from './components/ProtectedRoute/ProtectedRoute.jsx'
 
+import CursosPage
+  from './pages/AreaGestor/CursosFormPage.jsx'
 
-  import ProfessoresPage
-    from './pages/Professores/ProfessoresPage.jsx'
+import TurmasFormPage
+  from './pages/AreaGestor/TurmasFormPage.jsx'
+
+import DisciplinasFormPage
+  from './pages/AreaGestor/DisciplinasFormPage.jsx'
+
+import PeriodosFormPage
+  from './pages/AreaGestor/PeriodosFormPage.jsx'
+
+import AlunosFormPage
+  from './pages/AreaGestor/AlunosFormPage.jsx'
+
+import ProfessoresFormPage
+  from './pages/AreaGestor/ProfessoresFormPage.jsx'
+
+import VinculosFormPage
+  from './pages/AreaGestor/VinculosFormPage.jsx'
+
+import DevTests
+  from './pages/DevTests/DevTests.jsx'
+
 
 function App() {
 
@@ -130,9 +153,52 @@ function App() {
                 'GESTOR'
               ]}
             >
-              <AreaProfessor
-                modoGestor
-              />
+              <AreaGestor />
+            </ProtectedRoute>
+          }
+        />
+
+
+        <Route
+          path="/sistema/gestor/cursos"
+
+          element={
+            <ProtectedRoute
+              perfisPermitidos={[
+                'GESTOR'
+              ]}
+            >
+              <CursosPage />
+            </ProtectedRoute>
+          }
+        />
+
+
+        <Route
+          path="/sistema/gestor/periodos"
+
+          element={
+            <ProtectedRoute
+              perfisPermitidos={[
+                'GESTOR'
+              ]}
+            >
+              <PeriodosFormPage />
+            </ProtectedRoute>
+          }
+        />
+
+
+        <Route
+          path="/sistema/gestor/alunos"
+
+          element={
+            <ProtectedRoute
+              perfisPermitidos={[
+                'GESTOR'
+              ]}
+            >
+              <AlunosFormPage />
             </ProtectedRoute>
           }
         />
@@ -147,10 +213,78 @@ function App() {
                 'GESTOR'
               ]}
             >
-              <ProfessoresPage />
+              <ProfessoresFormPage />
             </ProtectedRoute>
           }
         />
+
+
+        <Route
+          path="/sistema/gestor/turmas"
+
+          element={
+            <ProtectedRoute
+              perfisPermitidos={[
+                'GESTOR'
+              ]}
+            >
+              <TurmasFormPage />
+            </ProtectedRoute>
+          }
+        />
+
+
+        <Route
+          path="/sistema/gestor/disciplinas"
+
+          element={
+            <ProtectedRoute
+              perfisPermitidos={[
+                'GESTOR'
+              ]}
+            >
+              <DisciplinasFormPage />
+            </ProtectedRoute>
+          }
+        />
+
+
+        <Route
+          path="/sistema/gestor/vinculos"
+
+          element={
+            <ProtectedRoute
+              perfisPermitidos={[
+                'GESTOR'
+              ]}
+            >
+              <VinculosFormPage />
+            </ProtectedRoute>
+          }
+        />
+
+
+        {/* SOMENTE DESENVOLVIMENTO */}
+
+        {
+          import.meta.env.DEV && (
+
+            <Route
+              path="/dev/testes"
+
+              element={
+                <ProtectedRoute
+                  perfisPermitidos={[
+                    'GESTOR'
+                  ]}
+                >
+                  <DevTests />
+                </ProtectedRoute>
+              }
+            />
+
+          )
+        }
 
       </Routes>
 

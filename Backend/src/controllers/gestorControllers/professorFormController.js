@@ -1,4 +1,4 @@
-import database from '../config/database.js'
+import database from '../../config/database.js'
 
 
 const emailValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -35,7 +35,7 @@ function responderErroBanco(error, res) {
 
   console.error('Erro no CRUD de professores:', error)
   return res.status(500).json({
-    message: 'Não foi possível realizar a operaçãos.'
+    message: 'Não foi possível realizar a operação.'
   })
 }
 

@@ -4,11 +4,15 @@ import {
 } from 'react'
 
 import {
+  useNavigate
+} from 'react-router-dom'
+
+import {
   cadastrarCurso,
   listarCursos,
   atualizarCurso,
   excluirCurso
-} from '../../services/cursoService'
+} from '../../services/gestorServices/cursoFormService'
 
 
 const MODALIDADES = [
@@ -16,6 +20,7 @@ const MODALIDADES = [
   'EAD',
   'Híbrido'
 ]
+
 
 const formInicial = {
   nomeCurso: '',
@@ -25,6 +30,7 @@ const formInicial = {
 
 
 function converterModalidadeParaAPI(modalidade) {
+
   const modalidades = {
     Presencial: 'PRESENCIAL',
     EAD: 'EAD',
@@ -32,10 +38,12 @@ function converterModalidadeParaAPI(modalidade) {
   }
 
   return modalidades[modalidade]
+
 }
 
 
 function converterModalidadeParaTela(modalidade) {
+
   const modalidades = {
     PRESENCIAL: 'Presencial',
     EAD: 'EAD',
@@ -43,10 +51,19 @@ function converterModalidadeParaTela(modalidade) {
   }
 
   return modalidades[modalidade] || modalidade
+
 }
 
 
 function CursosPage() {
+
+  const navigate =
+    useNavigate()
+
+
+  // ======================================================
+  // ESTADOS
+  // ======================================================
 
   const [form, setForm] =
     useState(formInicial)
@@ -64,45 +81,27 @@ function CursosPage() {
     useState(null)
 
 
+  // ======================================================
+  // TOAST
+  // ======================================================
+
   useEffect(() => {
 
     if (!toast) {
       return
     }
 
-    const temporizador = setTimeout(() => {
-      setToast(null)
-    }, 4000)
 
-    return () => clearTimeout(temporizador)
+    const temporizador =
+      setTimeout(() => {
+        setToast(null)
+      }, 4000)
+
+
+    return () =>
+      clearTimeout(temporizador)
 
   }, [toast])
-
-
-  useEffect(() => {
-
-    async function carregarCursos() {
-
-      try {
-
-        const dados = await listarCursos()
-
-        setCursos(dados)
-
-      } catch (error) {
-
-        mostrarToast(
-          error.message,
-          'erro'
-        )
-
-      }
-
-    }
-
-    carregarCursos()
-
-  }, [])
 
 
   function mostrarToast(
@@ -118,11 +117,85 @@ function CursosPage() {
   }
 
 
+  // ======================================================
+  // CARREGAR CURSOS
+  // ======================================================
+
+  useEffect(() => {
+
+    async function carregarCursos() {
+
+      try {
+
+        const dados =
+          await listarCursos()
+
+
+        setCursos(dados)
+
+      } catch (error) {
+
+        mostrarToast(
+          error.message ||
+          'Não foi possível carregar os cursos.',
+          'erro'
+        )
+
+      }
+
+    }
+
+
+    carregarCursos()
+
+  }, [])
+
+
+  // ======================================================
+  // ALTERAR FORMULÁRIO
+  // ======================================================
+
+  function handleChange(evento) {
+
+    const {
+      name,
+      value
+    } = evento.target
+
+
+    setForm(prev => ({
+      ...prev,
+      [name]: value
+    }))
+
+  }
+
+
+  // ======================================================
+  // REDEFINIR FORMULÁRIO
+  // ======================================================
+
+  function redefinirFormulario() {
+
+    setForm(formInicial)
+
+    setCursoEmEdicao(null)
+
+  }
+
+
+  // ======================================================
+  // CADASTRAR / ATUALIZAR
+  // ======================================================
+
   async function handleSubmit(evento) {
 
     evento.preventDefault()
 
-    const nome = form.nomeCurso.trim()
+
+    const nome =
+      form.nomeCurso.trim()
+
 
     if (!nome) {
 
@@ -135,6 +208,7 @@ function CursosPage() {
 
     }
 
+
     if (!/[A-Za-zÀ-ÿ]/.test(nome)) {
 
       mostrarToast(
@@ -146,6 +220,22 @@ function CursosPage() {
 
     }
 
+
+    if (
+      !form.duracaoSemestres ||
+      Number(form.duracaoSemestres) < 1
+    ) {
+
+      mostrarToast(
+        'Informe uma duração válida.',
+        'erro'
+      )
+
+      return
+
+    }
+
+
     try {
 
       const modalidadeAPI =
@@ -153,6 +243,10 @@ function CursosPage() {
           form.modalidade
         )
 
+
+      // ==================================================
+      // ATUALIZAR
+      // ==================================================
 
       if (cursoEmEdicao) {
 
@@ -167,7 +261,8 @@ function CursosPage() {
 
         setCursos(
           cursos.map((curso) =>
-            curso.idCurso === cursoEmEdicao.idCurso
+            curso.idCurso ===
+            cursoEmEdicao.idCurso
               ? resposta.curso
               : curso
           )
@@ -182,8 +277,14 @@ function CursosPage() {
           'Curso atualizado com sucesso.'
         )
 
+      }
 
-      } else {
+
+      // ==================================================
+      // CADASTRAR
+      // ==================================================
+
+      else {
 
         const resposta =
           await cadastrarCurso(
@@ -213,7 +314,8 @@ function CursosPage() {
     } catch (error) {
 
       mostrarToast(
-        error.message,
+        error.message ||
+        'Não foi possível salvar o curso.',
         'erro'
       )
 
@@ -222,9 +324,14 @@ function CursosPage() {
   }
 
 
+  // ======================================================
+  // EDITAR
+  // ======================================================
+
   function handleEditar(curso) {
 
     setCursoEmEdicao(curso)
+
 
     setForm({
 
@@ -241,19 +348,25 @@ function CursosPage() {
 
     })
 
-  }
 
-
-  function cancelarEdicao() {
-
-    setCursoEmEdicao(null)
-
-    setForm(formInicial)
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    })
 
   }
 
+
+  // ======================================================
+  // EXCLUIR
+  // ======================================================
 
   async function confirmarExclusao() {
+
+    if (!cursoParaExcluir) {
+      return
+    }
+
 
     try {
 
@@ -263,8 +376,10 @@ function CursosPage() {
 
 
       setCursos(
-        cursos.filter((curso) =>
-          curso.idCurso !== cursoParaExcluir.idCurso
+        cursos.filter(
+          (curso) =>
+            curso.idCurso !==
+            cursoParaExcluir.idCurso
         )
       )
 
@@ -280,7 +395,8 @@ function CursosPage() {
     } catch (error) {
 
       mostrarToast(
-        error.message,
+        error.message ||
+        'Não foi possível excluir o curso.',
         'erro'
       )
 
@@ -289,39 +405,89 @@ function CursosPage() {
   }
 
 
+  // ======================================================
+  // INTERFACE
+  // ======================================================
+
   return (
 
-    <div className="min-h-screen bg-background px-6 py-10 lg:px-10">
+    <div className="
+      min-h-screen
+      bg-background
+      px-6
+      py-10
+      lg:px-10
+    ">
 
-      <div className="mx-auto max-w-7xl">
+      <div className="
+        mx-auto
+        max-w-7xl
+      ">
 
 
         {/* ==================================================
             CABEÇALHO
         ================================================== */}
 
-        <div className="mb-8">
+        <div className="
+          mb-8
+          flex
+          items-start
+          justify-between
+          gap-4
+        ">
 
-          <h1 className="
-            text-3xl
-            font-bold
-            tracking-tight
-            text-foreground
-          ">
+          <div>
 
-            Cursos
+            <h1 className="
+              text-3xl
+              font-bold
+              tracking-tight
+              text-foreground
+            ">
 
-          </h1>
+              Cursos
 
-          <p className="
-            mt-2
-            text-sm
-            text-muted-foreground
-          ">
+            </h1>
 
-            Gerencie os cursos cadastrados no sistema.
 
-          </p>
+            <p className="
+              mt-2
+              text-sm
+              text-muted-foreground
+            ">
+
+              Gerencie os cursos cadastrados no sistema.
+
+            </p>
+
+          </div>
+
+
+          <button
+            type="button"
+
+            onClick={() =>
+              navigate('/sistema/gestor')
+            }
+
+            className="
+              h-10
+              rounded-lg
+              border
+              border-border
+              px-4
+              text-sm
+              font-medium
+              text-foreground
+              transition
+              hover:bg-secondary
+            "
+          >
+
+            ← Voltar ao menu
+
+          </button>
 
         </div>
 
@@ -347,41 +513,34 @@ function CursosPage() {
 
           <div className="
             mb-6
-            flex
-            items-center
-            justify-between
-            gap-4
           ">
 
-            <div>
+            <h2 className="
+              text-lg
+              font-semibold
+              text-card-foreground
+            ">
 
-              <h2 className="
-                text-lg
-                font-semibold
-                text-card-foreground
-              ">
+              {cursoEmEdicao
+                ? 'Editar curso'
+                : 'Cadastrar curso'
+              }
 
-                {cursoEmEdicao
-                  ? 'Editar curso'
-                  : 'Cadastrar curso'
-                }
+            </h2>
 
-              </h2>
 
-              <p className="
-                mt-1
-                text-sm
-                text-muted-foreground
-              ">
+            <p className="
+              mt-1
+              text-sm
+              text-muted-foreground
+            ">
 
-                {cursoEmEdicao
-                  ? 'Atualize as informações do curso.'
-                  : 'Preencha os dados para cadastrar um novo curso.'
-                }
+              {cursoEmEdicao
+                ? 'Atualize as informações do curso.'
+                : 'Preencha os dados para cadastrar um novo curso.'
+              }
 
-              </p>
-
-            </div>
+            </p>
 
           </div>
 
@@ -394,7 +553,9 @@ function CursosPage() {
           ">
 
 
-            {/* NOME */}
+            {/* ==================================================
+                NOME
+            ================================================== */}
 
             <div className="
               flex
@@ -404,29 +565,31 @@ function CursosPage() {
               lg:col-span-1
             ">
 
-              <label className="
-                text-sm
-                font-medium
-                text-foreground
-              ">
+              <label
+                htmlFor="nomeCurso"
+                className="
+                  text-sm
+                  font-medium
+                  text-foreground
+                "
+              >
 
                 Nome do curso
 
               </label>
 
+
               <input
+                id="nomeCurso"
+                name="nomeCurso"
                 type="text"
 
                 value={
                   form.nomeCurso
                 }
 
-                onChange={(evento) =>
-                  setForm({
-                    ...form,
-                    nomeCurso:
-                      evento.target.value
-                  })
+                onChange={
+                  handleChange
                 }
 
                 placeholder="Ex.: Engenharia de Software"
@@ -452,7 +615,9 @@ function CursosPage() {
             </div>
 
 
-            {/* MODALIDADE */}
+            {/* ==================================================
+                MODALIDADE
+            ================================================== */}
 
             <div className="
               flex
@@ -460,27 +625,30 @@ function CursosPage() {
               gap-2
             ">
 
-              <label className="
-                text-sm
-                font-medium
-                text-foreground
-              ">
+              <label
+                htmlFor="modalidade"
+                className="
+                  text-sm
+                  font-medium
+                  text-foreground
+                "
+              >
 
                 Modalidade
 
               </label>
 
+
               <select
+                id="modalidade"
+                name="modalidade"
+
                 value={
                   form.modalidade
                 }
 
-                onChange={(evento) =>
-                  setForm({
-                    ...form,
-                    modalidade:
-                      evento.target.value
-                  })
+                onChange={
+                  handleChange
                 }
 
                 className="
@@ -520,7 +688,9 @@ function CursosPage() {
             </div>
 
 
-            {/* DURAÇÃO */}
+            {/* ==================================================
+                DURAÇÃO
+            ================================================== */}
 
             <div className="
               flex
@@ -528,33 +698,34 @@ function CursosPage() {
               gap-2
             ">
 
-              <label className="
-                text-sm
-                font-medium
-                text-foreground
-              ">
+              <label
+                htmlFor="duracaoSemestres"
+                className="
+                  text-sm
+                  font-medium
+                  text-foreground
+                "
+              >
 
                 Duração (semestres)
 
               </label>
 
+
               <input
+                id="duracaoSemestres"
+                name="duracaoSemestres"
                 type="number"
 
                 min="1"
-
                 max="20"
 
                 value={
                   form.duracaoSemestres
                 }
 
-                onChange={(evento) =>
-                  setForm({
-                    ...form,
-                    duracaoSemestres:
-                      evento.target.value
-                  })
+                onChange={
+                  handleChange
                 }
 
                 placeholder="Ex.: 8"
@@ -582,7 +753,9 @@ function CursosPage() {
           </div>
 
 
-          {/* BOTÕES */}
+          {/* ==================================================
+              BOTÕES
+          ================================================== */}
 
           <div className="
             mt-7
@@ -591,11 +764,40 @@ function CursosPage() {
             gap-3
           ">
 
+            <button
+              type="button"
+
+              onClick={
+                redefinirFormulario
+              }
+
+              className="
+                h-10
+                rounded-lg
+                border
+                border-border
+                px-5
+                text-sm
+                font-medium
+                text-foreground
+                transition
+                hover:bg-secondary
+              "
+            >
+
+              Redefinir
+
+            </button>
+
+
             {cursoEmEdicao && (
 
               <button
                 type="button"
-                onClick={cancelarEdicao}
+
+                onClick={
+                  redefinirFormulario
+                }
 
                 className="
                   h-10
@@ -674,24 +876,40 @@ function CursosPage() {
 
               </h2>
 
+
               <p className="
                 mt-1
                 text-sm
                 text-muted-foreground
               ">
 
-                {cursos.length}{' '}
-                {cursos.length === 1
-                  ? 'curso cadastrado'
-                  : 'cursos cadastrados'
-                }
+                Consulte e gerencie os cursos cadastrados no sistema.
 
               </p>
 
             </div>
 
+
+            <div className="
+              text-sm
+              text-muted-foreground
+            ">
+
+              {cursos.length}{' '}
+
+              {cursos.length === 1
+                ? 'curso cadastrado'
+                : 'cursos cadastrados'
+              }
+
+            </div>
+
           </div>
 
+
+          {/* ==================================================
+              TABELA
+          ================================================== */}
 
           <div className="
             overflow-hidden
@@ -702,7 +920,9 @@ function CursosPage() {
             shadow-sm
           ">
 
-            <div className="overflow-x-auto">
+            <div className="
+              overflow-x-auto
+            ">
 
               <table className="
                 w-full
@@ -732,6 +952,7 @@ function CursosPage() {
 
                     </th>
 
+
                     <th className="
                       px-6
                       py-4
@@ -747,6 +968,7 @@ function CursosPage() {
 
                     </th>
 
+
                     <th className="
                       px-6
                       py-4
@@ -761,6 +983,7 @@ function CursosPage() {
                       Duração
 
                     </th>
+
 
                     <th className="
                       px-6
@@ -816,7 +1039,10 @@ function CursosPage() {
 
                           </span>
 
-                          <span className="text-sm">
+
+                          <span className="
+                            text-sm
+                          ">
 
                             Cadastre o primeiro curso usando o formulário acima.
 
@@ -834,7 +1060,9 @@ function CursosPage() {
                   {cursos.map((curso) => (
 
                     <tr
-                      key={curso.idCurso}
+                      key={
+                        curso.idCurso
+                      }
 
                       className="
                         border-b
@@ -857,7 +1085,10 @@ function CursosPage() {
                       </td>
 
 
-                      <td className="px-6 py-4">
+                      <td className="
+                        px-6
+                        py-4
+                      ">
 
                         <span className="
                           inline-flex
@@ -889,6 +1120,7 @@ function CursosPage() {
                       ">
 
                         {curso.duracaoSemestres}{' '}
+
                         {curso.duracaoSemestres === 1
                           ? 'semestre'
                           : 'semestres'
@@ -897,7 +1129,10 @@ function CursosPage() {
                       </td>
 
 
-                      <td className="px-6 py-4">
+                      <td className="
+                        px-6
+                        py-4
+                      ">
 
                         <div className="
                           flex
@@ -972,7 +1207,6 @@ function CursosPage() {
 
         </div>
 
-
       </div>
 
 
@@ -982,68 +1216,61 @@ function CursosPage() {
 
       {cursoParaExcluir && (
 
-        <div
-          className="
-            fixed
-            inset-0
-            z-50
-            flex
-            items-center
-            justify-center
-            bg-black/60
-            p-4
-            backdrop-blur-sm
-          "
-        >
+        <div className="
+          fixed
+          inset-0
+          z-50
+          flex
+          items-center
+          justify-center
+          bg-black/60
+          p-4
+          backdrop-blur-sm
+        ">
 
-          <div
-            className="
-              w-full
-              max-w-md
-              rounded-2xl
-              border
-              border-border
-              bg-card
-              p-6
-              shadow-2xl
-            "
-          >
+          <div className="
+            w-full
+            max-w-md
+            rounded-2xl
+            border
+            border-border
+            bg-card
+            p-6
+            shadow-2xl
+          ">
 
-            <div>
+            <h2 className="
+              text-lg
+              font-semibold
+              text-card-foreground
+            ">
 
-              <h2 className="
-                text-lg
-                font-semibold
-                text-card-foreground
+              Excluir curso
+
+            </h2>
+
+
+            <p className="
+              mt-3
+              text-sm
+              leading-6
+              text-muted-foreground
+            ">
+
+              Tem certeza de que deseja excluir o curso{' '}
+
+              <span className="
+                font-medium
+                text-foreground
               ">
 
-                Excluir curso
+                "{cursoParaExcluir.nomeCurso}"
 
-              </h2>
+              </span>
 
-              <p className="
-                mt-3
-                text-sm
-                leading-6
-                text-muted-foreground
-              ">
+              ?
 
-                Tem certeza de que deseja excluir o curso{' '}
-
-                <span className="
-                  font-medium
-                  text-foreground
-                ">
-
-                  "{cursoParaExcluir.nomeCurso}"
-
-                </span>
-
-                ?
-
-              </p>
-
-            </div>
+            </p>
 
 
             <div className="
@@ -1082,7 +1309,9 @@ function CursosPage() {
               <button
                 type="button"
 
-                onClick={confirmarExclusao}
+                onClick={
+                  confirmarExclusao
+                }
 
                 className="
                   h-10
