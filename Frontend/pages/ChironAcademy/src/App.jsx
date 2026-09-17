@@ -50,10 +50,14 @@ import AlunosFormPage
   from './pages/AreaGestor/AlunosFormPage.jsx'
 
 import ProfessoresFormPage
-    from './pages/AreaGestor/ProfessoresFormPage.jsx'
+  from './pages/AreaGestor/ProfessoresFormPage.jsx'
 
 import VinculosFormPage
-    from './pages/AreaGestor/VinculosFormPage.jsx'
+  from './pages/AreaGestor/VinculosFormPage.jsx'
+
+import DevTests
+  from './pages/DevTests/DevTests.jsx'
+
 
 function App() {
 
@@ -154,69 +158,133 @@ function App() {
           }
         />
 
+
         <Route
           path="/sistema/gestor/cursos"
 
           element={
-            <ProtectedRoute perfisPermitidos={['GESTOR']}>
+            <ProtectedRoute
+              perfisPermitidos={[
+                'GESTOR'
+              ]}
+            >
               <CursosPage />
             </ProtectedRoute>
           }
         />
 
+
         <Route
           path="/sistema/gestor/periodos"
+
           element={
-            <ProtectedRoute perfisPermitidos={['GESTOR']}>
+            <ProtectedRoute
+              perfisPermitidos={[
+                'GESTOR'
+              ]}
+            >
               <PeriodosFormPage />
             </ProtectedRoute>
           }
         />
 
+
         <Route
           path="/sistema/gestor/alunos"
+
           element={
-            <ProtectedRoute perfisPermitidos={['GESTOR']}>
+            <ProtectedRoute
+              perfisPermitidos={[
+                'GESTOR'
+              ]}
+            >
               <AlunosFormPage />
             </ProtectedRoute>
           }
         />
 
+
         <Route
           path="/sistema/gestor/professores"
+
           element={
-            <ProtectedRoute perfisPermitidos={['GESTOR']}>
+            <ProtectedRoute
+              perfisPermitidos={[
+                'GESTOR'
+              ]}
+            >
               <ProfessoresFormPage />
             </ProtectedRoute>
           }
         />
 
+
         <Route
           path="/sistema/gestor/turmas"
+
           element={
-            <ProtectedRoute perfisPermitidos={['GESTOR']}>
+            <ProtectedRoute
+              perfisPermitidos={[
+                'GESTOR'
+              ]}
+            >
               <TurmasFormPage />
             </ProtectedRoute>
           }
         />
 
+
         <Route
           path="/sistema/gestor/disciplinas"
+
           element={
-            <ProtectedRoute perfisPermitidos={['GESTOR']}>
-              <DisciplinasFormPage/>
+            <ProtectedRoute
+              perfisPermitidos={[
+                'GESTOR'
+              ]}
+            >
+              <DisciplinasFormPage />
             </ProtectedRoute>
           }
         />
 
+
         <Route
           path="/sistema/gestor/vinculos"
+
           element={
-            <ProtectedRoute perfisPermitidos={['GESTOR']}>
-              <VinculosFormPage/>
+            <ProtectedRoute
+              perfisPermitidos={[
+                'GESTOR'
+              ]}
+            >
+              <VinculosFormPage />
             </ProtectedRoute>
           }
         />
+
+
+        {/* SOMENTE DESENVOLVIMENTO */}
+
+        {
+          import.meta.env.DEV && (
+
+            <Route
+              path="/dev/testes"
+
+              element={
+                <ProtectedRoute
+                  perfisPermitidos={[
+                    'GESTOR'
+                  ]}
+                >
+                  <DevTests />
+                </ProtectedRoute>
+              }
+            />
+
+          )
+        }
 
       </Routes>
 
