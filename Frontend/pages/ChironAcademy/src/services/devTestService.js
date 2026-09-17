@@ -116,7 +116,9 @@ function garantir(
 
   if (!condicao) {
 
-    throw new Error(mensagem)
+    throw new Error(
+      mensagem
+    )
 
   }
 
@@ -129,6 +131,7 @@ export async function executarTestesIntegracao(
 
   const resultados = []
 
+
   const recursos = {
 
     idCurso:
@@ -138,6 +141,18 @@ export async function executarTestesIntegracao(
       null,
 
     idAluno:
+      null,
+
+    idProfessor:
+      null,
+
+    codDisciplina:
+      null,
+
+    idTurma:
+      null,
+
+    idVinculo:
       null
 
   }
@@ -156,10 +171,20 @@ export async function executarTestesIntegracao(
 
 
   const emailAluno =
-    `test.${sufixo}@chiron.local`
+    `aluno.${sufixo}@chiron.local`
 
 
-  function publicar(resultado) {
+  const emailProfessor =
+    `professor.${sufixo}@chiron.local`
+
+
+  const codDisciplina =
+    `T${sufixo.slice(-10)}`
+
+
+  function publicar(
+    resultado
+  ) {
 
     resultados.push(
       resultado
@@ -275,6 +300,7 @@ export async function executarTestesIntegracao(
     await executar(
       'Infraestrutura',
       'Backend Health',
+
       async () => {
 
         const resposta =
@@ -308,6 +334,7 @@ export async function executarTestesIntegracao(
     await executar(
       'Infraestrutura',
       'Database Health',
+
       async () => {
 
         const resposta =
@@ -332,7 +359,9 @@ export async function executarTestesIntegracao(
         )
 
 
-        return `MySQL conectado em ${resposta.data.database}.`
+        return (
+          `MySQL conectado em ${resposta.data.database}.`
+        )
 
       }
     )
@@ -346,6 +375,7 @@ export async function executarTestesIntegracao(
       await executar(
         'Autenticação',
         'JWT /me',
+
         async () => {
 
           const resposta =
@@ -361,8 +391,10 @@ export async function executarTestesIntegracao(
 
 
           garantir(
-            resposta.data?.usuario?.perfil ===
-              'GESTOR',
+            resposta.data
+              ?.usuario
+              ?.perfil === 'GESTOR',
+
             'O usuário autenticado não possui perfil GESTOR.'
           )
 
@@ -378,6 +410,7 @@ export async function executarTestesIntegracao(
     await executar(
       'Segurança',
       'Token inválido bloqueado',
+
       async () => {
 
         const resposta =
@@ -396,7 +429,9 @@ export async function executarTestesIntegracao(
         )
 
 
-        return 'API rejeitou JWT inválido corretamente.'
+        return (
+          'API rejeitou JWT inválido corretamente.'
+        )
 
       }
     )
@@ -405,10 +440,11 @@ export async function executarTestesIntegracao(
     if (!authOk) {
 
       pular(
-        'Cursos',
-        'CRUD de Cursos',
+        'Sistema',
+        'Testes acadêmicos',
         'Autenticação do gestor falhou.'
       )
+
 
       return gerarResumo(
         resultados
@@ -425,6 +461,7 @@ export async function executarTestesIntegracao(
       await executar(
         'Cursos',
         'Criar curso',
+
         async () => {
 
           const resposta =
@@ -458,13 +495,18 @@ export async function executarTestesIntegracao(
 
 
           garantir(
-            resposta.data?.curso?.idCurso,
+            resposta.data
+              ?.curso
+              ?.idCurso,
+
             'A API não retornou idCurso.'
           )
 
 
           recursos.idCurso =
-            resposta.data.curso.idCurso
+            resposta.data
+              .curso
+              .idCurso
 
 
           return (
@@ -480,6 +522,7 @@ export async function executarTestesIntegracao(
       await executar(
         'Cursos',
         'Listar cursos',
+
         async () => {
 
           const resposta =
@@ -498,6 +541,7 @@ export async function executarTestesIntegracao(
             Array.isArray(
               resposta.data
             ),
+
             'A listagem não retornou um array.'
           )
 
@@ -512,11 +556,14 @@ export async function executarTestesIntegracao(
                   recursos.idCurso
                 )
             ),
+
             'Curso temporário não apareceu na listagem.'
           )
 
 
-          return 'Curso encontrado na listagem.'
+          return (
+            'Curso encontrado na listagem.'
+          )
 
         }
       )
@@ -525,6 +572,7 @@ export async function executarTestesIntegracao(
       await executar(
         'Cursos',
         'Buscar curso por ID',
+
         async () => {
 
           const resposta =
@@ -540,13 +588,17 @@ export async function executarTestesIntegracao(
 
 
           garantir(
-            resposta.data?.nomeCurso ===
+            resposta.data
+              ?.nomeCurso ===
               nomeCurso,
-            'Nome do curso retornado é diferente do esperado.'
+
+            'Nome do curso retornado é diferente.'
           )
 
 
-          return 'Consulta individual funcionando.'
+          return (
+            'Consulta individual funcionando.'
+          )
 
         }
       )
@@ -555,6 +607,7 @@ export async function executarTestesIntegracao(
       await executar(
         'Cursos',
         'Atualizar curso',
+
         async () => {
 
           const resposta =
@@ -587,7 +640,9 @@ export async function executarTestesIntegracao(
           )
 
 
-          return 'Curso atualizado para HIBRIDO / 9 semestres.'
+          return (
+            'Curso atualizado corretamente.'
+          )
 
         }
       )
@@ -596,6 +651,7 @@ export async function executarTestesIntegracao(
       await executar(
         'Cursos',
         'Bloquear curso duplicado',
+
         async () => {
 
           const resposta =
@@ -628,17 +684,11 @@ export async function executarTestesIntegracao(
           )
 
 
-          return 'Duplicidade bloqueada corretamente.'
+          return (
+            'Duplicidade bloqueada corretamente.'
+          )
 
         }
-      )
-
-    } else {
-
-      pular(
-        'Cursos',
-        'Listagem / leitura / atualização',
-        'Criação do curso falhou.'
       )
 
     }
@@ -648,82 +698,80 @@ export async function executarTestesIntegracao(
     // PERÍODOS
     // ==================================================
 
-    let periodoCriado =
-      false
+    if (
+      recursos.idCurso
+    ) {
 
-
-    if (recursos.idCurso) {
-
-      periodoCriado =
-        await executar(
-          'Períodos',
-          'Criar período',
-          async () => {
-
-            const resposta =
-              await request(
-                '/api/periodos',
-                {
-
-                  method:
-                    'POST',
-
-                  body: {
-
-                    numeroPeriodo:
-                      2,
-
-                    nomePeriodo:
-                      'TEST Período',
-
-                    idCurso:
-                      recursos.idCurso
-
-                  }
-
-                }
-              )
-
-
-            garantir(
-              resposta.status === 201,
-              `Status esperado 201, recebido ${resposta.status}.`
-            )
-
-
-            garantir(
-              resposta.data?.periodo?.idPeriodo,
-              'A API não retornou idPeriodo.'
-            )
-
-
-            recursos.idPeriodo =
-              resposta.data.periodo.idPeriodo
-
-
-            return (
-              `Período criado com ID ${recursos.idPeriodo}.`
-            )
-
-          }
-        )
-
-    } else {
-
-      pular(
+      await executar(
         'Períodos',
         'Criar período',
-        'Curso temporário não disponível.'
+
+        async () => {
+
+          const resposta =
+            await request(
+              '/api/periodos',
+              {
+
+                method:
+                  'POST',
+
+                body: {
+
+                  numeroPeriodo:
+                    2,
+
+                  nomePeriodo:
+                    'TEST Período',
+
+                  idCurso:
+                    recursos.idCurso
+
+                }
+
+              }
+            )
+
+
+          garantir(
+            resposta.status === 201,
+            `Status esperado 201, recebido ${resposta.status}.`
+          )
+
+
+          garantir(
+            resposta.data
+              ?.periodo
+              ?.idPeriodo,
+
+            'A API não retornou idPeriodo.'
+          )
+
+
+          recursos.idPeriodo =
+            resposta.data
+              .periodo
+              .idPeriodo
+
+
+          return (
+            `Período criado com ID ${recursos.idPeriodo}.`
+          )
+
+        }
       )
 
     }
 
 
-    if (periodoCriado) {
+    if (
+      recursos.idPeriodo
+    ) {
 
       await executar(
         'Períodos',
-        'Listar períodos do curso',
+        'Listar períodos',
+
         async () => {
 
           const resposta =
@@ -748,11 +796,14 @@ export async function executarTestesIntegracao(
                   recursos.idPeriodo
                 )
             ),
-            'Período não encontrado na listagem.'
+
+            'Período não encontrado.'
           )
 
 
-          return 'Relação Curso → Período confirmada.'
+          return (
+            'Relação Curso → Período confirmada.'
+          )
 
         }
       )
@@ -761,6 +812,7 @@ export async function executarTestesIntegracao(
       await executar(
         'Períodos',
         'Atualizar período',
+
         async () => {
 
           const resposta =
@@ -794,7 +846,9 @@ export async function executarTestesIntegracao(
           )
 
 
-          return 'Período atualizado corretamente.'
+          return (
+            'Período atualizado corretamente.'
+          )
 
         }
       )
@@ -803,6 +857,7 @@ export async function executarTestesIntegracao(
       await executar(
         'Integridade',
         'Bloquear exclusão de curso com período',
+
         async () => {
 
           const resposta =
@@ -821,7 +876,9 @@ export async function executarTestesIntegracao(
           )
 
 
-          return 'Curso protegido por vínculo com período.'
+          return (
+            'Curso protegido por período vinculado.'
+          )
 
         }
       )
@@ -833,94 +890,85 @@ export async function executarTestesIntegracao(
     // ALUNOS
     // ==================================================
 
-    let alunoCriado =
-      false
-
-
     if (
       recursos.idCurso &&
       recursos.idPeriodo
     ) {
 
-      alunoCriado =
-        await executar(
-          'Alunos',
-          'Criar aluno',
-          async () => {
-
-            const resposta =
-              await request(
-                '/api/alunos',
-                {
-
-                  method:
-                    'POST',
-
-                  body: {
-
-                    nome:
-                      'TEST Aluno Chiron',
-
-                    telefone:
-                      null,
-
-                    email:
-                      emailAluno,
-
-                    numeroMatricula:
-                      matricula,
-
-                    idCurso:
-                      recursos.idCurso,
-
-                    idPeriodo:
-                      recursos.idPeriodo
-
-                  }
-
-                }
-              )
-
-
-            garantir(
-              resposta.status === 201,
-              `Status esperado 201, recebido ${resposta.status}.`
-            )
-
-
-            garantir(
-              resposta.data?.idAluno,
-              'A API não retornou idAluno.'
-            )
-
-
-            recursos.idAluno =
-              resposta.data.idAluno
-
-
-            return (
-              `Aluno criado com ID ${recursos.idAluno}.`
-            )
-
-          }
-        )
-
-    } else {
-
-      pular(
+      await executar(
         'Alunos',
         'Criar aluno',
-        'Curso ou período temporário não disponível.'
+
+        async () => {
+
+          const resposta =
+            await request(
+              '/api/alunos',
+              {
+
+                method:
+                  'POST',
+
+                body: {
+
+                  nome:
+                    'TEST Aluno Chiron',
+
+                  telefone:
+                    null,
+
+                  email:
+                    emailAluno,
+
+                  numeroMatricula:
+                    matricula,
+
+                  idCurso:
+                    recursos.idCurso,
+
+                  idPeriodo:
+                    recursos.idPeriodo
+
+                }
+
+              }
+            )
+
+
+          garantir(
+            resposta.status === 201,
+            `Status esperado 201, recebido ${resposta.status}.`
+          )
+
+
+          garantir(
+            resposta.data?.idAluno,
+            'A API não retornou idAluno.'
+          )
+
+
+          recursos.idAluno =
+            resposta.data.idAluno
+
+
+          return (
+            `Aluno criado com ID ${recursos.idAluno}.`
+          )
+
+        }
       )
 
     }
 
 
-    if (alunoCriado) {
+    if (
+      recursos.idAluno
+    ) {
 
       await executar(
         'Alunos',
         'Buscar aluno',
+
         async () => {
 
           const resposta =
@@ -936,13 +984,17 @@ export async function executarTestesIntegracao(
 
 
           garantir(
-            resposta.data?.numeroMatricula ===
+            resposta.data
+              ?.numeroMatricula ===
               matricula,
-            'Matrícula retornada é diferente da esperada.'
+
+            'Matrícula retornada é diferente.'
           )
 
 
-          return 'Consulta individual funcionando.'
+          return (
+            'Consulta individual funcionando.'
+          )
 
         }
       )
@@ -951,6 +1003,7 @@ export async function executarTestesIntegracao(
       await executar(
         'Alunos',
         'Atualizar aluno',
+
         async () => {
 
           const resposta =
@@ -993,7 +1046,9 @@ export async function executarTestesIntegracao(
           )
 
 
-          return 'Aluno atualizado corretamente.'
+          return (
+            'Aluno atualizado corretamente.'
+          )
 
         }
       )
@@ -1002,6 +1057,7 @@ export async function executarTestesIntegracao(
       await executar(
         'Alunos',
         'Bloquear matrícula duplicada',
+
         async () => {
 
           const resposta =
@@ -1015,7 +1071,7 @@ export async function executarTestesIntegracao(
                 body: {
 
                   nome:
-                    'TEST Aluno Duplicado',
+                    'TEST Duplicado',
 
                   telefone:
                     null,
@@ -1044,7 +1100,9 @@ export async function executarTestesIntegracao(
           )
 
 
-          return 'Matrícula duplicada bloqueada.'
+          return (
+            'Matrícula duplicada bloqueada.'
+          )
 
         }
       )
@@ -1053,6 +1111,7 @@ export async function executarTestesIntegracao(
       await executar(
         'Integridade',
         'Bloquear exclusão de período com aluno',
+
         async () => {
 
           const resposta =
@@ -1071,24 +1130,1168 @@ export async function executarTestesIntegracao(
           )
 
 
-          return 'Período protegido por vínculo com aluno.'
+          return (
+            'Período protegido por aluno vinculado.'
+          )
+
+        }
+      )
+
+    }
+
+
+    // ==================================================
+    // PROFESSORES
+    // ==================================================
+
+    await executar(
+      'Professores',
+      'Criar professor',
+
+      async () => {
+
+        const resposta =
+          await request(
+            '/api/professores',
+            {
+
+              method:
+                'POST',
+
+              body: {
+
+                nome:
+                  'TEST Professor Chiron',
+
+                telefone:
+                  null,
+
+                email:
+                  emailProfessor
+
+              }
+
+            }
+          )
+
+
+        garantir(
+          resposta.status === 201,
+          `Status esperado 201, recebido ${resposta.status}.`
+        )
+
+
+        garantir(
+          resposta.data
+            ?.professor
+            ?.idProfessor,
+
+          'A API não retornou idProfessor.'
+        )
+
+
+        recursos.idProfessor =
+          resposta.data
+            .professor
+            .idProfessor
+
+
+        return (
+          `Professor criado com ID ${recursos.idProfessor}.`
+        )
+
+      }
+    )
+
+
+    if (
+      recursos.idProfessor
+    ) {
+
+      await executar(
+        'Professores',
+        'Listar professores',
+
+        async () => {
+
+          const resposta =
+            await request(
+              '/api/professores'
+            )
+
+
+          garantir(
+            resposta.status === 200,
+            `Status esperado 200, recebido ${resposta.status}.`
+          )
+
+
+          garantir(
+            Array.isArray(
+              resposta.data
+                ?.professores
+            ),
+
+            'A API não retornou professores.'
+          )
+
+
+          garantir(
+            resposta.data
+              .professores
+              .some(
+                professor =>
+                  Number(
+                    professor.idProfessor
+                  ) ===
+                  Number(
+                    recursos.idProfessor
+                  )
+              ),
+
+            'Professor temporário não encontrado.'
+          )
+
+
+          return (
+            'Professor encontrado na listagem.'
+          )
 
         }
       )
 
 
       await executar(
-        'Limpeza',
-        'Excluir aluno temporário',
+        'Professores',
+        'Buscar professor',
+
         async () => {
-
-          const id =
-            recursos.idAluno
-
 
           const resposta =
             await request(
-              `/api/alunos/${id}`,
+              `/api/professores/${recursos.idProfessor}`
+            )
+
+
+          garantir(
+            resposta.status === 200,
+            `Status esperado 200, recebido ${resposta.status}.`
+          )
+
+
+          garantir(
+            resposta.data
+              ?.professor
+              ?.email ===
+              emailProfessor,
+
+            'Professor retornado é diferente.'
+          )
+
+
+          return (
+            'Consulta individual funcionando.'
+          )
+
+        }
+      )
+
+
+      await executar(
+        'Professores',
+        'Atualizar professor',
+
+        async () => {
+
+          const resposta =
+            await request(
+              `/api/professores/${recursos.idProfessor}`,
+              {
+
+                method:
+                  'PUT',
+
+                body: {
+
+                  nome:
+                    'TEST Professor Atualizado',
+
+                  telefone:
+                    '41999990000',
+
+                  email:
+                    emailProfessor
+
+                }
+
+              }
+            )
+
+
+          garantir(
+            resposta.status === 200,
+            `Status esperado 200, recebido ${resposta.status}.`
+          )
+
+
+          garantir(
+            resposta.data
+              ?.professor
+              ?.nome ===
+              'TEST Professor Atualizado',
+
+            'Professor não foi atualizado.'
+          )
+
+
+          return (
+            'Professor atualizado corretamente.'
+          )
+
+        }
+      )
+
+
+      await executar(
+        'Professores',
+        'Bloquear e-mail duplicado',
+
+        async () => {
+
+          const resposta =
+            await request(
+              '/api/professores',
+              {
+
+                method:
+                  'POST',
+
+                body: {
+
+                  nome:
+                    'TEST Professor Duplicado',
+
+                  telefone:
+                    null,
+
+                  email:
+                    emailProfessor
+
+                }
+
+              }
+            )
+
+
+          garantir(
+            resposta.status === 409,
+            `Era esperado 409, recebido ${resposta.status}.`
+          )
+
+
+          return (
+            'E-mail duplicado bloqueado.'
+          )
+
+        }
+      )
+
+    }
+
+
+    // ==================================================
+    // DISCIPLINAS
+    // ==================================================
+
+    if (
+      recursos.idCurso &&
+      recursos.idPeriodo
+    ) {
+
+      await executar(
+        'Disciplinas',
+        'Criar disciplina',
+
+        async () => {
+
+          const resposta =
+            await request(
+              '/api/disciplinas',
+              {
+
+                method:
+                  'POST',
+
+                body: {
+
+                  codDisciplina,
+
+                  nomeDisciplina:
+                    'TEST Engenharia de Software',
+
+                  tipoDisciplina:
+                    'OBRIGATORIA',
+
+                  cargaHoraria:
+                    80,
+
+                  idCurso:
+                    recursos.idCurso,
+
+                  idPeriodo:
+                    recursos.idPeriodo
+
+                }
+
+              }
+            )
+
+
+          garantir(
+            resposta.status === 201,
+            `Status esperado 201, recebido ${resposta.status}.`
+          )
+
+
+          garantir(
+            resposta.data
+              ?.disciplina
+              ?.codDisciplina ===
+              codDisciplina,
+
+            'Disciplina criada com código inesperado.'
+          )
+
+
+          recursos.codDisciplina =
+            codDisciplina
+
+
+          return (
+            `Disciplina ${codDisciplina} criada.`
+          )
+
+        }
+      )
+
+    }
+
+
+    if (
+      recursos.codDisciplina
+    ) {
+
+      await executar(
+        'Disciplinas',
+        'Listar disciplinas',
+
+        async () => {
+
+          const resposta =
+            await request(
+              '/api/disciplinas'
+            )
+
+
+          garantir(
+            resposta.status === 200,
+            `Status esperado 200, recebido ${resposta.status}.`
+          )
+
+
+          garantir(
+            resposta.data
+              ?.disciplinas
+              ?.some(
+                disciplina =>
+                  disciplina.codDisciplina ===
+                  recursos.codDisciplina
+              ),
+
+            'Disciplina não encontrada.'
+          )
+
+
+          return (
+            'Disciplina encontrada na listagem.'
+          )
+
+        }
+      )
+
+
+      await executar(
+        'Disciplinas',
+        'Atualizar disciplina',
+
+        async () => {
+
+          const resposta =
+            await request(
+              `/api/disciplinas/${recursos.codDisciplina}`,
+              {
+
+                method:
+                  'PUT',
+
+                body: {
+
+                  nomeDisciplina:
+                    'TEST Disciplina Atualizada',
+
+                  tipoDisciplina:
+                    'OPTATIVA',
+
+                  cargaHoraria:
+                    60,
+
+                  idCurso:
+                    recursos.idCurso,
+
+                  idPeriodo:
+                    recursos.idPeriodo
+
+                }
+
+              }
+            )
+
+
+          garantir(
+            resposta.status === 200,
+            `Status esperado 200, recebido ${resposta.status}.`
+          )
+
+
+          garantir(
+            resposta.data
+              ?.disciplina
+              ?.tipoDisciplina ===
+              'OPTATIVA',
+
+            'Disciplina não foi atualizada.'
+          )
+
+
+          return (
+            'Disciplina atualizada corretamente.'
+          )
+
+        }
+      )
+
+
+      await executar(
+        'Disciplinas',
+        'Bloquear código duplicado',
+
+        async () => {
+
+          const resposta =
+            await request(
+              '/api/disciplinas',
+              {
+
+                method:
+                  'POST',
+
+                body: {
+
+                  codDisciplina:
+                    recursos.codDisciplina,
+
+                  nomeDisciplina:
+                    'TEST Duplicada',
+
+                  tipoDisciplina:
+                    'OBRIGATORIA',
+
+                  cargaHoraria:
+                    40,
+
+                  idCurso:
+                    recursos.idCurso,
+
+                  idPeriodo:
+                    recursos.idPeriodo
+
+                }
+
+              }
+            )
+
+
+          garantir(
+            resposta.status === 409,
+            `Era esperado 409, recebido ${resposta.status}.`
+          )
+
+
+          return (
+            'Código duplicado bloqueado.'
+          )
+
+        }
+      )
+
+    }
+
+
+    // ==================================================
+    // TURMAS
+    // ==================================================
+
+    if (
+      recursos.idCurso
+    ) {
+
+      await executar(
+        'Turmas',
+        'Criar turma',
+
+        async () => {
+
+          const resposta =
+            await request(
+              '/api/turmas',
+              {
+
+                method:
+                  'POST',
+
+                body: {
+
+                  localTurma:
+                    `TEST Sala ${sufixo.slice(-4)}`,
+
+                  turnoTurma:
+                    'NOITE',
+
+                  idCurso:
+                    recursos.idCurso
+
+                }
+
+              }
+            )
+
+
+          // O controller atual retorna buscarTurma(),
+          // por isso o status é 200.
+          garantir(
+            resposta.status === 200,
+            `Status esperado 200, recebido ${resposta.status}.`
+          )
+
+
+          garantir(
+            resposta.data
+              ?.turma
+              ?.idTurma,
+
+            'A API não retornou idTurma.'
+          )
+
+
+          recursos.idTurma =
+            resposta.data
+              .turma
+              .idTurma
+
+
+          return (
+            `Turma criada com ID ${recursos.idTurma}.`
+          )
+
+        }
+      )
+
+    }
+
+
+    if (
+      recursos.idTurma
+    ) {
+
+      await executar(
+        'Turmas',
+        'Listar turmas',
+
+        async () => {
+
+          const resposta =
+            await request(
+              '/api/turmas'
+            )
+
+
+          garantir(
+            resposta.status === 200,
+            `Status esperado 200, recebido ${resposta.status}.`
+          )
+
+
+          garantir(
+            resposta.data
+              ?.turmas
+              ?.some(
+                turma =>
+                  Number(
+                    turma.idTurma
+                  ) ===
+                  Number(
+                    recursos.idTurma
+                  )
+              ),
+
+            'Turma não encontrada.'
+          )
+
+
+          return (
+            'Turma encontrada na listagem.'
+          )
+
+        }
+      )
+
+
+      await executar(
+        'Turmas',
+        'Atualizar turma',
+
+        async () => {
+
+          const resposta =
+            await request(
+              `/api/turmas/${recursos.idTurma}`,
+              {
+
+                method:
+                  'PUT',
+
+                body: {
+
+                  localTurma:
+                    'TEST Laboratório 42',
+
+                  turnoTurma:
+                    'TARDE',
+
+                  idCurso:
+                    recursos.idCurso
+
+                }
+
+              }
+            )
+
+
+          garantir(
+            resposta.status === 200,
+            `Status esperado 200, recebido ${resposta.status}.`
+          )
+
+
+          garantir(
+            resposta.data
+              ?.turma
+              ?.turnoTurma ===
+              'TARDE',
+
+            'Turma não foi atualizada.'
+          )
+
+
+          return (
+            'Turma atualizada corretamente.'
+          )
+
+        }
+      )
+
+    }
+
+
+    // ==================================================
+    // VÍNCULOS
+    // ==================================================
+
+    if (
+      recursos.idProfessor &&
+      recursos.idTurma &&
+      recursos.codDisciplina
+    ) {
+
+      await executar(
+        'Vínculos',
+        'Criar vínculo Professor → Turma → Disciplina',
+
+        async () => {
+
+          const resposta =
+            await request(
+              '/api/vinculos',
+              {
+
+                method:
+                  'POST',
+
+                body: {
+
+                  idProfessor:
+                    recursos.idProfessor,
+
+                  idTurma:
+                    recursos.idTurma,
+
+                  codDisciplina:
+                    recursos.codDisciplina
+
+                }
+
+              }
+            )
+
+
+          // O controller retorna buscarVinculo(),
+          // portanto atualmente responde 200.
+          garantir(
+            resposta.status === 200,
+            `Status esperado 200, recebido ${resposta.status}.`
+          )
+
+
+          garantir(
+            resposta.data
+              ?.vinculo
+              ?.idProfessorTurma,
+
+            'A API não retornou idProfessorTurma.'
+          )
+
+
+          recursos.idVinculo =
+            resposta.data
+              .vinculo
+              .idProfessorTurma
+
+
+          return (
+            `Vínculo criado com ID ${recursos.idVinculo}.`
+          )
+
+        }
+      )
+
+    }
+
+
+    if (
+      recursos.idVinculo
+    ) {
+
+      await executar(
+        'Vínculos',
+        'Listar vínculos',
+
+        async () => {
+
+          const resposta =
+            await request(
+              '/api/vinculos'
+            )
+
+
+          garantir(
+            resposta.status === 200,
+            `Status esperado 200, recebido ${resposta.status}.`
+          )
+
+
+          garantir(
+            resposta.data
+              ?.vinculos
+              ?.some(
+                vinculo =>
+                  Number(
+                    vinculo.idProfessorTurma
+                  ) ===
+                  Number(
+                    recursos.idVinculo
+                  )
+              ),
+
+            'Vínculo não encontrado.'
+          )
+
+
+          return (
+            'Vínculo encontrado na listagem.'
+          )
+
+        }
+      )
+
+
+      await executar(
+        'Vínculos',
+        'Buscar vínculo',
+
+        async () => {
+
+          const resposta =
+            await request(
+              `/api/vinculos/${recursos.idVinculo}`
+            )
+
+
+          garantir(
+            resposta.status === 200,
+            `Status esperado 200, recebido ${resposta.status}.`
+          )
+
+
+          garantir(
+            Number(
+              resposta.data
+                ?.vinculo
+                ?.idProfessor
+            ) ===
+            Number(
+              recursos.idProfessor
+            ),
+
+            'Professor do vínculo é diferente.'
+          )
+
+
+          return (
+            'Relacionamento completo confirmado.'
+          )
+
+        }
+      )
+
+
+      await executar(
+        'Vínculos',
+        'Bloquear vínculo duplicado',
+
+        async () => {
+
+          const resposta =
+            await request(
+              '/api/vinculos',
+              {
+
+                method:
+                  'POST',
+
+                body: {
+
+                  idProfessor:
+                    recursos.idProfessor,
+
+                  idTurma:
+                    recursos.idTurma,
+
+                  codDisciplina:
+                    recursos.codDisciplina
+
+                }
+
+              }
+            )
+
+
+          garantir(
+            resposta.status === 409,
+            `Era esperado 409, recebido ${resposta.status}.`
+          )
+
+
+          return (
+            'Vínculo duplicado bloqueado.'
+          )
+
+        }
+      )
+
+
+      // ==================================================
+      // INTEGRIDADE DO VÍNCULO
+      // ==================================================
+
+      await executar(
+        'Integridade',
+        'Bloquear exclusão de professor vinculado',
+
+        async () => {
+
+          const resposta =
+            await request(
+              `/api/professores/${recursos.idProfessor}`,
+              {
+                method:
+                  'DELETE'
+              }
+            )
+
+
+          garantir(
+            resposta.status === 409,
+            `Era esperado 409, recebido ${resposta.status}.`
+          )
+
+
+          return (
+            'Professor protegido por vínculo.'
+          )
+
+        }
+      )
+
+
+      await executar(
+        'Integridade',
+        'Bloquear exclusão de turma vinculada',
+
+        async () => {
+
+          const resposta =
+            await request(
+              `/api/turmas/${recursos.idTurma}`,
+              {
+                method:
+                  'DELETE'
+              }
+            )
+
+
+          garantir(
+            resposta.status === 409,
+            `Era esperado 409, recebido ${resposta.status}.`
+          )
+
+
+          return (
+            'Turma protegida por vínculo.'
+          )
+
+        }
+      )
+
+
+      await executar(
+        'Integridade',
+        'Bloquear exclusão de disciplina vinculada',
+
+        async () => {
+
+          const resposta =
+            await request(
+              `/api/disciplinas/${recursos.codDisciplina}`,
+              {
+                method:
+                  'DELETE'
+              }
+            )
+
+
+          garantir(
+            resposta.status === 409,
+            `Era esperado 409, recebido ${resposta.status}.`
+          )
+
+
+          return (
+            'Disciplina protegida por vínculo.'
+          )
+
+        }
+      )
+
+    }
+
+
+    // ==================================================
+    // LIMPEZA
+    // ==================================================
+
+    if (
+      recursos.idVinculo
+    ) {
+
+      await executar(
+        'Limpeza',
+        'Excluir vínculo temporário',
+
+        async () => {
+
+          const resposta =
+            await request(
+              `/api/vinculos/${recursos.idVinculo}`,
+              {
+                method:
+                  'DELETE'
+              }
+            )
+
+
+          garantir(
+            resposta.status === 200,
+            `Status esperado 200, recebido ${resposta.status}.`
+          )
+
+
+          recursos.idVinculo =
+            null
+
+
+          return (
+            'Vínculo temporário removido.'
+          )
+
+        }
+      )
+
+    }
+
+
+    if (
+      recursos.idProfessor
+    ) {
+
+      await executar(
+        'Limpeza',
+        'Excluir professor temporário',
+
+        async () => {
+
+          const resposta =
+            await request(
+              `/api/professores/${recursos.idProfessor}`,
+              {
+                method:
+                  'DELETE'
+              }
+            )
+
+
+          garantir(
+            resposta.status === 200,
+            `Status esperado 200, recebido ${resposta.status}.`
+          )
+
+
+          recursos.idProfessor =
+            null
+
+
+          return (
+            'Professor temporário removido.'
+          )
+
+        }
+      )
+
+    }
+
+
+    if (
+      recursos.idTurma
+    ) {
+
+      await executar(
+        'Limpeza',
+        'Excluir turma temporária',
+
+        async () => {
+
+          const resposta =
+            await request(
+              `/api/turmas/${recursos.idTurma}`,
+              {
+                method:
+                  'DELETE'
+              }
+            )
+
+
+          garantir(
+            resposta.status === 200,
+            `Status esperado 200, recebido ${resposta.status}.`
+          )
+
+
+          recursos.idTurma =
+            null
+
+
+          return (
+            'Turma temporária removida.'
+          )
+
+        }
+      )
+
+    }
+
+
+    if (
+      recursos.codDisciplina
+    ) {
+
+      await executar(
+        'Limpeza',
+        'Excluir disciplina temporária',
+
+        async () => {
+
+          const resposta =
+            await request(
+              `/api/disciplinas/${recursos.codDisciplina}`,
+              {
+                method:
+                  'DELETE'
+              }
+            )
+
+
+          garantir(
+            resposta.status === 200,
+            `Status esperado 200, recebido ${resposta.status}.`
+          )
+
+
+          recursos.codDisciplina =
+            null
+
+
+          return (
+            'Disciplina temporária removida.'
+          )
+
+        }
+      )
+
+    }
+
+
+    if (
+      recursos.idAluno
+    ) {
+
+      await executar(
+        'Limpeza',
+        'Excluir aluno temporário',
+
+        async () => {
+
+          const resposta =
+            await request(
+              `/api/alunos/${recursos.idAluno}`,
               {
                 method:
                   'DELETE'
@@ -1106,30 +2309,9 @@ export async function executarTestesIntegracao(
             null
 
 
-          return 'Aluno temporário removido.'
-
-        }
-      )
-
-
-      await executar(
-        'Alunos',
-        'Confirmar exclusão do aluno',
-        async () => {
-
-          const resposta =
-            await request(
-              `/api/alunos/${recursos.idAluno || '999999999'}`
-            )
-
-
-          garantir(
-            resposta.status === 404,
-            `Era esperado 404, recebido ${resposta.status}.`
+          return (
+            'Aluno temporário removido.'
           )
-
-
-          return 'Aluno não encontrado após exclusão.'
 
         }
       )
@@ -1137,15 +2319,14 @@ export async function executarTestesIntegracao(
     }
 
 
-    // ==================================================
-    // LIMPEZA DO PERÍODO
-    // ==================================================
-
-    if (recursos.idPeriodo) {
+    if (
+      recursos.idPeriodo
+    ) {
 
       await executar(
         'Limpeza',
         'Excluir período temporário',
+
         async () => {
 
           const resposta =
@@ -1168,7 +2349,9 @@ export async function executarTestesIntegracao(
             null
 
 
-          return 'Período temporário removido.'
+          return (
+            'Período temporário removido.'
+          )
 
         }
       )
@@ -1176,15 +2359,14 @@ export async function executarTestesIntegracao(
     }
 
 
-    // ==================================================
-    // LIMPEZA DO CURSO
-    // ==================================================
-
-    if (recursos.idCurso) {
+    if (
+      recursos.idCurso
+    ) {
 
       await executar(
         'Limpeza',
         'Excluir curso temporário',
+
         async () => {
 
           const resposta =
@@ -1207,7 +2389,9 @@ export async function executarTestesIntegracao(
             null
 
 
-          return 'Curso temporário removido.'
+          return (
+            'Curso temporário removido.'
+          )
 
         }
       )
@@ -1221,9 +2405,43 @@ export async function executarTestesIntegracao(
     // LIMPEZA DE SEGURANÇA
     // ==================================================
 
+    // Ordem inversa das dependências:
+    //
+    // Vínculo
+    // Aluno
+    // Disciplina
+    // Turma
+    // Professor
+    // Período
+    // Curso
+
+
     try {
 
-      if (recursos.idAluno) {
+      if (
+        recursos.idVinculo
+      ) {
+
+        await request(
+          `/api/vinculos/${recursos.idVinculo}`,
+          {
+            method:
+              'DELETE'
+          }
+        )
+
+      }
+
+    } catch {
+      // limpeza silenciosa
+    }
+
+
+    try {
+
+      if (
+        recursos.idAluno
+      ) {
 
         await request(
           `/api/alunos/${recursos.idAluno}`,
@@ -1242,7 +2460,72 @@ export async function executarTestesIntegracao(
 
     try {
 
-      if (recursos.idPeriodo) {
+      if (
+        recursos.codDisciplina
+      ) {
+
+        await request(
+          `/api/disciplinas/${recursos.codDisciplina}`,
+          {
+            method:
+              'DELETE'
+          }
+        )
+
+      }
+
+    } catch {
+      // limpeza silenciosa
+    }
+
+
+    try {
+
+      if (
+        recursos.idTurma
+      ) {
+
+        await request(
+          `/api/turmas/${recursos.idTurma}`,
+          {
+            method:
+              'DELETE'
+          }
+        )
+
+      }
+
+    } catch {
+      // limpeza silenciosa
+    }
+
+
+    try {
+
+      if (
+        recursos.idProfessor
+      ) {
+
+        await request(
+          `/api/professores/${recursos.idProfessor}`,
+          {
+            method:
+              'DELETE'
+          }
+        )
+
+      }
+
+    } catch {
+      // limpeza silenciosa
+    }
+
+
+    try {
+
+      if (
+        recursos.idPeriodo
+      ) {
 
         await request(
           `/api/periodos/${recursos.idPeriodo}`,
@@ -1261,7 +2544,9 @@ export async function executarTestesIntegracao(
 
     try {
 
-      if (recursos.idCurso) {
+      if (
+        recursos.idCurso
+      ) {
 
         await request(
           `/api/cursos/${recursos.idCurso}`,
