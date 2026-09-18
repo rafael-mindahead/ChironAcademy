@@ -59,6 +59,10 @@ import DevTests
   from './pages/DevTests/DevTests.jsx'
 
 
+import MatriculasFormPage
+  from './pages/AreaGestor/MatriculasFormPage.jsx'
+
+
 function App() {
 
   return (
@@ -268,25 +272,39 @@ function App() {
 
         {
           import.meta.env.DEV && (
-
-            <Route
-              path="/dev/testes"
-
-              element={
-                <ProtectedRoute
-                  perfisPermitidos={[
-                    'GESTOR'
-                  ]}
-                >
-                  <DevTests />
-                </ProtectedRoute>
-              }
-            />
+            <>
+              <Route
+                path="/dev/testes"
+                element={
+                  <ProtectedRoute
+                    perfisPermitidos={[
+                      'GESTOR'
+                    ]}
+                  >
+                    <DevTests />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/sistema/gestor/matriculas"
+                element={
+                  <ProtectedRoute
+                    perfisPermitidos={[
+                      'GESTOR'
+                    ]}
+                  >
+                    <MatriculasFormPage />
+                  </ProtectedRoute>
+                }
+              />
+            </>
 
           )
         }
 
       </Routes>
+
+      
 
     </BrowserRouter>
 

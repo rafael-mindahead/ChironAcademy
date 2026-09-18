@@ -1,5 +1,7 @@
 CREATE DATABASE IF NOT EXISTS chironAcademyData;
 USE chironAcademyData;
+
+
 CREATE TABLE IF NOT EXISTS Usuario (
     idUsuario BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
 
@@ -11,20 +13,19 @@ CREATE TABLE IF NOT EXISTS Usuario (
         'PROFESSOR',
         'ALUNO'
     ) NOT NULL,
-    recoveryTokenHash CHAR(64) NOT NULL,
+
+    recoveryTokenHash CHAR(64) NOT NULL UNIQUE,
+
     ativo BOOLEAN NOT NULL DEFAULT TRUE,
+
     createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
     updatedAt TIMESTAMP NOT NULL
-    DEFAULT CURRENT_TIMESTAMP 
-    ON UPDATE CURRENT_TIMESTAMP,
-
-    CONSTRAINT uq_usuario_email
-    UNIQUE (email),
-
-    CONSTRAINT uq_usuario_recovery_token
-    UNIQUE (recoveryTokenHash)
+        DEFAULT CURRENT_TIMESTAMP
+        ON UPDATE CURRENT_TIMESTAMP
 );
+
+
 CREATE TABLE IF NOT EXISTS Curso (
     idCurso INT AUTO_INCREMENT PRIMARY KEY,
 
@@ -38,6 +39,8 @@ CREATE TABLE IF NOT EXISTS Curso (
 
     duracaoSemestres INT NOT NULL
 );
+
+
 CREATE TABLE IF NOT EXISTS Periodo (
     idPeriodo INT AUTO_INCREMENT PRIMARY KEY,
 
@@ -51,6 +54,8 @@ CREATE TABLE IF NOT EXISTS Periodo (
         FOREIGN KEY (idCurso)
         REFERENCES Curso(idCurso)
 );
+
+
 CREATE TABLE IF NOT EXISTS Turma (
     idTurma INT AUTO_INCREMENT PRIMARY KEY,
 
@@ -68,6 +73,7 @@ CREATE TABLE IF NOT EXISTS Turma (
         FOREIGN KEY (idCurso)
         REFERENCES Curso(idCurso)
 );
+
 
 CREATE TABLE IF NOT EXISTS Disciplina (
     codDisciplina VARCHAR(50) PRIMARY KEY,
@@ -94,6 +100,7 @@ CREATE TABLE IF NOT EXISTS Disciplina (
         REFERENCES Curso(idCurso)
 );
 
+
 CREATE TABLE IF NOT EXISTS Professor (
     idProfessor INT AUTO_INCREMENT PRIMARY KEY,
 
@@ -107,6 +114,7 @@ CREATE TABLE IF NOT EXISTS Professor (
         UNIQUE (email)
 );
 
+
 CREATE TABLE IF NOT EXISTS ProfessorTurma (
     idProfessorTurma INT AUTO_INCREMENT PRIMARY KEY,
 
@@ -115,6 +123,13 @@ CREATE TABLE IF NOT EXISTS ProfessorTurma (
     idTurma INT NOT NULL,
 
     codDisciplina VARCHAR(50) NOT NULL,
+
+    CONSTRAINT uq_professor_turma_disciplina
+        UNIQUE (
+            idProfessor,
+            idTurma,
+            codDisciplina
+        ),
 
     CONSTRAINT fk_professor_turma_professor
         FOREIGN KEY (idProfessor)
@@ -128,6 +143,8 @@ CREATE TABLE IF NOT EXISTS ProfessorTurma (
         FOREIGN KEY (codDisciplina)
         REFERENCES Disciplina(codDisciplina)
 );
+
+
 CREATE TABLE IF NOT EXISTS Aluno (
     idAluno INT AUTO_INCREMENT PRIMARY KEY,
 
@@ -156,4 +173,45 @@ CREATE TABLE IF NOT EXISTS Aluno (
     CONSTRAINT fk_aluno_periodo
         FOREIGN KEY (idPeriodo)
         REFERENCES Periodo(idPeriodo)
+);
+
+
+CREATE TABLE IF NOT EXISTS Matricula (
+    idMatricula INT AUTO_INCREMENT PRIMARY KEY,
+
+    dataMatricula DATE NOT NULL
+        DEFAULT (CURRENT_DATE),
+
+    statusMatricula ENUM(
+        'CURSANDO',
+        'APROVADO',
+        'REPROVADO',
+        'TRANCADO',
+        'JUSTIFICADO'
+    ) NOT NULL DEFAULT 'CURSANDO',
+
+    idAluno INT NOT NULL,
+
+    codDisciplina VARCHAR(50) NOT NULL,
+
+    idTurma INT NOT NULL,
+
+    CONSTRAINT uq_matricula_aluno_disciplina_turma
+        UNIQUE (
+            idAluno,
+            codDisciplina,
+            idTurma
+        ),
+
+    CONSTRAINT fk_matricula_aluno
+        FOREIGN KEY (idAluno)
+        REFERENCES Aluno(idAluno),
+
+    CONSTRAINT fk_matricula_disciplina
+        FOREIGN KEY (codDisciplina)
+        REFERENCES Disciplina(codDisciplina),
+
+    CONSTRAINT fk_matricula_turma
+        FOREIGN KEY (idTurma)
+        REFERENCES Turma(idTurma)
 );
