@@ -64,32 +64,90 @@ async function registroExiste(tabela, coluna, valor) {
 }
 
 
-async function possuiVinculos(codDisciplina) {
-  const tabelas = ['ProfessorTurma', 'Matricula', 'Avaliacao']
+async function possuiVinculos(
+  codDisciplina
+) {
 
-  for (const tabela of tabelas) {
-    const [existe] = await database.execute(
-      `
-        SELECT COUNT(*) AS quantidade
-        FROM information_schema.tables
-        WHERE table_schema = DATABASE() AND table_name = ?
-      `,
-      [tabela]
-    )
+  const tabelas = [
+    {
+      tabela:
+        'ProfessorTurma',
 
-    if (Number(existe[0].quantidade) === 0) continue
+      coluna:
+        'codDisciplina'
+    },
 
-    const coluna = tabela === 'ProfessorTurma' || tabela === 'Matricula' || tabela === 'Avaliacao'
-      ? 'codDisciplina'
-      : 'codDisciplina'
+    {
+      tabela:
+        'Matricula',
 
-    const [vinculo] = await database.execute(
-      `SELECT 1 FROM ${tabela} WHERE ${coluna} = ? LIMIT 1`,
-      [codDisciplina]
-    )
+      coluna:
+        'codDisciplina'
+    }
+  ]
 
-    if (vinculo.length > 0) return true
+
+  for (
+    const item
+    of tabelas
+  ) {
+
+    const [existe] =
+      await database.execute(
+        `
+          SELECT
+            COUNT(*) AS quantidade
+
+          FROM information_schema.tables
+
+          WHERE table_schema = DATABASE()
+
+            AND table_name = ?
+        `,
+        [
+          item.tabela
+        ]
+      )
+
+
+    if (
+      Number(
+        existe[0].quantidade
+      ) === 0
+    ) {
+
+      continue
+
+    }
+
+
+    const [vinculo] =
+      await database.execute(
+        `
+          SELECT 1
+
+          FROM ${item.tabela}
+
+          WHERE ${item.coluna} = ?
+
+          LIMIT 1
+        `,
+        [
+          codDisciplina
+        ]
+      )
+
+
+    if (
+      vinculo.length > 0
+    ) {
+
+      return true
+
+    }
+
   }
+
 
   return false
 }
