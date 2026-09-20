@@ -6,6 +6,13 @@ import {
 } from '../../controllers/professorControllers/turmasProfessorController.js'
 
 import {
+  listarAvaliacoes,
+  criarAvaliacao,
+  atualizarAvaliacao,
+  excluirAvaliacao
+} from '../../controllers/professorControllers/avaliacaoProfessorController.js'
+
+import {
   autenticarToken
 } from '../../middlewares/authMiddleware.js'
 
@@ -19,7 +26,7 @@ const router =
 
 
 // ======================================================
-// TODAS AS ROTAS EXIGEM PROFESSOR
+// SOMENTE PROFESSOR
 // ======================================================
 
 router.use(
@@ -31,6 +38,34 @@ router.use(
   autorizarPerfis(
     'PROFESSOR'
   )
+)
+
+
+// ======================================================
+// AVALIAÇÕES
+// ======================================================
+
+router.get(
+  '/:idProfessorTurma/avaliacoes',
+  listarAvaliacoes
+)
+
+
+router.post(
+  '/:idProfessorTurma/avaliacoes',
+  criarAvaliacao
+)
+
+
+router.put(
+  '/:idProfessorTurma/avaliacoes/:idAvaliacao',
+  atualizarAvaliacao
+)
+
+
+router.delete(
+  '/:idProfessorTurma/avaliacoes/:idAvaliacao',
+  excluirAvaliacao
 )
 
 

@@ -215,3 +215,27 @@ CREATE TABLE IF NOT EXISTS Matricula (
         FOREIGN KEY (idTurma)
         REFERENCES Turma(idTurma)
 );
+CREATE TABLE IF NOT EXISTS Avaliacao (
+    idAvaliacao INT AUTO_INCREMENT PRIMARY KEY,
+
+    titulo VARCHAR(150) NOT NULL,
+
+    descricao VARCHAR(500),
+
+    dataAvaliacao DATE NOT NULL,
+
+    valorMaximo DECIMAL(5,2) NOT NULL DEFAULT 10.00,
+
+    idProfessorTurma INT NOT NULL,
+
+    createdAt TIMESTAMP NOT NULL
+        DEFAULT CURRENT_TIMESTAMP,
+
+    updatedAt TIMESTAMP NOT NULL
+        DEFAULT CURRENT_TIMESTAMP
+        ON UPDATE CURRENT_TIMESTAMP,
+
+    CONSTRAINT fk_avaliacao_professor_turma
+        FOREIGN KEY (idProfessorTurma)
+        REFERENCES ProfessorTurma(idProfessorTurma)
+);
