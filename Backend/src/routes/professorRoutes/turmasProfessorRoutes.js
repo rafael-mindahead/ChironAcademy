@@ -19,6 +19,11 @@ import {
 import {
   autorizarPerfis
 } from '../../middlewares/authorizationMiddleware.js'
+import {
+  listarNotas,
+  registrarNota,
+  excluirNota
+} from '../../controllers/professorControllers/notaProfessorController.js'
 
 
 const router =
@@ -67,7 +72,26 @@ router.delete(
   '/:idProfessorTurma/avaliacoes/:idAvaliacao',
   excluirAvaliacao
 )
+// ======================================================
+// NOTAS
+// ======================================================
 
+router.get(
+  '/:idProfessorTurma/avaliacoes/:idAvaliacao/notas',
+  listarNotas
+)
+
+
+router.put(
+  '/:idProfessorTurma/avaliacoes/:idAvaliacao/notas/:idMatricula',
+  registrarNota
+)
+
+
+router.delete(
+  '/:idProfessorTurma/avaliacoes/:idAvaliacao/notas/:idMatricula',
+  excluirNota
+)
 
 // ======================================================
 // MINHAS TURMAS

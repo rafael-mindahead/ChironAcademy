@@ -239,3 +239,35 @@ CREATE TABLE IF NOT EXISTS Avaliacao (
         FOREIGN KEY (idProfessorTurma)
         REFERENCES ProfessorTurma(idProfessorTurma)
 );
+CREATE TABLE IF NOT EXISTS Nota (
+    idNota INT AUTO_INCREMENT PRIMARY KEY,
+
+    valor DECIMAL(5,2) NOT NULL,
+
+    observacao VARCHAR(500),
+
+    idAvaliacao INT NOT NULL,
+
+    idMatricula INT NOT NULL,
+
+    createdAt TIMESTAMP NOT NULL
+        DEFAULT CURRENT_TIMESTAMP,
+
+    updatedAt TIMESTAMP NOT NULL
+        DEFAULT CURRENT_TIMESTAMP
+        ON UPDATE CURRENT_TIMESTAMP,
+
+    CONSTRAINT uq_nota_avaliacao_matricula
+        UNIQUE (
+            idAvaliacao,
+            idMatricula
+        ),
+
+    CONSTRAINT fk_nota_avaliacao
+        FOREIGN KEY (idAvaliacao)
+        REFERENCES Avaliacao(idAvaliacao),
+
+    CONSTRAINT fk_nota_matricula
+        FOREIGN KEY (idMatricula)
+        REFERENCES Matricula(idMatricula)
+);

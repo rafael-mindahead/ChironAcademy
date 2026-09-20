@@ -149,7 +149,7 @@ function TurmaProfessorPage() {
 
 
   // ====================================================
-  // CARREGAR
+  // CARREGAR DADOS
   // ====================================================
 
   useEffect(
@@ -158,7 +158,6 @@ function TurmaProfessorPage() {
       carregar()
 
     },
-
     [
       idProfessorTurma
     ]
@@ -240,7 +239,9 @@ function TurmaProfessorPage() {
   // TOAST
   // ====================================================
 
-  function toast(texto) {
+  function toast(
+    texto
+  ) {
 
     setMensagem(
       texto
@@ -250,7 +251,6 @@ function TurmaProfessorPage() {
     window.setTimeout(
       () =>
         setMensagem(''),
-
       3500
     )
 
@@ -268,9 +268,12 @@ function TurmaProfessorPage() {
 
     setFormulario(
       atual => ({
+
         ...atual,
+
         [nome]:
           valor
+
       })
     )
 
@@ -293,6 +296,10 @@ function TurmaProfessorPage() {
 
   }
 
+
+  // ====================================================
+  // EDITAR AVALIAÇÃO
+  // ====================================================
 
   function editarAvaliacao(
     avaliacao
@@ -333,8 +340,10 @@ function TurmaProfessorPage() {
         'form-avaliacao'
       )
       ?.scrollIntoView({
+
         behavior:
           'smooth'
+
       })
 
   }
@@ -365,6 +374,7 @@ function TurmaProfessorPage() {
       )
 
       return
+
     }
 
 
@@ -459,7 +469,7 @@ function TurmaProfessorPage() {
 
 
   // ====================================================
-  // EXCLUIR
+  // EXCLUIR AVALIAÇÃO
   // ====================================================
 
   async function confirmarExclusao() {
@@ -467,7 +477,9 @@ function TurmaProfessorPage() {
     if (
       !avaliacaoParaExcluir
     ) {
+
       return
+
     }
 
 
@@ -527,7 +539,7 @@ function TurmaProfessorPage() {
 
 
   // ====================================================
-  // FORMATAÇÕES
+  // FORMATAÇÃO
   // ====================================================
 
   function formatarData(
@@ -535,7 +547,9 @@ function TurmaProfessorPage() {
   ) {
 
     if (!data) {
+
       return '-'
+
     }
 
 
@@ -560,7 +574,9 @@ function TurmaProfessorPage() {
       !mes ||
       !dia
     ) {
+
       return valor
+
     }
 
 
@@ -576,7 +592,9 @@ function TurmaProfessorPage() {
   ) {
 
     if (!data) {
+
       return ''
+
     }
 
 
@@ -594,7 +612,8 @@ function TurmaProfessorPage() {
   ) {
 
     return Number(
-      valor || 0
+      valor ||
+      0
     )
       .toFixed(2)
       .replace(
@@ -606,7 +625,7 @@ function TurmaProfessorPage() {
 
 
   // ====================================================
-  // ESTADOS
+  // LOADING
   // ====================================================
 
   if (
@@ -624,6 +643,10 @@ function TurmaProfessorPage() {
 
   }
 
+
+  // ====================================================
+  // ERRO
+  // ====================================================
 
   if (
     estado ===
@@ -644,7 +667,11 @@ function TurmaProfessorPage() {
         "
       >
 
-        <div>
+        <div
+          className="
+            max-w-md
+          "
+        >
 
           <p
             className="
@@ -681,6 +708,10 @@ function TurmaProfessorPage() {
 
   }
 
+
+  // ====================================================
+  // PÁGINA
+  // ====================================================
 
   return (
 
@@ -926,6 +957,7 @@ function TurmaProfessorPage() {
 
         <section
           id="form-avaliacao"
+
           className="
             mt-8
           "
@@ -960,7 +992,9 @@ function TurmaProfessorPage() {
           </div>
 
 
-          {/* FORM */}
+          {/* ============================================
+              FORMULÁRIO DE AVALIAÇÃO
+          ============================================ */}
 
           <div
             className="
@@ -997,18 +1031,22 @@ function TurmaProfessorPage() {
                 {
                   avaliacaoEmEdicao
                     ? (
+
                       <Pencil
                         className="
                           size-5
                         "
                       />
+
                     )
                     : (
+
                       <Plus
                         className="
                           size-5
                         "
                       />
+
                     )
                 }
 
@@ -1066,6 +1104,8 @@ function TurmaProfessorPage() {
                 "
               >
 
+                {/* TÍTULO */}
+
                 <Campo
                   titulo="Título"
                 >
@@ -1097,6 +1137,8 @@ function TurmaProfessorPage() {
                 </Campo>
 
 
+                {/* DATA */}
+
                 <Campo
                   titulo="Data da avaliação"
                 >
@@ -1123,6 +1165,8 @@ function TurmaProfessorPage() {
 
                 </Campo>
 
+
+                {/* VALOR */}
 
                 <Campo
                   titulo="Valor máximo"
@@ -1157,6 +1201,8 @@ function TurmaProfessorPage() {
                 </Campo>
 
 
+                {/* DESCRIÇÃO */}
+
                 <div
                   className="
                     md:col-span-2
@@ -1165,6 +1211,7 @@ function TurmaProfessorPage() {
 
                   <Campo
                     titulo="Descrição"
+
                     obrigatorio={
                       false
                     }
@@ -1206,6 +1253,8 @@ function TurmaProfessorPage() {
               </div>
 
 
+              {/* ERRO */}
+
               {
                 erro && (
 
@@ -1226,6 +1275,8 @@ function TurmaProfessorPage() {
                 )
               }
 
+
+              {/* BOTÕES */}
 
               <div
                 className="
@@ -1303,7 +1354,9 @@ function TurmaProfessorPage() {
           </div>
 
 
-          {/* LISTA */}
+          {/* ============================================
+              AVALIAÇÕES CADASTRADAS
+          ============================================ */}
 
           <div
             className="
@@ -1413,6 +1466,8 @@ function TurmaProfessorPage() {
                             "
                           >
 
+                            {/* CABEÇALHO */}
+
                             <div
                               className="
                                 flex
@@ -1472,6 +1527,8 @@ function TurmaProfessorPage() {
                             </div>
 
 
+                            {/* DATA */}
+
                             <div
                               className="
                                 mt-4
@@ -1489,6 +1546,7 @@ function TurmaProfessorPage() {
                                 "
                               />
 
+
                               {
                                 formatarData(
                                   avaliacao.dataAvaliacao
@@ -1497,6 +1555,8 @@ function TurmaProfessorPage() {
 
                             </div>
 
+
+                            {/* DESCRIÇÃO */}
 
                             {
                               avaliacao.descricao && (
@@ -1518,10 +1578,15 @@ function TurmaProfessorPage() {
                             }
 
 
+                            {/* ======================================
+                                AÇÕES DA AVALIAÇÃO
+                            ====================================== */}
+
                             <div
                               className="
                                 mt-5
                                 flex
+                                flex-wrap
                                 justify-end
                                 gap-2
                                 border-t
@@ -1529,6 +1594,40 @@ function TurmaProfessorPage() {
                                 pt-4
                               "
                             >
+
+                              {/* LANÇAR NOTAS */}
+
+                              <button
+                                type="button"
+
+                                onClick={() =>
+                                  navigate(
+                                    `/sistema/professor/turmas/${idProfessorTurma}/avaliacoes/${avaliacao.idAvaliacao}/notas`
+                                  )
+                                }
+
+                                className="
+                                  flex
+                                  items-center
+                                  gap-2
+                                  rounded-md
+                                  border
+                                  border-primary/30
+                                  bg-primary/5
+                                  px-3
+                                  py-2
+                                  text-sm
+                                  font-medium
+                                  text-primary
+                                  transition
+                                  hover:bg-primary/10
+                                "
+                              >
+                                Lançar notas
+                              </button>
+
+
+                              {/* EDITAR */}
 
                               <button
                                 type="button"
@@ -1563,6 +1662,8 @@ function TurmaProfessorPage() {
 
                               </button>
 
+
+                              {/* EXCLUIR */}
 
                               <button
                                 type="button"
@@ -1743,19 +1844,42 @@ function TurmaProfessorPage() {
                           "
                         >
 
-                          <th className="px-5 py-4">
+                          <th
+                            className="
+                              px-5
+                              py-4
+                            "
+                          >
                             Aluno
                           </th>
 
-                          <th className="px-5 py-4">
+
+                          <th
+                            className="
+                              px-5
+                              py-4
+                            "
+                          >
                             Matrícula
                           </th>
 
-                          <th className="px-5 py-4">
+
+                          <th
+                            className="
+                              px-5
+                              py-4
+                            "
+                          >
                             E-mail
                           </th>
 
-                          <th className="px-5 py-4">
+
+                          <th
+                            className="
+                              px-5
+                              py-4
+                            "
+                          >
                             Status
                           </th>
 
@@ -1875,7 +1999,7 @@ function TurmaProfessorPage() {
 
 
       {/* ==============================================
-          MODAL EXCLUIR
+          MODAL DE EXCLUSÃO
       ============================================== */}
 
       {
@@ -2069,6 +2193,10 @@ function TurmaProfessorPage() {
 }
 
 
+// ======================================================
+// CAMPO
+// ======================================================
+
 function Campo({
   titulo,
   children,
@@ -2110,6 +2238,10 @@ function Campo({
 
 }
 
+
+// ======================================================
+// INFO
+// ======================================================
 
 function Info({
   icon,
@@ -2173,6 +2305,10 @@ function Info({
 
 }
 
+
+// ======================================================
+// ESTADO CENTRAL
+// ======================================================
 
 function EstadoCentral({
   texto

@@ -28,6 +28,9 @@ import AreaProfessor
 import TurmaProfessorPage
   from './pages/AreaProfessor/TurmaProfessorPage.jsx'
 
+import NotasProfessorPage
+  from './pages/AreaProfessor/NotasProfessorPage.jsx'
+
 import AreaGestor
   from './pages/AreaGestor/AreaGestor.jsx'
 
@@ -118,7 +121,7 @@ function App() {
 
 
         {/* =============================================
-            INTERNA
+            INTERNA GENÉRICA
         ============================================= */}
 
         <Route
@@ -194,6 +197,25 @@ function App() {
             >
 
               <TurmaProfessorPage />
+
+            </ProtectedRoute>
+
+          }
+        />
+
+
+        <Route
+          path="/sistema/professor/turmas/:idProfessorTurma/avaliacoes/:idAvaliacao/notas"
+
+          element={
+
+            <ProtectedRoute
+              perfisPermitidos={[
+                'PROFESSOR'
+              ]}
+            >
+
+              <NotasProfessorPage />
 
             </ProtectedRoute>
 
