@@ -271,3 +271,120 @@ CREATE TABLE IF NOT EXISTS Nota (
         FOREIGN KEY (idMatricula)
         REFERENCES Matricula(idMatricula)
 );
+CREATE TABLE IF NOT EXISTS Aula (
+    idAula INT AUTO_INCREMENT PRIMARY KEY,
+
+    dataAula DATE NOT NULL,
+
+    conteudo VARCHAR(500),
+
+    idProfessorTurma INT NOT NULL,
+
+    createdAt TIMESTAMP NOT NULL
+        DEFAULT CURRENT_TIMESTAMP,
+
+    updatedAt TIMESTAMP NOT NULL
+        DEFAULT CURRENT_TIMESTAMP
+        ON UPDATE CURRENT_TIMESTAMP,
+
+    CONSTRAINT fk_aula_professor_turma
+        FOREIGN KEY (idProfessorTurma)
+        REFERENCES ProfessorTurma(idProfessorTurma)
+);
+
+
+CREATE TABLE IF NOT EXISTS Frequencia (
+    idFrequencia INT AUTO_INCREMENT PRIMARY KEY,
+
+    statusFrequencia ENUM(
+        'PRESENTE',
+        'FALTA',
+        'JUSTIFICADA'
+    ) NOT NULL,
+
+    observacao VARCHAR(500),
+
+    idAula INT NOT NULL,
+
+    idMatricula INT NOT NULL,
+
+    createdAt TIMESTAMP NOT NULL
+        DEFAULT CURRENT_TIMESTAMP,
+
+    updatedAt TIMESTAMP NOT NULL
+        DEFAULT CURRENT_TIMESTAMP
+        ON UPDATE CURRENT_TIMESTAMP,
+
+    CONSTRAINT uq_frequencia_aula_matricula
+        UNIQUE (
+            idAula,
+            idMatricula
+        ),
+
+    CONSTRAINT fk_frequencia_aula
+        FOREIGN KEY (idAula)
+        REFERENCES Aula(idAula)
+        ON DELETE CASCADE,
+
+    CONSTRAINT fk_frequencia_matricula
+        FOREIGN KEY (idMatricula)
+        REFERENCES Matricula(idMatricula)
+);CREATE TABLE IF NOT EXISTS Aula (
+    idAula INT AUTO_INCREMENT PRIMARY KEY,
+
+    dataAula DATE NOT NULL,
+
+    conteudo VARCHAR(500),
+
+    idProfessorTurma INT NOT NULL,
+
+    createdAt TIMESTAMP NOT NULL
+        DEFAULT CURRENT_TIMESTAMP,
+
+    updatedAt TIMESTAMP NOT NULL
+        DEFAULT CURRENT_TIMESTAMP
+        ON UPDATE CURRENT_TIMESTAMP,
+
+    CONSTRAINT fk_aula_professor_turma
+        FOREIGN KEY (idProfessorTurma)
+        REFERENCES ProfessorTurma(idProfessorTurma)
+);
+
+
+CREATE TABLE IF NOT EXISTS Frequencia (
+    idFrequencia INT AUTO_INCREMENT PRIMARY KEY,
+
+    statusFrequencia ENUM(
+        'PRESENTE',
+        'FALTA',
+        'JUSTIFICADA'
+    ) NOT NULL,
+
+    observacao VARCHAR(500),
+
+    idAula INT NOT NULL,
+
+    idMatricula INT NOT NULL,
+
+    createdAt TIMESTAMP NOT NULL
+        DEFAULT CURRENT_TIMESTAMP,
+
+    updatedAt TIMESTAMP NOT NULL
+        DEFAULT CURRENT_TIMESTAMP
+        ON UPDATE CURRENT_TIMESTAMP,
+
+    CONSTRAINT uq_frequencia_aula_matricula
+        UNIQUE (
+            idAula,
+            idMatricula
+        ),
+
+    CONSTRAINT fk_frequencia_aula
+        FOREIGN KEY (idAula)
+        REFERENCES Aula(idAula)
+        ON DELETE CASCADE,
+
+    CONSTRAINT fk_frequencia_matricula
+        FOREIGN KEY (idMatricula)
+        REFERENCES Matricula(idMatricula)
+);

@@ -13,17 +13,28 @@ import {
 } from '../../controllers/professorControllers/avaliacaoProfessorController.js'
 
 import {
+  listarNotas,
+  registrarNota,
+  excluirNota
+} from '../../controllers/professorControllers/notaProfessorController.js'
+
+import {
+  listarAulas,
+  criarAula,
+  atualizarAula,
+  excluirAula,
+  listarFrequencias,
+  registrarFrequencia,
+  excluirFrequencia
+} from '../../controllers/professorControllers/frequenciaProfessorController.js'
+
+import {
   autenticarToken
 } from '../../middlewares/authMiddleware.js'
 
 import {
   autorizarPerfis
 } from '../../middlewares/authorizationMiddleware.js'
-import {
-  listarNotas,
-  registrarNota,
-  excluirNota
-} from '../../controllers/professorControllers/notaProfessorController.js'
 
 
 const router =
@@ -43,6 +54,28 @@ router.use(
   autorizarPerfis(
     'PROFESSOR'
   )
+)
+
+
+// ======================================================
+// NOTAS
+// ======================================================
+
+router.get(
+  '/:idProfessorTurma/avaliacoes/:idAvaliacao/notas',
+  listarNotas
+)
+
+
+router.put(
+  '/:idProfessorTurma/avaliacoes/:idAvaliacao/notas/:idMatricula',
+  registrarNota
+)
+
+
+router.delete(
+  '/:idProfessorTurma/avaliacoes/:idAvaliacao/notas/:idMatricula',
+  excluirNota
 )
 
 
@@ -72,26 +105,53 @@ router.delete(
   '/:idProfessorTurma/avaliacoes/:idAvaliacao',
   excluirAvaliacao
 )
+
+
 // ======================================================
-// NOTAS
+// FREQUÊNCIA
 // ======================================================
 
 router.get(
-  '/:idProfessorTurma/avaliacoes/:idAvaliacao/notas',
-  listarNotas
+  '/:idProfessorTurma/aulas',
+  listarAulas
+)
+
+
+router.post(
+  '/:idProfessorTurma/aulas',
+  criarAula
 )
 
 
 router.put(
-  '/:idProfessorTurma/avaliacoes/:idAvaliacao/notas/:idMatricula',
-  registrarNota
+  '/:idProfessorTurma/aulas/:idAula',
+  atualizarAula
 )
 
 
 router.delete(
-  '/:idProfessorTurma/avaliacoes/:idAvaliacao/notas/:idMatricula',
-  excluirNota
+  '/:idProfessorTurma/aulas/:idAula',
+  excluirAula
 )
+
+
+router.get(
+  '/:idProfessorTurma/aulas/:idAula/frequencias',
+  listarFrequencias
+)
+
+
+router.put(
+  '/:idProfessorTurma/aulas/:idAula/frequencias/:idMatricula',
+  registrarFrequencia
+)
+
+
+router.delete(
+  '/:idProfessorTurma/aulas/:idAula/frequencias/:idMatricula',
+  excluirFrequencia
+)
+
 
 // ======================================================
 // MINHAS TURMAS
