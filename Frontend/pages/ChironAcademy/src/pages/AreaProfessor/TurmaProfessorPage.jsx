@@ -990,6 +990,31 @@ function TurmaProfessorPage() {
             </p>
 
           </div>
+          <div
+              className="
+                mt-6
+                flex
+                justify-end
+              "
+            >
+
+              <button
+                type="button"
+
+                onClick={() =>
+                  navigate(
+                    `/sistema/professor/turmas/${idProfessorTurma}/frequencia`
+                  )
+                }
+
+                className="
+                  botao-principal
+                "
+              >
+                Gerenciar frequência
+              </button>
+
+            </div>
 
 
           {/* ============================================

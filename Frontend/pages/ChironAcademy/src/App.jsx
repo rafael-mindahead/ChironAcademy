@@ -67,6 +67,12 @@ import MatriculasFormPage
 import DevTests
   from './pages/DevTests/DevTests.jsx'
 
+import FrequenciaProfessorPage
+  from './pages/AreaProfessor/FrequenciaProfessorPage.jsx'
+
+import ChamadaFrequenciaPage
+  from './pages/AreaProfessor/ChamadaFrequenciaPage.jsx'
+
 
 function App() {
 
@@ -221,6 +227,34 @@ function App() {
 
           }
         />
+        <Route
+            path="/sistema/professor/turmas/:idProfessorTurma/frequencia"
+
+            element={
+              <ProtectedRoute
+                perfisPermitidos={[
+                  'PROFESSOR'
+                ]}
+              >
+                <FrequenciaProfessorPage />
+              </ProtectedRoute>
+            }
+          />
+
+
+          <Route
+            path="/sistema/professor/turmas/:idProfessorTurma/aulas/:idAula/frequencia"
+
+            element={
+              <ProtectedRoute
+                perfisPermitidos={[
+                  'PROFESSOR'
+                ]}
+              >
+                <ChamadaFrequenciaPage />
+              </ProtectedRoute>
+            }
+          />
 
 
         {/* =============================================
