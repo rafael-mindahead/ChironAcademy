@@ -609,9 +609,7 @@ export async function criarMatricula(
     }
 
 
-    // ================================================
     // VERIFICAR MATRÍCULA DUPLICADA
-    // ================================================
 
     const [existentes] =
       await database.execute(
@@ -649,9 +647,7 @@ export async function criarMatricula(
     }
 
 
-    // ================================================
     // CADASTRAR
-    // ================================================
 
     const [resultado] =
       await database.execute(
@@ -749,9 +745,7 @@ export async function atualizarMatricula(
 
   try {
 
-    // ================================================
     // VERIFICAR EXISTÊNCIA
-    // ================================================
 
     const [matriculasExistentes] =
       await database.execute(
@@ -801,9 +795,7 @@ export async function atualizarMatricula(
     }
 
 
-    // ================================================
     // VERIFICAR DUPLICIDADE
-    // ================================================
 
     const [duplicadas] =
       await database.execute(
@@ -843,9 +835,7 @@ export async function atualizarMatricula(
     }
 
 
-    // ================================================
     // ATUALIZAR
-    // ================================================
 
     await database.execute(
       `
