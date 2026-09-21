@@ -1,5 +1,7 @@
 import database from '../../config/database.js'
 
+// PBI 04 | Aceite: manter turmas vinculadas a um curso e proteger exclusões quando existirem vínculos acadêmicos.
+
 
 const turnosValidos = [
   'MANHA',
@@ -8,9 +10,7 @@ const turnosValidos = [
 ]
 
 
-// ======================================================
 // VALIDAR DADOS
-// ======================================================
 
 function validarDados(
   body
@@ -70,9 +70,7 @@ function validarDados(
 }
 
 
-// ======================================================
 // ERROS DO BANCO
-// ======================================================
 
 function responderErroBanco(
   error,
@@ -135,9 +133,7 @@ function responderErroBanco(
 }
 
 
-// ======================================================
 // VERIFICAR VÍNCULOS
-// ======================================================
 
 async function possuiVinculos(
   idTurma
@@ -232,9 +228,7 @@ async function possuiVinculos(
 }
 
 
-// ======================================================
 // LISTAR OPÇÕES
-// ======================================================
 
 export async function listarOpcoes(
   req,
@@ -277,9 +271,7 @@ export async function listarOpcoes(
 }
 
 
-// ======================================================
 // LISTAR TURMAS
-// ======================================================
 
 export async function listarTurmas(
   req,
@@ -329,9 +321,7 @@ export async function listarTurmas(
 }
 
 
-// ======================================================
 // BUSCAR TURMA
-// ======================================================
 
 export async function buscarTurma(
   req,
@@ -398,9 +388,7 @@ export async function buscarTurma(
 }
 
 
-// ======================================================
 // CRIAR TURMA
-// ======================================================
 
 export async function criarTurma(
   req,
@@ -472,9 +460,7 @@ export async function criarTurma(
 }
 
 
-// ======================================================
 // ATUALIZAR TURMA
-// ======================================================
 
 export async function atualizarTurma(
   req,
@@ -578,9 +564,7 @@ export async function atualizarTurma(
 }
 
 
-// ======================================================
 // EXCLUIR TURMA
-// ======================================================
 
 export async function excluirTurma(
   req,
