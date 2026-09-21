@@ -1,9 +1,9 @@
 import database from '../../config/database.js'
 
+// PBI 01 | Aceite: manter cursos (criar, consultar, editar e excluir) com validações dos dados e dos vínculos.
 
-// ======================================================
+
 // CADASTRAR CURSO
-// ======================================================
 
 export async function cadastrarCurso(req, res) {
 
@@ -200,9 +200,7 @@ export async function cadastrarCurso(req, res) {
 }
 
 
-// ======================================================
 // LISTAR CURSOS
-// ======================================================
 
 export async function listarCursos(req, res) {
 
@@ -244,9 +242,7 @@ export async function listarCursos(req, res) {
 }
 
 
-// ======================================================
 // BUSCAR CURSO POR ID
-// ======================================================
 
 export async function buscarCurso(req, res) {
 
@@ -306,9 +302,7 @@ export async function buscarCurso(req, res) {
 }
 
 
-// ======================================================
 // ATUALIZAR CURSO
-// ======================================================
 
 export async function atualizarCurso(req, res) {
 
@@ -536,9 +530,7 @@ export async function atualizarCurso(req, res) {
 }
 
 
-// ======================================================
 // EXCLUIR CURSO
-// ======================================================
 
 export async function excluirCurso(req, res) {
 
