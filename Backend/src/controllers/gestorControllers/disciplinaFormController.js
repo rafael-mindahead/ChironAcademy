@@ -1,5 +1,7 @@
 import database from '../../config/database.js'
 
+// PBI 03 | Aceite: manter disciplinas vinculadas ao curso e período corretos, respeitando as dependências acadêmicas.
+
 
 const tiposValidos = ['OBRIGATORIA', 'OPTATIVA']
 
