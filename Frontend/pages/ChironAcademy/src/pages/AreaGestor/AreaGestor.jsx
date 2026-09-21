@@ -327,14 +327,14 @@ function AreaGestor() {
 
             className="
               rounded-xl
-              border-2
-              border-primary
-              bg-primary/5
+              border
+              border-border
+              bg-background
               p-5
               text-left
               shadow-sm
               transition
-              hover:bg-primary/10
+              hover:bg-secondary
             "
           >
 
@@ -359,6 +359,53 @@ function AreaGestor() {
             </p>
 
           </button>
+          {/* ====================================================
+    MATRÍCULAS
+==================================================== */}
+
+<button
+  type="button"
+
+  onClick={() =>
+    navigate(
+      '/sistema/gestor/matriculas'
+    )
+  }
+
+  className="
+    rounded-xl
+    border-2
+    border-primary
+    bg-primary/5
+    p-5
+    text-left
+    shadow-sm
+    transition
+    hover:bg-primary/10
+  "
+>
+
+  <h3
+    className="
+      font-semibold
+      text-foreground
+    "
+  >
+    Matrículas
+  </h3>
+
+
+  <p
+    className="
+      mt-1
+      text-sm
+      text-muted-foreground
+    "
+  >
+    Matricular alunos em turmas e disciplinas.
+  </p>
+
+</button>
 
         </div>
 

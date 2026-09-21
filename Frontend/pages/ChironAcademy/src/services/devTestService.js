@@ -1,3 +1,7 @@
+import {
+  executarTestesPbi0812
+} from './devPbiTestService.js'
+
 const API_URL =
   import.meta.env.VITE_API_URL ||
   'http://localhost:3000'
@@ -447,7 +451,7 @@ export async function executarTestesIntegracao(
 
 
       return gerarResumo(
-        resultados
+        todosResultados
       )
 
     }
@@ -2563,10 +2567,25 @@ export async function executarTestesIntegracao(
     }
 
   }
+  const resultadoPbis =
+  await executarTestesPbi0812(
+    novosResultados => {
+
+      onUpdate([
+        ...resultados,
+        ...novosResultados
+      ])
+
+    }
+  )
 
 
+const todosResultados = [
+  ...resultados,
+  ...resultadoPbis.resultados
+]
   return gerarResumo(
-    resultados
+    todosResultados   
   )
 
 }

@@ -25,6 +25,12 @@ import AreaAluno
 import AreaProfessor
   from './pages/AreaProfessor/AreaProfessor.jsx'
 
+import TurmaProfessorPage
+  from './pages/AreaProfessor/TurmaProfessorPage.jsx'
+
+import NotasProfessorPage
+  from './pages/AreaProfessor/NotasProfessorPage.jsx'
+
 import AreaGestor
   from './pages/AreaGestor/AreaGestor.jsx'
 
@@ -55,8 +61,17 @@ import ProfessoresFormPage
 import VinculosFormPage
   from './pages/AreaGestor/VinculosFormPage.jsx'
 
+import MatriculasFormPage
+  from './pages/AreaGestor/MatriculasFormPage.jsx'
+
 import DevTests
   from './pages/DevTests/DevTests.jsx'
+
+import FrequenciaProfessorPage
+  from './pages/AreaProfessor/FrequenciaProfessorPage.jsx'
+
+import ChamadaFrequenciaPage
+  from './pages/AreaProfessor/ChamadaFrequenciaPage.jsx'
 
 
 function App() {
@@ -67,94 +82,200 @@ function App() {
 
       <Routes>
 
-        {/* PÚBLICAS */}
+        {/* =============================================
+            PÚBLICAS
+        ============================================= */}
 
         <Route
           path="/"
-          element={<Home />}
+          element={
+            <Home />
+          }
         />
+
 
         <Route
           path="/login"
-          element={<Login />}
+          element={
+            <Login />
+          }
         />
+
 
         <Route
           path="/cadastro"
-          element={<Cadastro />}
+          element={
+            <Cadastro />
+          }
         />
+
 
         <Route
           path="/esqueci-senha"
-          element={<RecuperarSenha />}
+          element={
+            <RecuperarSenha />
+          }
         />
+
 
         <Route
           path="/acesso-negado"
-          element={<AcessoNegado />}
+          element={
+            <AcessoNegado />
+          }
         />
 
 
-        {/* INTERNA GENÉRICA */}
+        {/* =============================================
+            INTERNA GENÉRICA
+        ============================================= */}
 
         <Route
           path="/sistema"
 
           element={
+
             <ProtectedRoute>
+
               <AreaInterna />
+
             </ProtectedRoute>
+
           }
         />
 
 
-        {/* ALUNO */}
+        {/* =============================================
+            ALUNO
+        ============================================= */}
 
         <Route
           path="/sistema/aluno"
 
           element={
+
             <ProtectedRoute
               perfisPermitidos={[
                 'ALUNO'
               ]}
             >
+
               <AreaAluno />
+
             </ProtectedRoute>
+
           }
         />
 
 
-        {/* PROFESSOR */}
+        {/* =============================================
+            PROFESSOR
+        ============================================= */}
 
         <Route
           path="/sistema/professor"
 
           element={
+
             <ProtectedRoute
               perfisPermitidos={[
                 'PROFESSOR'
               ]}
             >
+
               <AreaProfessor />
+
             </ProtectedRoute>
+
           }
         />
 
 
-        {/* GESTOR */}
+        <Route
+          path="/sistema/professor/turmas/:idProfessorTurma"
+
+          element={
+
+            <ProtectedRoute
+              perfisPermitidos={[
+                'PROFESSOR'
+              ]}
+            >
+
+              <TurmaProfessorPage />
+
+            </ProtectedRoute>
+
+          }
+        />
+
+
+        <Route
+          path="/sistema/professor/turmas/:idProfessorTurma/avaliacoes/:idAvaliacao/notas"
+
+          element={
+
+            <ProtectedRoute
+              perfisPermitidos={[
+                'PROFESSOR'
+              ]}
+            >
+
+              <NotasProfessorPage />
+
+            </ProtectedRoute>
+
+          }
+        />
+        <Route
+            path="/sistema/professor/turmas/:idProfessorTurma/frequencia"
+
+            element={
+              <ProtectedRoute
+                perfisPermitidos={[
+                  'PROFESSOR'
+                ]}
+              >
+                <FrequenciaProfessorPage />
+              </ProtectedRoute>
+            }
+          />
+
+
+          <Route
+            path="/sistema/professor/turmas/:idProfessorTurma/aulas/:idAula/frequencia"
+
+            element={
+              <ProtectedRoute
+                perfisPermitidos={[
+                  'PROFESSOR'
+                ]}
+              >
+                <ChamadaFrequenciaPage />
+              </ProtectedRoute>
+            }
+          />
+
+
+        {/* =============================================
+            GESTOR
+        ============================================= */}
 
         <Route
           path="/sistema/gestor"
 
           element={
+
             <ProtectedRoute
               perfisPermitidos={[
                 'GESTOR'
               ]}
             >
+
               <AreaGestor />
+
             </ProtectedRoute>
+
           }
         />
 
@@ -163,13 +284,17 @@ function App() {
           path="/sistema/gestor/cursos"
 
           element={
+
             <ProtectedRoute
               perfisPermitidos={[
                 'GESTOR'
               ]}
             >
+
               <CursosPage />
+
             </ProtectedRoute>
+
           }
         />
 
@@ -178,13 +303,17 @@ function App() {
           path="/sistema/gestor/periodos"
 
           element={
+
             <ProtectedRoute
               perfisPermitidos={[
                 'GESTOR'
               ]}
             >
+
               <PeriodosFormPage />
+
             </ProtectedRoute>
+
           }
         />
 
@@ -193,13 +322,17 @@ function App() {
           path="/sistema/gestor/alunos"
 
           element={
+
             <ProtectedRoute
               perfisPermitidos={[
                 'GESTOR'
               ]}
             >
+
               <AlunosFormPage />
+
             </ProtectedRoute>
+
           }
         />
 
@@ -208,13 +341,17 @@ function App() {
           path="/sistema/gestor/professores"
 
           element={
+
             <ProtectedRoute
               perfisPermitidos={[
                 'GESTOR'
               ]}
             >
+
               <ProfessoresFormPage />
+
             </ProtectedRoute>
+
           }
         />
 
@@ -223,13 +360,17 @@ function App() {
           path="/sistema/gestor/turmas"
 
           element={
+
             <ProtectedRoute
               perfisPermitidos={[
                 'GESTOR'
               ]}
             >
+
               <TurmasFormPage />
+
             </ProtectedRoute>
+
           }
         />
 
@@ -238,13 +379,17 @@ function App() {
           path="/sistema/gestor/disciplinas"
 
           element={
+
             <ProtectedRoute
               perfisPermitidos={[
                 'GESTOR'
               ]}
             >
+
               <DisciplinasFormPage />
+
             </ProtectedRoute>
+
           }
         />
 
@@ -253,18 +398,43 @@ function App() {
           path="/sistema/gestor/vinculos"
 
           element={
+
             <ProtectedRoute
               perfisPermitidos={[
                 'GESTOR'
               ]}
             >
+
               <VinculosFormPage />
+
             </ProtectedRoute>
+
           }
         />
 
 
-        {/* SOMENTE DESENVOLVIMENTO */}
+        <Route
+          path="/sistema/gestor/matriculas"
+
+          element={
+
+            <ProtectedRoute
+              perfisPermitidos={[
+                'GESTOR'
+              ]}
+            >
+
+              <MatriculasFormPage />
+
+            </ProtectedRoute>
+
+          }
+        />
+
+
+        {/* =============================================
+            SOMENTE DESENVOLVIMENTO
+        ============================================= */}
 
         {
           import.meta.env.DEV && (
@@ -273,13 +443,17 @@ function App() {
               path="/dev/testes"
 
               element={
+
                 <ProtectedRoute
                   perfisPermitidos={[
                     'GESTOR'
                   ]}
                 >
+
                   <DevTests />
+
                 </ProtectedRoute>
+
               }
             />
 
