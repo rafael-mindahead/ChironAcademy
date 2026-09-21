@@ -1,5 +1,7 @@
 import database from '../../config/database.js'
 
+// PBI 07 | Aceite: vincular professor, turma e disciplina, listar os vínculos e bloquear vínculos duplicados.
+
 function validarDados(body) {
   const idProfessor = Number(body.idProfessor)
   const idTurma = Number(body.idTurma)
