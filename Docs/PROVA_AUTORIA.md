@@ -908,3 +908,39 @@ O principal para a Prova de Autoria é conseguir explicar:
 3. qual trecho será alterado;
 4. por que a alteração resolve o pedido;
 5. como você confirmou que continuou funcionando.
+
+
+---
+
+## 31. Critérios de aceite e onde localizar
+
+Nos controllers principais existe um comentário curto no formato `PBI XX | Aceite:`. Ele marca a regra central de cada item sem poluir o código.
+
+| PBI | Aceite resumido | Backend | Frontend |
+| --- | --- | --- | --- |
+| 01 | Manter cursos: criar, consultar, editar e excluir | `cursoFormController.js` | `CursosFormPage.jsx` |
+| 02 | Manter períodos vinculados a um curso | `periodoFormController.js` | `PeriodosFormPage.jsx` |
+| 03 | Manter disciplinas ligadas ao curso e período corretos | `disciplinaFormController.js` | `DisciplinasFormPage.jsx` |
+| 04 | Manter turmas ligadas a um curso | `turmaFormController.js` | `TurmasFormPage.jsx` |
+| 05 | Manter cadastro de professores | `professorFormController.js` | `ProfessoresFormPage.jsx` |
+| 06 | Manter alunos com curso/período e matrícula/e-mail únicos | `alunoFormController.js` | `AlunosFormPage.jsx` |
+| 07 | Vincular professor + turma + disciplina sem duplicidade | `vinculosFormController.js` | `VinculosFormPage.jsx` |
+| 08 | Matricular aluno em turma/disciplina compatíveis e controlar status | `matriculaFormController.js` | `MatriculasFormPage.jsx` |
+| 09 | Professor consulta somente suas turmas e seus alunos | `turmasProfessorController.js` | `AreaProfessor.jsx` e `TurmaProfessorPage.jsx` |
+| 10 | Professor mantém avaliações das próprias turmas | `avaliacaoProfessorController.js` | `TurmaProfessorPage.jsx` |
+| 11 | Professor registra notas dos matriculados respeitando o valor máximo | `notaProfessorController.js` | `NotasProfessorPage.jsx` |
+| 12 | Professor registra frequência dos matriculados nas próprias turmas | `frequenciaProfessorController.js` | `FrequenciaProfessorPage.jsx` e `ChamadaFrequenciaPage.jsx` |
+
+### Atalho
+
+No VS Code, use `Command + Shift + F` e procure por:
+
+```text
+PBI 01 | Aceite
+PBI 02 | Aceite
+PBI 03 | Aceite
+...
+PBI 12 | Aceite
+```
+
+Assim você cai direto no controller principal do PBI. Para alterações visuais, use a coluna de frontend da tabela.
