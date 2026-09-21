@@ -1,5 +1,7 @@
 import database from '../../config/database.js'
 
+// PBI 05 | Aceite: manter o cadastro de professores com validação dos dados informados.
+
 
 const emailValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
