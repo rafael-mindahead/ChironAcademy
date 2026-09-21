@@ -1,9 +1,9 @@
 import database from '../../config/database.js'
 
+// PBI 09 | Aceite: o professor consulta somente as próprias turmas e os alunos matriculados nelas.
 
-// ======================================================
+
 // LOCALIZAR PROFESSOR AUTENTICADO
-// ======================================================
 
 async function buscarProfessorAutenticado(
   req
@@ -58,9 +58,7 @@ async function buscarProfessorAutenticado(
 }
 
 
-// ======================================================
 // LISTAR TURMAS SOB RESPONSABILIDADE
-// ======================================================
 
 export async function listarMinhasTurmas(
   req,
@@ -200,9 +198,7 @@ export async function listarMinhasTurmas(
 }
 
 
-// ======================================================
 // CONSULTAR UMA TURMA SOB RESPONSABILIDADE
-// ======================================================
 
 export async function buscarMinhaTurma(
   req,
