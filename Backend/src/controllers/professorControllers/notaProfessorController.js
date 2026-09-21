@@ -472,9 +472,7 @@ export async function registrarNota(
     }
 
 
-    // ==================================================
     // VALOR DA NOTA
-    // ==================================================
 
     if (
       req.body.valor === undefined ||
@@ -547,9 +545,7 @@ export async function registrarNota(
     }
 
 
-    // ==================================================
     // UPSERT
-    // ==================================================
 
     await database.execute(
       `
