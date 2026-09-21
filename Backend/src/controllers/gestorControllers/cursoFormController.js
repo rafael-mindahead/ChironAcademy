@@ -16,9 +16,7 @@ export async function cadastrarCurso(req, res) {
     } = req.body
 
 
-    // ==================================================
     // VALIDAÇÕES
-    // ==================================================
 
     if (!nomeCurso || !nomeCurso.trim()) {
 
@@ -108,9 +106,7 @@ export async function cadastrarCurso(req, res) {
     }
 
 
-    // ==================================================
     // VERIFICAR CURSO DUPLICADO
-    // ==================================================
 
     const [cursoExistente] = await database.execute(
       `
@@ -137,9 +133,7 @@ export async function cadastrarCurso(req, res) {
     }
 
 
-    // ==================================================
     // CADASTRAR NO BANCO
-    // ==================================================
 
     const [resultado] = await database.execute(
       `
@@ -317,9 +311,7 @@ export async function atualizarCurso(req, res) {
     } = req.body
 
 
-    // ==================================================
     // VALIDAÇÕES
-    // ==================================================
 
     if (!nomeCurso || !nomeCurso.trim()) {
 
@@ -409,9 +401,7 @@ export async function atualizarCurso(req, res) {
     }
 
 
-    // ==================================================
     // VERIFICAR CURSO DUPLICADO
-    // ==================================================
 
     const [cursoExistente] = await database.execute(
       `
@@ -440,9 +430,7 @@ export async function atualizarCurso(req, res) {
     }
 
 
-    // ==================================================
     // VERIFICAR SE O CURSO EXISTE
-    // ==================================================
 
     const [cursosExistentes] = await database.execute(
       `
@@ -465,9 +453,7 @@ export async function atualizarCurso(req, res) {
     }
 
 
-    // ==================================================
     // ATUALIZAR CURSO
-    // ==================================================
 
     await database.execute(
       `
@@ -539,9 +525,7 @@ export async function excluirCurso(req, res) {
     const { id } = req.params
 
 
-    // ==================================================
     // VERIFICAR SE O CURSO EXISTE
-    // ==================================================
 
     const [cursos] = await database.execute(
       `
@@ -564,9 +548,7 @@ export async function excluirCurso(req, res) {
     }
 
 
-    // ==================================================
     // VERIFICAR PERÍODOS VINCULADOS
-    // ==================================================
 
     const [periodos] = await database.execute(
       `
@@ -589,9 +571,7 @@ export async function excluirCurso(req, res) {
     }
 
 
-    // ==================================================
     // EXCLUIR CURSO
-    // ==================================================
 
     await database.execute(
       `
