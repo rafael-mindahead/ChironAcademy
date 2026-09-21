@@ -1,9 +1,9 @@
 import database from '../../config/database.js'
 
+// PBI 11 | Aceite: o professor lança, altera e remove notas dos matriculados sem ultrapassar o valor máximo da avaliação.
 
-// ======================================================
+
 // PROFESSOR AUTENTICADO
-// ======================================================
 
 async function buscarProfessorAutenticado(req) {
 
@@ -46,9 +46,7 @@ async function buscarProfessorAutenticado(req) {
 }
 
 
-// ======================================================
 // VÍNCULO DO PROFESSOR
-// ======================================================
 
 async function buscarVinculoProfessor(
   idProfessorTurma,
@@ -108,9 +106,7 @@ async function buscarVinculoProfessor(
 }
 
 
-// ======================================================
 // AVALIAÇÃO DO VÍNCULO
-// ======================================================
 
 async function buscarAvaliacao(
   idAvaliacao,
@@ -152,9 +148,7 @@ async function buscarAvaliacao(
 }
 
 
-// ======================================================
 // MATRÍCULA DA TURMA/DISCIPLINA
-// ======================================================
 
 async function buscarMatricula(
   idMatricula,
@@ -204,9 +198,7 @@ async function buscarMatricula(
 }
 
 
-// ======================================================
 // LISTAR NOTAS
-// ======================================================
 
 export async function listarNotas(
   req,
@@ -369,9 +361,7 @@ export async function listarNotas(
 }
 
 
-// ======================================================
 // REGISTRAR / ATUALIZAR NOTA
-// ======================================================
 
 export async function registrarNota(
   req,
@@ -652,9 +642,7 @@ export async function registrarNota(
 }
 
 
-// ======================================================
 // REMOVER NOTA
-// ======================================================
 
 export async function excluirNota(
   req,
