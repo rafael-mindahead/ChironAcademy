@@ -16,9 +16,7 @@ export async function cadastrarPeriodo(req, res) {
     } = req.body
 
 
-    // ==================================================
     // VALIDAÇÕES
-    // ==================================================
 
     if (
       numeroPeriodo === '' ||
@@ -77,9 +75,7 @@ export async function cadastrarPeriodo(req, res) {
     }
 
 
-    // ==================================================
     // VERIFICAR SE O CURSO EXISTE
-    // ==================================================
 
     const [cursos] = await database.execute(
       `
@@ -102,9 +98,7 @@ export async function cadastrarPeriodo(req, res) {
     }
 
 
-    // ==================================================
     // VERIFICAR PERÍODO DUPLICADO NO CURSO
-    // ==================================================
 
     const [periodoExistente] = await database.execute(
       `
@@ -131,9 +125,7 @@ export async function cadastrarPeriodo(req, res) {
     }
 
 
-    // ==================================================
     // CADASTRAR NO BANCO
-    // ==================================================
 
     const [resultado] = await database.execute(
       `
@@ -336,9 +328,7 @@ export async function atualizarPeriodo(req, res) {
     } = req.body
 
 
-    // ==================================================
     // VALIDAÇÕES
-    // ==================================================
 
     if (
       numeroPeriodo === '' ||
@@ -397,9 +387,7 @@ export async function atualizarPeriodo(req, res) {
     }
 
 
-    // ==================================================
     // VERIFICAR SE O PERÍODO EXISTE
-    // ==================================================
 
     const [periodosExistentes] = await database.execute(
       `
@@ -422,9 +410,7 @@ export async function atualizarPeriodo(req, res) {
     }
 
 
-    // ==================================================
     // VERIFICAR SE O CURSO EXISTE
-    // ==================================================
 
     const [cursos] = await database.execute(
       `
@@ -447,9 +433,7 @@ export async function atualizarPeriodo(req, res) {
     }
 
 
-    // ==================================================
     // VERIFICAR PERÍODO DUPLICADO
-    // ==================================================
 
     const [periodoExistente] = await database.execute(
       `
@@ -478,9 +462,7 @@ export async function atualizarPeriodo(req, res) {
     }
 
 
-    // ==================================================
     // ATUALIZAR PERÍODO
-    // ==================================================
 
     await database.execute(
       `
@@ -553,9 +535,7 @@ export async function excluirPeriodo(req, res) {
     const { id } = req.params
 
 
-    // ==================================================
     // VERIFICAR SE O PERÍODO EXISTE
-    // ==================================================
 
     const [periodos] = await database.execute(
       `
@@ -578,9 +558,7 @@ export async function excluirPeriodo(req, res) {
     }
 
 
-    // ==================================================
     // VERIFICAR ALUNOS VINCULADOS
-    // ==================================================
 
     const [alunos] = await database.execute(
       `
@@ -603,9 +581,7 @@ export async function excluirPeriodo(req, res) {
     }
 
 
-    // ==================================================
     // EXCLUIR PERÍODO
-    // ==================================================
 
     await database.execute(
       `
