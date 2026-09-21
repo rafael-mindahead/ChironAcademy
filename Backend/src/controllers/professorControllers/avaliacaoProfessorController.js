@@ -1,9 +1,9 @@
 import database from '../../config/database.js'
 
+// PBI 10 | Aceite: o professor mantém avaliações somente nas turmas pelas quais é responsável.
 
-// ======================================================
+
 // PROFESSOR AUTENTICADO
-// ======================================================
 
 async function buscarProfessorAutenticado(req) {
 
@@ -46,9 +46,7 @@ async function buscarProfessorAutenticado(req) {
 }
 
 
-// ======================================================
 // VERIFICAR VÍNCULO DO PROFESSOR
-// ======================================================
 
 async function buscarVinculoProfessor(
   idProfessorTurma,
@@ -107,9 +105,7 @@ async function buscarVinculoProfessor(
 }
 
 
-// ======================================================
 // VALIDAR DADOS
-// ======================================================
 
 function validarDados(body) {
 
@@ -237,9 +233,7 @@ function validarDados(body) {
 }
 
 
-// ======================================================
 // LISTAR AVALIAÇÕES
-// ======================================================
 
 export async function listarAvaliacoes(
   req,
@@ -359,9 +353,7 @@ export async function listarAvaliacoes(
 }
 
 
-// ======================================================
 // CRIAR AVALIAÇÃO
-// ======================================================
 
 export async function criarAvaliacao(
   req,
@@ -518,9 +510,7 @@ export async function criarAvaliacao(
 }
 
 
-// ======================================================
 // ATUALIZAR AVALIAÇÃO
-// ======================================================
 
 export async function atualizarAvaliacao(
   req,
@@ -720,9 +710,7 @@ export async function atualizarAvaliacao(
 }
 
 
-// ======================================================
 // EXCLUIR AVALIAÇÃO
-// ======================================================
 
 export async function excluirAvaliacao(
   req,
