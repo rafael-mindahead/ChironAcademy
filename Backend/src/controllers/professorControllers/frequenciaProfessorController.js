@@ -1,5 +1,7 @@
 import database from '../../config/database.js'
 
+// PBI 12 | Aceite: o professor registra e altera a frequência dos matriculados somente nas próprias turmas.
+
 
 const statusValidos = [
   'PRESENTE',
@@ -8,9 +10,7 @@ const statusValidos = [
 ]
 
 
-// ======================================================
 // PROFESSOR AUTENTICADO
-// ======================================================
 
 async function buscarProfessorAutenticado(req) {
 
@@ -53,9 +53,7 @@ async function buscarProfessorAutenticado(req) {
 }
 
 
-// ======================================================
 // VÍNCULO DO PROFESSOR
-// ======================================================
 
 async function buscarVinculoProfessor(
   idProfessorTurma,
@@ -115,9 +113,7 @@ async function buscarVinculoProfessor(
 }
 
 
-// ======================================================
 // AULA
-// ======================================================
 
 async function buscarAula(
   idAula,
@@ -159,9 +155,7 @@ async function buscarAula(
 }
 
 
-// ======================================================
 // MATRÍCULA DA TURMA
-// ======================================================
 
 async function buscarMatricula(
   idMatricula,
@@ -211,9 +205,7 @@ async function buscarMatricula(
 }
 
 
-// ======================================================
 // VALIDAR AULA
-// ======================================================
 
 function validarAula(body) {
 
@@ -271,9 +263,7 @@ function validarAula(body) {
 }
 
 
-// ======================================================
 // LISTAR AULAS
-// ======================================================
 
 export async function listarAulas(
   req,
@@ -431,9 +421,7 @@ export async function listarAulas(
 }
 
 
-// ======================================================
 // CRIAR AULA
-// ======================================================
 
 export async function criarAula(
   req,
@@ -552,9 +540,7 @@ export async function criarAula(
 }
 
 
-// ======================================================
 // ATUALIZAR AULA
-// ======================================================
 
 export async function atualizarAula(
   req,
@@ -698,9 +684,7 @@ export async function atualizarAula(
 }
 
 
-// ======================================================
 // EXCLUIR AULA
-// ======================================================
 
 export async function excluirAula(
   req,
@@ -806,9 +790,7 @@ export async function excluirAula(
 }
 
 
-// ======================================================
 // LISTAR FREQUÊNCIAS
-// ======================================================
 
 export async function listarFrequencias(
   req,
@@ -954,9 +936,7 @@ export async function listarFrequencias(
 }
 
 
-// ======================================================
 // REGISTRAR FREQUÊNCIA
-// ======================================================
 
 export async function registrarFrequencia(
   req,
@@ -1182,9 +1162,7 @@ export async function registrarFrequencia(
 }
 
 
-// ======================================================
 // REMOVER FREQUÊNCIA
-// ======================================================
 
 export async function excluirFrequencia(
   req,
