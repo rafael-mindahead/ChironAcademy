@@ -1,5 +1,7 @@
 import database from '../../config/database.js'
 
+// PBI 08 | Aceite: matricular aluno em turma/disciplina compatíveis, bloquear duplicidade e permitir atualizar o status.
+
 
 const statusValidos = [
   'CURSANDO',
@@ -10,9 +12,7 @@ const statusValidos = [
 ]
 
 
-// ======================================================
 // TRATAMENTO DE ERROS DO BANCO
-// ======================================================
 
 function responderErroBanco(error, res) {
 
@@ -63,9 +63,7 @@ function responderErroBanco(error, res) {
 }
 
 
-// ======================================================
 // VALIDAR DADOS
-// ======================================================
 
 function validarDados(body) {
 
@@ -148,9 +146,7 @@ function validarDados(body) {
 }
 
 
-// ======================================================
 // VALIDAR RELACIONAMENTOS ACADÊMICOS
-// ======================================================
 
 async function validarRelacionamentos(
   {
@@ -302,9 +298,7 @@ async function validarRelacionamentos(
 }
 
 
-// ======================================================
 // OPÇÕES PARA OS SELECTS
-// ======================================================
 
 export async function listarOpcoes(
   req,
@@ -412,9 +406,7 @@ export async function listarOpcoes(
 }
 
 
-// ======================================================
 // LISTAR MATRÍCULAS
-// ======================================================
 
 export async function listarMatriculas(
   req,
@@ -484,9 +476,7 @@ export async function listarMatriculas(
 }
 
 
-// ======================================================
 // BUSCAR MATRÍCULA POR ID
-// ======================================================
 
 export async function buscarMatricula(
   req,
@@ -576,9 +566,7 @@ export async function buscarMatricula(
 }
 
 
-// ======================================================
 // CRIAR MATRÍCULA
-// ======================================================
 
 export async function criarMatricula(
   req,
@@ -730,9 +718,7 @@ export async function criarMatricula(
 }
 
 
-// ======================================================
 // ATUALIZAR MATRÍCULA
-// ======================================================
 
 export async function atualizarMatricula(
   req,
@@ -924,9 +910,7 @@ export async function atualizarMatricula(
 }
 
 
-// ======================================================
 // EXCLUIR MATRÍCULA
-// ======================================================
 
 export async function excluirMatricula(
   req,
