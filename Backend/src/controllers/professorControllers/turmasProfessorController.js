@@ -244,9 +244,7 @@ export async function buscarMinhaTurma(
     }
 
 
-    // ==================================================
     // GARANTIR QUE A TURMA É DO PROFESSOR LOGADO
-    // ==================================================
 
     const [turmas] =
       await database.execute(
@@ -317,9 +315,7 @@ export async function buscarMinhaTurma(
       turmas[0]
 
 
-    // ==================================================
     // ALUNOS MATRICULADOS
-    // ==================================================
 
     const [alunos] =
       await database.execute(
