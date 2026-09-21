@@ -1,9 +1,9 @@
 import database from '../../config/database.js'
 
+// PBI 02 | Aceite: manter períodos acadêmicos vinculados a um curso e impedir inconsistências de relacionamento.
 
-// ======================================================
+
 // CADASTRAR PERÍODO
-// ======================================================
 
 export async function cadastrarPeriodo(req, res) {
 
@@ -195,9 +195,7 @@ export async function cadastrarPeriodo(req, res) {
 }
 
 
-// ======================================================
 // LISTAR PERÍODOS
-// ======================================================
 
 export async function listarPeriodos(req, res) {
 
@@ -259,9 +257,7 @@ export async function listarPeriodos(req, res) {
 }
 
 
-// ======================================================
 // BUSCAR PERÍODO POR ID
-// ======================================================
 
 export async function buscarPeriodo(req, res) {
 
@@ -325,9 +321,7 @@ export async function buscarPeriodo(req, res) {
 }
 
 
-// ======================================================
 // ATUALIZAR PERÍODO
-// ======================================================
 
 export async function atualizarPeriodo(req, res) {
 
@@ -550,9 +544,7 @@ export async function atualizarPeriodo(req, res) {
 }
 
 
-// ======================================================
 // EXCLUIR PERÍODO
-// ======================================================
 
 export async function excluirPeriodo(req, res) {
 
