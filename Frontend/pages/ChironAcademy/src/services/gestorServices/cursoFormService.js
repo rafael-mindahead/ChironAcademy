@@ -2,6 +2,10 @@ const API_URL =
   import.meta.env.VITE_API_URL ||
   'http://localhost:3000'
 
+// ======================================================
+// A FUNÇÃO OBTER TOKEN É RESPONSÁVEL POR PEGAR O TOKEN DO USUÁRIO QUE ESTÁ LOGADO, ELA VAI PEGAR O TOKEN DO SESSION STORAGE, SE NÃO TIVER O TOKEN, ELE VAI LANÇAR UM ERRO INFORMANDO QUE O USUÁRIO NÃO ESTÁ AUTENTICADO
+// =====================================================
+
 function obterToken() {
   const token = sessionStorage.getItem('chiron_token')
 
@@ -14,6 +18,10 @@ function obterToken() {
 
 // ======================================================
 // CADASTRAR
+// 
+//
+//
+//
 // ======================================================
 
 export async function cadastrarCurso(

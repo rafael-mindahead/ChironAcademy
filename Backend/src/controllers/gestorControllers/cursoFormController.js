@@ -596,7 +596,8 @@ export async function excluirCurso(req, res) {
 
     }
 
-
+    // =================================================
+    // CASO O CURSO ESTEJA VINCULADO A UM PERIODO, ESSA PARTE DE EXCLUSÃO NÃO SERÁ EXECUTADA
     // ==================================================
     // EXCLUIR CURSO
     // ==================================================

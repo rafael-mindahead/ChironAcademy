@@ -244,10 +244,9 @@ function CursosPage() {
         )
 
 
-      // ==================================================
-      // ATUALIZAR
-      // ==================================================
-
+      // 
+      // atualizar o curso, substituindo-o na lista de cursos
+      // 
       if (cursoEmEdicao) {
 
         const resposta =
@@ -280,9 +279,9 @@ function CursosPage() {
       }
 
 
-      // ==================================================
-      // CADASTRAR
-      // ==================================================
+      // 
+      // cadastrar o curso, adicionando-o à lista de cursos
+      // 
 
       else {
 
@@ -324,9 +323,9 @@ function CursosPage() {
   }
 
 
-  // ======================================================
-  // EDITAR
-  // ======================================================
+  // 
+  // editar o curso, preenchendo o formulário com os dados do curso selecionado
+  // 
 
   function handleEditar(curso) {
 

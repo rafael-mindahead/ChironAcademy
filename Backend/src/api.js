@@ -5,6 +5,10 @@ import cors from 'cors'
 import dotenv from 'dotenv'
 import database from './config/database.js'
 
+// ======================================================
+// IMPORTANDO ROTAS DE CADA MODULO, COM SUAS FUNCIONALIDADES
+// ======================================================
+
 import authRoutes from './routes/authRoutes.js'
 import cursoFormRoutes from './routes/gestorRoutes/cursoFormRoutes.js'
 import periodoFormRoutes from './routes/gestorRoutes/periodoFormRoutes.js'

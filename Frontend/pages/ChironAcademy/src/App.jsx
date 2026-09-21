@@ -55,9 +55,6 @@ import ProfessoresFormPage
 import VinculosFormPage
   from './pages/AreaGestor/VinculosFormPage.jsx'
 
-import DevTests
-  from './pages/DevTests/DevTests.jsx'
-
 
 function App() {
 
@@ -262,29 +259,6 @@ function App() {
             </ProtectedRoute>
           }
         />
-
-
-        {/* SOMENTE DESENVOLVIMENTO */}
-
-        {
-          import.meta.env.DEV && (
-
-            <Route
-              path="/dev/testes"
-
-              element={
-                <ProtectedRoute
-                  perfisPermitidos={[
-                    'GESTOR'
-                  ]}
-                >
-                  <DevTests />
-                </ProtectedRoute>
-              }
-            />
-
-          )
-        }
 
       </Routes>
 
