@@ -41,6 +41,9 @@ import turmasProfessorRoutes
 import disciplinasAlunoRoutes
   from './routes/alunoRoutes/disciplinasAlunoRoutes.js'
 
+import evolucaoAlunoRoutes
+  from './routes/alunoRoutes/evolucaoAlunoRoutes.js'
+
 
 dotenv.config()
 
@@ -135,6 +138,11 @@ app.use(
 app.use(
   '/api/aluno/disciplinas',
   disciplinasAlunoRoutes
+)
+
+app.use(
+  '/api/aluno/evolucao',
+  evolucaoAlunoRoutes
 )
 
 
