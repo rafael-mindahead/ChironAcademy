@@ -20,7 +20,7 @@ The system is not intended to be an LMS such as Moodle or Google Classroom.
 
 Its main purpose is academic administration and data organization.
 
-Future versions may include analytical features, but Sprint 1 is focused on building the operational foundation of the platform.
+Sprint 1 completed the operational foundation of the platform. Sprint 2 is the current development phase and will follow the official backlog without inventing requirements.
 
 ---
 
@@ -277,7 +277,7 @@ Periodo
 Professor
 Aluno
 
-Additional entities will be introduced according to the Sprint 1 requirements.
+The academic model currently includes the entities required by Sprint 1: Curso, Periodo, Disciplina, Turma, Professor, ProfessorTurma, Aluno, Matricula, Avaliacao, Nota, Aula and Frequencia.
 
 Sprint 1
 
@@ -315,17 +315,29 @@ Create
 Read
 Update
 Delete
-Next Milestone
+Sprint Status
 
-The authentication and authorization foundation is nearly complete.
+Sprint 1 is complete with PBIs 01–12 implemented across Front-End, Back-End and MySQL.
 
-The next main development milestone is:
+The development test suite reached the Sprint 1 baseline of:
 
-PBI 01
-MANTER CADASTRO DE CURSOS
+```text
+89 PASS
+0 FAIL
+0 SKIP
+```
 
-This module will introduce the first complete academic CRUD integrated across:
+Current milestone:
 
+```text
+SPRINT 2
+```
+
+Sprint 2 must be implemented from the official backlog and acceptance criteria. New entities, analytics or business rules must not be invented before they are specified.
+
+Development continues with the same architecture:
+
+```text
 React
    ↓
 REST API
@@ -333,6 +345,7 @@ REST API
 Express
    ↓
 MySQL
+```
 Running the Project
 Requirements
 
