@@ -20,6 +20,9 @@ const database = mysql.createPool({
   database:
     process.env.DB_NAME,
 
+  charset:
+    'utf8mb4',
+
 
   waitForConnections: true,
 

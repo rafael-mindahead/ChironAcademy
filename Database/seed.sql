@@ -1,3 +1,6 @@
+SET NAMES utf8mb4
+    COLLATE utf8mb4_unicode_ci;
+
 USE chironAcademyData;
 
 -- =====================================================
@@ -40,10 +43,24 @@ WHERE nomeCurso = 'Engenharia de Software'
       SELECT 1
       FROM Periodo
       WHERE numeroPeriodo = 1
-        AND nomePeriodo = '1º Período'
         AND idCurso = Curso.idCurso
   )
 LIMIT 1;
+
+-- =====================================================
+-- NORMALIZAR NOME DO PERÍODO DE TESTE
+-- Evita duplicidade e corrige dados gravados com charset incorreto.
+-- =====================================================
+
+UPDATE Periodo p
+INNER JOIN Curso c
+    ON c.idCurso = p.idCurso
+SET p.nomePeriodo = '1º Período'
+WHERE p.numeroPeriodo = 1
+  AND c.nomeCurso = 'Engenharia de Software'
+  AND c.modalidade = 'PRESENCIAL'
+  AND p.nomePeriodo <> '1º Período';
+
 
 -- =====================================================
 -- ALUNO DE TESTE
