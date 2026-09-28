@@ -38,6 +38,9 @@ import matriculaFormRoutes
 import turmasProfessorRoutes
   from './routes/professorRoutes/turmasProfessorRoutes.js'
 
+import disciplinasAlunoRoutes
+  from './routes/alunoRoutes/disciplinasAlunoRoutes.js'
+
 
 dotenv.config()
 
@@ -122,6 +125,16 @@ app.use(
 app.use(
   '/api/professor/turmas',
   turmasProfessorRoutes
+)
+
+
+// ======================================================
+// ALUNO
+// ======================================================
+
+app.use(
+  '/api/aluno/disciplinas',
+  disciplinasAlunoRoutes
 )
 
 

@@ -130,8 +130,50 @@ A `main` continua sendo a linha estável.
 
 Adicionar aqui os PBIs oficiais da Sprint 2 assim que forem fornecidos pelo professor/Trello.
 
-### Backlog oficial da Sprint 2
+### Backlog oficial da Sprint 2 — Rafael Alves
+
+1. CONSULTAR DISCIPLINAS MATRICULADAS
+   - Aluno autenticado
+   - filtrar por período acadêmico
+   - exibir somente matrículas ativas
+   - informar quando o período não possui disciplinas
+
+2. CONSULTAR DESEMPENHO POR DISCIPLINA
+   - Aluno autenticado
+   - notas registradas
+   - frequência acumulada
+   - dados parciais devem ser apresentados sem estimativas
+
+3. ACOMPANHAR EVOLUÇÃO NO PERÍODO
+   - Aluno autenticado
+   - evolução cronológica dos indicadores
+   - novos registros entram no histórico
+   - informar insuficiência de dados quando necessário
+
+4. CONSULTAR DESEMPENHO DOS ALUNOS
+   - Professor autenticado
+   - indicadores dos alunos das próprias turmas
+   - detalhamento de notas e frequência
+   - bloquear acesso a turmas não vinculadas
+
+### Ordem de implementação
 
 ```text
-A DEFINIR A PARTIR DA ESPECIFICAÇÃO OFICIAL.
+Consultar disciplinas matriculadas
+↓
+Consultar desempenho por disciplina
+↓
+Acompanhar evolução no período
+
+Consultar desempenho dos alunos
+↓
+Área do Professor
 ```
+
+### PBI atual
+
+```text
+CONSULTAR DISCIPLINAS MATRICULADAS
+```
+
+Não exige alteração no modelo de dados: utiliza Aluno, Curso, Periodo, Matricula, Disciplina e Turma já existentes.
