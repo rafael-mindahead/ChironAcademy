@@ -11,6 +11,7 @@ import {
   Layers3,
   LogOut,
   MapPin,
+  TrendingUp,
   UserRound
 } from 'lucide-react'
 
@@ -791,6 +792,47 @@ function AreaAluno() {
                 }
 
               </select>
+              <button
+                type="button"
+                disabled={
+                  !periodoSelecionado ||
+                  carregandoPeriodo
+                }
+                onClick={
+                  () =>
+                    navigate(
+                      `/sistema/aluno/evolucao/${periodoSelecionado}`
+                    )
+                }
+                className="
+                  mt-3
+                  inline-flex
+                  w-full
+                  items-center
+                  justify-center
+                  gap-2
+                  rounded-md
+                  border
+                  border-primary/30
+                  px-4
+                  py-2.5
+                  text-sm
+                  font-medium
+                  text-primary
+                  transition
+                  hover:bg-primary/10
+                  disabled:cursor-not-allowed
+                  disabled:opacity-50
+                "
+              >
+
+                <TrendingUp
+                  className="size-4"
+                />
+
+                Ver evolução no período
+
+              </button>
 
             </div>
 

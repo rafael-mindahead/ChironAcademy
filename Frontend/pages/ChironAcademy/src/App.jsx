@@ -76,6 +76,9 @@ import ChamadaFrequenciaPage
 import DesempenhoDisciplinaAlunoPage
   from './pages/AreaAluno/DesempenhoDisciplinaAlunoPage.jsx'
 
+import EvolucaoAlunoPage
+  from './pages/AreaAluno/EvolucaoAlunoPage.jsx'
+
 
 function App() {
 
@@ -165,6 +168,23 @@ function App() {
             >
 
               <AreaAluno />
+
+            </ProtectedRoute>
+
+          }
+        />
+        <Route
+          path="/sistema/aluno/evolucao/:idPeriodo"
+
+          element={
+
+            <ProtectedRoute
+              perfisPermitidos={[
+                'ALUNO'
+              ]}
+            >
+
+              <EvolucaoAlunoPage />
 
             </ProtectedRoute>
 
