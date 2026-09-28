@@ -12,6 +12,10 @@ import {
   autorizarPerfis
 } from '../../middlewares/authorizationMiddleware.js'
 
+import {
+  consultarDesempenhoDisciplina
+} from '../../controllers/alunoControllers/desempenhoAlunoController.js'
+
 
 const router =
   express.Router()
@@ -27,7 +31,10 @@ router.use(
     'ALUNO'
   )
 )
-
+router.get(
+  '/:idMatricula/desempenho',
+  consultarDesempenhoDisciplina
+)
 
 router.get(
   '/',

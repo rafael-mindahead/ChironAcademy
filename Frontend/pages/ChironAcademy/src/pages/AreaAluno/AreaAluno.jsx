@@ -994,6 +994,31 @@ function AreaAluno() {
                               >
 
                                 <div>
+                                  <button
+                                    type="button"
+                                    onClick={
+                                      () =>
+                                        navigate(
+                                          `/sistema/aluno/disciplinas/${disciplina.idMatricula}/desempenho`
+                                        )
+                                    }
+                                    className="
+                                      mt-5
+                                      w-full
+                                      rounded-md
+                                      border
+                                      border-primary/30
+                                      px-4
+                                      py-2.5
+                                      text-sm
+                                      font-medium
+                                      text-primary
+                                      transition
+                                      hover:bg-primary/10
+                                    "
+                                  >
+                                    Ver desempenho
+                                  </button>
 
                                   <span
                                     className="

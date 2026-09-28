@@ -73,6 +73,9 @@ import FrequenciaProfessorPage
 import ChamadaFrequenciaPage
   from './pages/AreaProfessor/ChamadaFrequenciaPage.jsx'
 
+import DesempenhoDisciplinaAlunoPage
+  from './pages/AreaAluno/DesempenhoDisciplinaAlunoPage.jsx'
+
 
 function App() {
 
@@ -151,6 +154,7 @@ function App() {
 
         <Route
           path="/sistema/aluno"
+          
 
           element={
 
@@ -184,6 +188,23 @@ function App() {
             >
 
               <AreaProfessor />
+
+            </ProtectedRoute>
+
+          }
+        />
+        <Route
+          path="/sistema/aluno/disciplinas/:idMatricula/desempenho"
+
+          element={
+
+            <ProtectedRoute
+              perfisPermitidos={[
+                'ALUNO'
+              ]}
+            >
+
+              <DesempenhoDisciplinaAlunoPage />
 
             </ProtectedRoute>
 
