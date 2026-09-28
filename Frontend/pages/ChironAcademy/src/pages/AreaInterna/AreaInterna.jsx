@@ -428,7 +428,7 @@ function AreaInterna({ children }) {
               >
                 Sua sessão foi validada pelo servidor.
                 As funcionalidades acadêmicas serão adicionadas
-                conforme os PBIs da Sprint 1.
+                conforme os PBIs do projeto.
               </p>
 
             </div>

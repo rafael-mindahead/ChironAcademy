@@ -589,10 +589,7 @@ function EvolucaoAlunoPage() {
                       evolucao
                         ?.eventos
                         ?.map(
-                          (
-                            evento,
-                            index
-                          ) => {
+                          evento => {
 
                             const Icone =
                               evento.tipo ===
@@ -607,7 +604,7 @@ function EvolucaoAlunoPage() {
 
                               <article
                                 key={
-                                  `${evento.tipo}-${evento.data}-${evento.idMatricula}-${index}`
+                                  `${evento.tipo}-${evento.idRegistro}`
                                 }
                                 className="
                                   relative

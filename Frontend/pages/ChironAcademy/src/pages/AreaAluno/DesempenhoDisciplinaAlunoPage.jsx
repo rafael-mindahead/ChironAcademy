@@ -375,7 +375,7 @@ function DesempenhoDisciplinaAlunoPage() {
         >
 
           <ResumoCard
-            titulo="Registros"
+            titulo="Frequências registradas"
             valor={
               frequencia
                 ?.totalRegistradas ||

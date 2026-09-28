@@ -126,9 +126,9 @@ feature/sprint-2
 
 A `main` continua sendo a linha estável.
 
-## Próximo passo
+## Status da Sprint 2
 
-Adicionar aqui os PBIs oficiais da Sprint 2 assim que forem fornecidos pelo professor/Trello.
+O backlog abaixo foi confirmado no Trello para Rafael Alves.
 
 ### Backlog oficial da Sprint 2 — Rafael Alves
 
@@ -170,10 +170,13 @@ Consultar desempenho dos alunos
 Área do Professor
 ```
 
-### PBI atual
+### Progresso atual
 
 ```text
-CONSULTAR DISCIPLINAS MATRICULADAS
+CONCLUÍDO  — CONSULTAR DISCIPLINAS MATRICULADAS
+CONCLUÍDO  — CONSULTAR DESEMPENHO POR DISCIPLINA
+CONCLUÍDO  — ACOMPANHAR EVOLUÇÃO NO PERÍODO
+PRÓXIMO    — CONSULTAR DESEMPENHO DOS ALUNOS
 ```
 
-Não exige alteração no modelo de dados: utiliza Aluno, Curso, Periodo, Matricula, Disciplina e Turma já existentes.
+Os três PBIs concluídos reutilizam o modelo acadêmico existente e não exigem novas tabelas.

@@ -174,6 +174,24 @@ function App() {
           }
         />
         <Route
+          path="/sistema/aluno/disciplinas/:idMatricula/desempenho"
+
+          element={
+
+            <ProtectedRoute
+              perfisPermitidos={[
+                'ALUNO'
+              ]}
+            >
+
+              <DesempenhoDisciplinaAlunoPage />
+
+            </ProtectedRoute>
+
+          }
+        />
+
+        <Route
           path="/sistema/aluno/evolucao/:idPeriodo"
 
           element={
@@ -208,23 +226,6 @@ function App() {
             >
 
               <AreaProfessor />
-
-            </ProtectedRoute>
-
-          }
-        />
-        <Route
-          path="/sistema/aluno/disciplinas/:idMatricula/desempenho"
-
-          element={
-
-            <ProtectedRoute
-              perfisPermitidos={[
-                'ALUNO'
-              ]}
-            >
-
-              <DesempenhoDisciplinaAlunoPage />
 
             </ProtectedRoute>
 
