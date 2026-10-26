@@ -1,9 +1,9 @@
 import database from '../../config/database.js'
 
+// PBI 02 | Aceite: manter períodos acadêmicos vinculados a um curso e impedir inconsistências de relacionamento.
 
-// ======================================================
+
 // CADASTRAR PERÍODO
-// ======================================================
 
 export async function cadastrarPeriodo(req, res) {
 
@@ -16,9 +16,7 @@ export async function cadastrarPeriodo(req, res) {
     } = req.body
 
 
-    // ==================================================
     // VALIDAÇÕES
-    // ==================================================
 
     if (
       numeroPeriodo === '' ||
@@ -77,9 +75,7 @@ export async function cadastrarPeriodo(req, res) {
     }
 
 
-    // ==================================================
     // VERIFICAR SE O CURSO EXISTE
-    // ==================================================
 
     const [cursos] = await database.execute(
       `
@@ -102,9 +98,7 @@ export async function cadastrarPeriodo(req, res) {
     }
 
 
-    // ==================================================
     // VERIFICAR PERÍODO DUPLICADO NO CURSO
-    // ==================================================
 
     const [periodoExistente] = await database.execute(
       `
@@ -131,9 +125,7 @@ export async function cadastrarPeriodo(req, res) {
     }
 
 
-    // ==================================================
     // CADASTRAR NO BANCO
-    // ==================================================
 
     const [resultado] = await database.execute(
       `
@@ -195,9 +187,7 @@ export async function cadastrarPeriodo(req, res) {
 }
 
 
-// ======================================================
 // LISTAR PERÍODOS
-// ======================================================
 
 export async function listarPeriodos(req, res) {
 
@@ -259,9 +249,7 @@ export async function listarPeriodos(req, res) {
 }
 
 
-// ======================================================
 // BUSCAR PERÍODO POR ID
-// ======================================================
 
 export async function buscarPeriodo(req, res) {
 
@@ -325,9 +313,7 @@ export async function buscarPeriodo(req, res) {
 }
 
 
-// ======================================================
 // ATUALIZAR PERÍODO
-// ======================================================
 
 export async function atualizarPeriodo(req, res) {
 
@@ -342,9 +328,7 @@ export async function atualizarPeriodo(req, res) {
     } = req.body
 
 
-    // ==================================================
     // VALIDAÇÕES
-    // ==================================================
 
     if (
       numeroPeriodo === '' ||
@@ -403,9 +387,7 @@ export async function atualizarPeriodo(req, res) {
     }
 
 
-    // ==================================================
     // VERIFICAR SE O PERÍODO EXISTE
-    // ==================================================
 
     const [periodosExistentes] = await database.execute(
       `
@@ -428,9 +410,7 @@ export async function atualizarPeriodo(req, res) {
     }
 
 
-    // ==================================================
     // VERIFICAR SE O CURSO EXISTE
-    // ==================================================
 
     const [cursos] = await database.execute(
       `
@@ -453,9 +433,7 @@ export async function atualizarPeriodo(req, res) {
     }
 
 
-    // ==================================================
     // VERIFICAR PERÍODO DUPLICADO
-    // ==================================================
 
     const [periodoExistente] = await database.execute(
       `
@@ -484,9 +462,7 @@ export async function atualizarPeriodo(req, res) {
     }
 
 
-    // ==================================================
     // ATUALIZAR PERÍODO
-    // ==================================================
 
     await database.execute(
       `
@@ -550,9 +526,7 @@ export async function atualizarPeriodo(req, res) {
 }
 
 
-// ======================================================
 // EXCLUIR PERÍODO
-// ======================================================
 
 export async function excluirPeriodo(req, res) {
 
@@ -561,9 +535,7 @@ export async function excluirPeriodo(req, res) {
     const { id } = req.params
 
 
-    // ==================================================
     // VERIFICAR SE O PERÍODO EXISTE
-    // ==================================================
 
     const [periodos] = await database.execute(
       `
@@ -586,9 +558,7 @@ export async function excluirPeriodo(req, res) {
     }
 
 
-    // ==================================================
     // VERIFICAR ALUNOS VINCULADOS
-    // ==================================================
 
     const [alunos] = await database.execute(
       `
@@ -611,9 +581,7 @@ export async function excluirPeriodo(req, res) {
     }
 
 
-    // ==================================================
     // EXCLUIR PERÍODO
-    // ==================================================
 
     await database.execute(
       `

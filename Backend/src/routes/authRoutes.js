@@ -11,6 +11,10 @@ import {
 } from '../controllers/sessionController.js'
 
 import {
+  excluirUsuarioTemporario
+} from '../controllers/devTestController.js'
+
+import {
   autenticarToken
 } from '../middlewares/authMiddleware.js'
 
@@ -19,7 +23,8 @@ import {
 } from '../middlewares/authorizationMiddleware.js'
 
 
-const router = express.Router()
+const router =
+  express.Router()
 
 
 // ======================================================
@@ -43,7 +48,7 @@ router.post(
 
 
 // ======================================================
-// RECUPERAÇÃO DE SENHA
+// RECUPERAÇÃO
 // ======================================================
 
 router.post(
@@ -53,7 +58,7 @@ router.post(
 
 
 // ======================================================
-// USUÁRIO AUTENTICADO
+// USUÁRIO ATUAL
 // ======================================================
 
 router.get(
@@ -79,11 +84,13 @@ router.get(
   (req, res) => {
 
     return res.status(200).json({
+
       message:
         'Acesso de Aluno autorizado.',
 
       usuario:
         req.usuario
+
     })
 
   }
@@ -106,11 +113,13 @@ router.get(
   (req, res) => {
 
     return res.status(200).json({
+
       message:
         'Acesso de Professor autorizado.',
 
       usuario:
         req.usuario
+
     })
 
   }
@@ -133,15 +142,42 @@ router.get(
   (req, res) => {
 
     return res.status(200).json({
+
       message:
         'Acesso de Gestor autorizado.',
 
       usuario:
         req.usuario
+
     })
 
   }
 )
+
+
+// ======================================================
+// LIMPEZA DE USUÁRIO TEMPORÁRIO
+// SOMENTE DESENVOLVIMENTO
+// ======================================================
+
+if (
+  process.env.NODE_ENV !==
+  'production'
+) {
+
+  router.delete(
+    '/test/usuario-temporario',
+
+    autenticarToken,
+
+    autorizarPerfis(
+      'GESTOR'
+    ),
+
+    excluirUsuarioTemporario
+  )
+
+}
 
 
 export default router

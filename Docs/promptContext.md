@@ -22,7 +22,7 @@ Aluno
 
 O objetivo do produto é centralizar informações acadêmicas, permitindo organizar cursos, períodos, disciplinas, turmas, professores, alunos, matrículas, avaliações, notas e frequência.
 
-Posteriormente o sistema também terá funcionalidades analíticas, porém essas funcionalidades NÃO fazem parte da Sprint 1.
+A fundação operacional da Sprint 1 foi concluída. Funcionalidades da Sprint 2 só devem ser implementadas quando estiverem definidas no backlog oficial e nos respectivos critérios de aceite.
 
 O ChironAcademy NÃO é um AVA/LMS como Moodle ou Google Classroom.
 
@@ -1030,37 +1030,35 @@ PRIORIDADE ATUAL
 
 ==================================================
 
-Estamos trabalhando na SPRINT 1.
+A SPRINT 1 foi concluída.
 
-A ordem recomendada é:
+PBIs entregues:
 
-MANTER CADASTRO DE CURSOS
+01 - MANTER CADASTRO DE CURSOS
+02 - MANTER CADASTRO DE PERÍODOS ACADÊMICOS
+03 - MANTER CADASTRO DE DISCIPLINAS
+04 - MANTER CADASTRO DE TURMAS
+05 - MANTER CADASTRO DE PROFESSORES
+06 - MANTER CADASTRO DE ALUNOS
+07 - VINCULAR PROFESSOR À TURMA/DISCIPLINA
+08 - MATRICULAR ALUNO EM TURMA/DISCIPLINA
+09 - CONSULTAR TURMAS SOB RESPONSABILIDADE
+10 - MANTER CADASTRO DE AVALIAÇÕES DA TURMA
+11 - REGISTRAR NOTAS DOS ALUNOS
+12 - REGISTRAR FREQUÊNCIA DOS ALUNOS
 
-MANTER CADASTRO DE PERÍODOS ACADÊMICOS
+Estamos iniciando a SPRINT 2.
 
-MANTER CADASTRO DE DISCIPLINAS
+Antes de implementar qualquer novo PBI da Sprint 2:
 
-MANTER CADASTRO DE TURMAS
+- utilizar o backlog oficial;
+- conferir a User Story;
+- conferir os critérios de aceite;
+- identificar impacto em banco, backend, services e frontend;
+- não criar entidades, campos, dashboards ou regras que não estejam especificados;
+- concluir e testar um PBI antes de avançar ao próximo.
 
-MANTER CADASTRO DE PROFESSORES
-
-MANTER CADASTRO DE ALUNOS
-
-VINCULAR PROFESSOR À TURMA/DISCIPLINA
-
-MATRICULAR ALUNO EM TURMA/DISCIPLINA
-
-CONSULTAR TURMAS SOB RESPONSABILIDADE
-
-MANTER CADASTRO DE AVALIAÇÕES DA TURMA
-
-REGISTRAR NOTAS DOS ALUNOS
-
-REGISTRAR FREQUÊNCIA DOS ALUNOS
-
-Não avance automaticamente para o próximo.
-
-Aguarde minhas instruções.
+A Sprint 1 deve ser tratada como baseline estável do projeto.
 
 ==================================================
 

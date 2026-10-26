@@ -1,9 +1,9 @@
 import database from '../../config/database.js'
 
+// PBI 01 | Aceite: manter cursos (criar, consultar, editar e excluir) com validações dos dados e dos vínculos.
 
-// ======================================================
+
 // CADASTRAR CURSO
-// ======================================================
 
 export async function cadastrarCurso(req, res) {
 
@@ -16,9 +16,7 @@ export async function cadastrarCurso(req, res) {
     } = req.body
 
 
-    // ==================================================
     // VALIDAÇÕES
-    // ==================================================
 
     if (!nomeCurso || !nomeCurso.trim()) {
 
@@ -108,9 +106,7 @@ export async function cadastrarCurso(req, res) {
     }
 
 
-    // ==================================================
     // VERIFICAR CURSO DUPLICADO
-    // ==================================================
 
     const [cursoExistente] = await database.execute(
       `
@@ -137,9 +133,7 @@ export async function cadastrarCurso(req, res) {
     }
 
 
-    // ==================================================
     // CADASTRAR NO BANCO
-    // ==================================================
 
     const [resultado] = await database.execute(
       `
@@ -200,9 +194,7 @@ export async function cadastrarCurso(req, res) {
 }
 
 
-// ======================================================
 // LISTAR CURSOS
-// ======================================================
 
 export async function listarCursos(req, res) {
 
@@ -244,9 +236,7 @@ export async function listarCursos(req, res) {
 }
 
 
-// ======================================================
 // BUSCAR CURSO POR ID
-// ======================================================
 
 export async function buscarCurso(req, res) {
 
@@ -306,9 +296,7 @@ export async function buscarCurso(req, res) {
 }
 
 
-// ======================================================
 // ATUALIZAR CURSO
-// ======================================================
 
 export async function atualizarCurso(req, res) {
 
@@ -323,9 +311,7 @@ export async function atualizarCurso(req, res) {
     } = req.body
 
 
-    // ==================================================
     // VALIDAÇÕES
-    // ==================================================
 
     if (!nomeCurso || !nomeCurso.trim()) {
 
@@ -415,9 +401,7 @@ export async function atualizarCurso(req, res) {
     }
 
 
-    // ==================================================
     // VERIFICAR CURSO DUPLICADO
-    // ==================================================
 
     const [cursoExistente] = await database.execute(
       `
@@ -446,9 +430,7 @@ export async function atualizarCurso(req, res) {
     }
 
 
-    // ==================================================
     // VERIFICAR SE O CURSO EXISTE
-    // ==================================================
 
     const [cursosExistentes] = await database.execute(
       `
@@ -471,9 +453,7 @@ export async function atualizarCurso(req, res) {
     }
 
 
-    // ==================================================
     // ATUALIZAR CURSO
-    // ==================================================
 
     await database.execute(
       `
@@ -536,9 +516,7 @@ export async function atualizarCurso(req, res) {
 }
 
 
-// ======================================================
 // EXCLUIR CURSO
-// ======================================================
 
 export async function excluirCurso(req, res) {
 
@@ -547,9 +525,7 @@ export async function excluirCurso(req, res) {
     const { id } = req.params
 
 
-    // ==================================================
     // VERIFICAR SE O CURSO EXISTE
-    // ==================================================
 
     const [cursos] = await database.execute(
       `
@@ -572,9 +548,7 @@ export async function excluirCurso(req, res) {
     }
 
 
-    // ==================================================
     // VERIFICAR PERÍODOS VINCULADOS
-    // ==================================================
 
     const [periodos] = await database.execute(
       `
@@ -596,11 +570,7 @@ export async function excluirCurso(req, res) {
 
     }
 
-    // =================================================
-    // CASO O CURSO ESTEJA VINCULADO A UM PERIODO, ESSA PARTE DE EXCLUSÃO NÃO SERÁ EXECUTADA
-    // ==================================================
     // EXCLUIR CURSO
-    // ==================================================
 
     await database.execute(
       `

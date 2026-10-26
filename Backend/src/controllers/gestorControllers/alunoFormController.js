@@ -1,8 +1,8 @@
 import database from '../../config/database.js'
 
-// =====================================================
+// PBI 06 | Aceite: manter alunos vinculados a curso/período, preservando unicidade de matrícula e e-mail.
+
 // CADASTRAR ALUNO
-// =====================================================
 
 export const cadastrarAluno = async (req, res) => {
     try {
@@ -134,9 +134,7 @@ export const cadastrarAluno = async (req, res) => {
 }
 
 
-// =====================================================
 // LISTAR ALUNOS
-// =====================================================
 
 export const listarAlunos = async (req, res) => {
     try {
@@ -170,9 +168,7 @@ export const listarAlunos = async (req, res) => {
 }
 
 
-// =====================================================
 // BUSCAR ALUNO
-// =====================================================
 
 export const buscarAluno = async (req, res) => {
     try {
@@ -221,9 +217,7 @@ export const buscarAluno = async (req, res) => {
 }
 
 
-// =====================================================
 // ATUALIZAR ALUNO
-// =====================================================
 
 export const atualizarAluno = async (req, res) => {
     try {
@@ -384,9 +378,7 @@ export const atualizarAluno = async (req, res) => {
 }
 
 
-// =====================================================
 // EXCLUIR ALUNO
-// =====================================================
 
 export const excluirAluno = async (req, res) => {
     try {

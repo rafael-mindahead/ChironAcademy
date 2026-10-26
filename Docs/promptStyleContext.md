@@ -33,7 +33,7 @@ Portanto, não invente:
 - dashboards analíticos não solicitados;
 - funcionalidades de outras Sprints.
 
-Estamos trabalhando na SPRINT 1.
+A SPRINT 1 foi concluída. Estamos iniciando a SPRINT 2, sempre a partir do backlog oficial e dos critérios de aceite.
 
 ==================================================
 2. TECNOLOGIAS ATUAIS DO FRONT-END
@@ -773,36 +773,38 @@ NÃO:
 - refatorar arquivos sem necessidade.
 
 ==================================================
-28. ORDEM DA SPRINT 1
+28. STATUS DAS SPRINTS
 ==================================================
 
-Os PBIs da Sprint 1 são:
+SPRINT 1 — CONCLUÍDA
 
 01 - MANTER CADASTRO DE CURSOS
-
 02 - MANTER CADASTRO DE PERÍODOS ACADÊMICOS
-
 03 - MANTER CADASTRO DE DISCIPLINAS
-
 04 - MANTER CADASTRO DE TURMAS
-
 05 - MANTER CADASTRO DE PROFESSORES
-
 06 - MANTER CADASTRO DE ALUNOS
-
 07 - VINCULAR PROFESSOR À TURMA/DISCIPLINA
-
 08 - MATRICULAR ALUNO EM TURMA/DISCIPLINA
-
 09 - CONSULTAR TURMAS SOB RESPONSABILIDADE
-
 10 - MANTER CADASTRO DE AVALIAÇÕES DA TURMA
-
 11 - REGISTRAR NOTAS DOS ALUNOS
-
 12 - REGISTRAR FREQUÊNCIA DOS ALUNOS
 
-NÃO avance automaticamente.
+SPRINT 2 — EM INÍCIO
+
+Não inventar a ordem nem o conteúdo dos PBIs da Sprint 2.
+
+Para cada novo PBI:
+
+1. Ler User Story e critérios de aceite.
+2. Mapear impacto no banco.
+3. Implementar backend e autorização.
+4. Implementar service do Front-End.
+5. Implementar interface.
+6. Testar fluxo principal e exceções.
+7. Fazer commit do PBI.
+8. Só então avançar.
 
 ==================================================
 29. REGRA PRINCIPAL DE CONSISTÊNCIA
