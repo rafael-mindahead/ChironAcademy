@@ -82,9 +82,9 @@ import EvolucaoAlunoPage
 import DesempenhoTurmaProfessorPage
   from './pages/AreaProfessor/DesempenhoTurmaProfessorPage.jsx'
 
-
 import DesempenhoAlunoProfessorPage
   from './pages/AreaProfessor/DesempenhoAlunoProfessorPage.jsx'
+
 
 function App() {
 
@@ -275,68 +275,82 @@ function App() {
 
           }
         />
+
+
         <Route
-            path="/sistema/professor/turmas/:idProfessorTurma/frequencia"
+          path="/sistema/professor/turmas/:idProfessorTurma/frequencia"
 
-            element={
-              <ProtectedRoute
-                perfisPermitidos={[
-                  'PROFESSOR'
-                ]}
-              >
-                <FrequenciaProfessorPage />
-              </ProtectedRoute>
-            }
-          />
+          element={
+
+            <ProtectedRoute
+              perfisPermitidos={[
+                'PROFESSOR'
+              ]}
+            >
+
+              <FrequenciaProfessorPage />
+
+            </ProtectedRoute>
+
+          }
+        />
 
 
-          <Route
-            path="/sistema/professor/turmas/:idProfessorTurma/aulas/:idAula/frequencia"
+        <Route
+          path="/sistema/professor/turmas/:idProfessorTurma/aulas/:idAula/frequencia"
 
-            element={
-              <ProtectedRoute
-                perfisPermitidos={[
-                  'PROFESSOR'
-                ]}
-              >
-                <ChamadaFrequenciaPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/sistema/professor/turmas/:idProfessorTurma/desempenho"
+          element={
 
-            element={
+            <ProtectedRoute
+              perfisPermitidos={[
+                'PROFESSOR'
+              ]}
+            >
 
-              <ProtectedRoute
-                perfisPermitidos={[
-                  'PROFESSOR'
-                ]}
-              >
+              <ChamadaFrequenciaPage />
 
-                <DesempenhoTurmaProfessorPage />
+            </ProtectedRoute>
 
-              </ProtectedRoute>
+          }
+        />
 
-            }
-          />
-          <Route
-            path="/sistema/professor/turmas/:idProfessorTurma/alunos/:idMatricula/desempenho"
 
-            element={
+        <Route
+          path="/sistema/professor/turmas/:idProfessorTurma/desempenho"
 
-              <ProtectedRoute
-                perfisPermitidos={[
-                  'PROFESSOR'
-                ]}
-              >
+          element={
 
-                <DesempenhoAlunoProfessorPage />
+            <ProtectedRoute
+              perfisPermitidos={[
+                'PROFESSOR'
+              ]}
+            >
 
-              </ProtectedRoute>
+              <DesempenhoTurmaProfessorPage />
 
-            }
-          />
+            </ProtectedRoute>
+
+          }
+        />
+
+
+        <Route
+          path="/sistema/professor/turmas/:idProfessorTurma/alunos/:idMatricula/desempenho"
+
+          element={
+
+            <ProtectedRoute
+              perfisPermitidos={[
+                'PROFESSOR'
+              ]}
+            >
+
+              <DesempenhoAlunoProfessorPage />
+
+            </ProtectedRoute>
+
+          }
+        />
 
 
         {/* =============================================
