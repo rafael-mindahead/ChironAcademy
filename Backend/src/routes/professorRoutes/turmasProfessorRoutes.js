@@ -36,17 +36,14 @@ import {
   autorizarPerfis
 } from '../../middlewares/authorizationMiddleware.js'
 
-
-
-
 import {
   listarDesempenhoTurma,
   consultarDesempenhoAluno
 } from '../../controllers/professorControllers/desempenhoProfessorController.js'
 
+
 const router =
   express.Router()
-
 
 
 // ======================================================
@@ -169,6 +166,7 @@ router.get(
   '/',
   listarMinhasTurmas
 )
+
 
 // ======================================================
 // DESEMPENHO DOS ALUNOS
