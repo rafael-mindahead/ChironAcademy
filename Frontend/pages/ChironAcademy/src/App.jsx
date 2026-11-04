@@ -79,6 +79,12 @@ import DesempenhoDisciplinaAlunoPage
 import EvolucaoAlunoPage
   from './pages/AreaAluno/EvolucaoAlunoPage.jsx'
 
+import DesempenhoTurmaProfessorPage
+  from './pages/AreaProfessor/DesempenhoTurmaProfessorPage.jsx'
+
+
+import DesempenhoAlunoProfessorPage
+  from './pages/AreaProfessor/DesempenhoAlunoProfessorPage.jsx'
 
 function App() {
 
@@ -295,6 +301,40 @@ function App() {
               >
                 <ChamadaFrequenciaPage />
               </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/sistema/professor/turmas/:idProfessorTurma/desempenho"
+
+            element={
+
+              <ProtectedRoute
+                perfisPermitidos={[
+                  'PROFESSOR'
+                ]}
+              >
+
+                <DesempenhoTurmaProfessorPage />
+
+              </ProtectedRoute>
+
+            }
+          />
+          <Route
+            path="/sistema/professor/turmas/:idProfessorTurma/alunos/:idMatricula/desempenho"
+
+            element={
+
+              <ProtectedRoute
+                perfisPermitidos={[
+                  'PROFESSOR'
+                ]}
+              >
+
+                <DesempenhoAlunoProfessorPage />
+
+              </ProtectedRoute>
+
             }
           />
 
