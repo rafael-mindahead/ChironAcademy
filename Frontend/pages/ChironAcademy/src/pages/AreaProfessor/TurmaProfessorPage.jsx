@@ -18,7 +18,8 @@ import {
   Pencil,
   Plus,
   Trash2,
-  UsersRound
+  UsersRound,
+  TrendingUp
 } from 'lucide-react'
 
 import {
@@ -1015,6 +1016,57 @@ function TurmaProfessorPage() {
               </button>
 
             </div>
+                      <div
+            className="
+              mt-6
+              flex
+              flex-wrap
+              justify-end
+              gap-3
+            "
+          >
+
+            <button
+              type="button"
+              onClick={
+                () =>
+                  navigate(
+                    `/sistema/professor/turmas/${idProfessorTurma}/desempenho`
+                  )
+              }
+              className="
+                botao-secundario
+                inline-flex
+                items-center
+                gap-2
+              "
+            >
+
+              <TrendingUp
+                className="size-4"
+              />
+
+              Desempenho dos alunos
+
+            </button>
+
+
+            <button
+              type="button"
+              onClick={
+                () =>
+                  navigate(
+                    `/sistema/professor/turmas/${idProfessorTurma}/frequencia`
+                  )
+              }
+              className="
+                botao-principal
+              "
+            >
+              Gerenciar frequência
+            </button>
+
+          </div>
 
 
           {/* ============================================
