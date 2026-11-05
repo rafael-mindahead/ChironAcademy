@@ -85,6 +85,9 @@ import DesempenhoTurmaProfessorPage
 import DesempenhoAlunoProfessorPage
   from './pages/AreaProfessor/DesempenhoAlunoProfessorPage.jsx'
 
+import DashboardGestor
+  from './pages/AreaGestor/DashboardGestor.jsx'
+
 
 function App() {
 
@@ -520,6 +523,24 @@ function App() {
             >
 
               <MatriculasFormPage />
+
+            </ProtectedRoute>
+
+          }
+        />
+
+                <Route
+          path="/sistema/gestor/indicadores"
+
+          element={
+
+            <ProtectedRoute
+              perfisPermitidos={[
+                'GESTOR'
+              ]}
+            >
+
+              <DashboardGestor />
 
             </ProtectedRoute>
 
