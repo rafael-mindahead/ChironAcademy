@@ -38,6 +38,49 @@ function AreaGestor() {
           "
         >
 
+          <button
+            type="button"
+
+            onClick={() =>
+              navigate('/sistema/gestor/indicadores')
+            }
+
+            className="
+              rounded-xl
+              border
+              border-primary/40
+              bg-primary/5
+              p-5
+              text-left
+              shadow-sm
+              transition
+              hover:bg-primary/10
+            "
+          >
+
+            <h3
+              className="
+                font-semibold
+                text-foreground
+              "
+            >
+              Indicadores dos cursos
+            </h3>
+
+
+            <p
+              className="
+                mt-1
+                text-sm
+                text-muted-foreground
+              "
+            >
+              Consultar dados acadêmicos consolidados por curso.
+            </p>
+
+          </button>
+
+
           {/* ====================================================
               CURSOS
           ==================================================== */}
