@@ -61,7 +61,7 @@ export async function consultarIndicadoresCursos(
     }
 
 
-        const [alunosAgrupados] =
+    const [alunosAgrupados] =
       await database.execute(
         `
           SELECT
@@ -72,6 +72,133 @@ export async function consultarIndicadoresCursos(
 
           GROUP BY
             idCurso
+        `
+      )
+
+
+    const [disciplinasAgrupadas] =
+      await database.execute(
+        `
+          SELECT
+            idCurso,
+            COUNT(*) AS total
+
+          FROM Disciplina
+
+          GROUP BY
+            idCurso
+        `
+      )
+
+
+    const [turmasAgrupadas] =
+      await database.execute(
+        `
+          SELECT
+            idCurso,
+            COUNT(*) AS total
+
+          FROM Turma
+
+          GROUP BY
+            idCurso
+        `
+      )
+
+
+    const [matriculasAgrupadas] =
+      await database.execute(
+        `
+          SELECT
+            d.idCurso,
+            m.statusMatricula AS status,
+            COUNT(*) AS total
+
+          FROM Matricula m
+
+          INNER JOIN Disciplina d
+            ON d.codDisciplina =
+               m.codDisciplina
+
+          GROUP BY
+            d.idCurso,
+            m.statusMatricula
+        `
+      )
+
+
+    const [notasAgrupadas] =
+      await database.execute(
+        `
+          SELECT
+            d.idCurso,
+            COUNT(DISTINCT n.idNota) AS total
+
+          FROM Nota n
+
+          INNER JOIN Matricula m
+            ON m.idMatricula =
+               n.idMatricula
+
+          INNER JOIN Disciplina d
+            ON d.codDisciplina =
+               m.codDisciplina
+
+          INNER JOIN Avaliacao av
+            ON av.idAvaliacao =
+               n.idAvaliacao
+
+          INNER JOIN ProfessorTurma pt
+            ON pt.idProfessorTurma =
+               av.idProfessorTurma
+
+           AND pt.idTurma =
+               m.idTurma
+
+           AND pt.codDisciplina =
+               m.codDisciplina
+
+          GROUP BY
+            d.idCurso
+        `
+      )
+
+
+    const [frequenciasAgrupadas] =
+      await database.execute(
+        `
+          SELECT
+            d.idCurso,
+            f.statusFrequencia AS status,
+            COUNT(DISTINCT f.idFrequencia) AS total
+
+          FROM Frequencia f
+
+          INNER JOIN Matricula m
+            ON m.idMatricula =
+               f.idMatricula
+
+          INNER JOIN Disciplina d
+            ON d.codDisciplina =
+               m.codDisciplina
+
+          INNER JOIN Aula au
+            ON au.idAula =
+               f.idAula
+
+          INNER JOIN ProfessorTurma pt
+            ON pt.idProfessorTurma =
+               au.idProfessorTurma
+
+           AND pt.idTurma =
+               m.idTurma
+
+           AND pt.codDisciplina =
+               m.codDisciplina
+
+          GROUP BY
+            d.idCurso,
+            f.statusFrequencia
         `
       )
 
@@ -97,6 +224,48 @@ export async function consultarIndicadoresCursos(
             )
 
 
+          const disciplinasDoCurso =
+            disciplinasAgrupadas.find(
+              item =>
+                Number(item.idCurso) ===
+                Number(curso.idCurso)
+            )
+
+
+          const turmasDoCurso =
+            turmasAgrupadas.find(
+              item =>
+                Number(item.idCurso) ===
+                Number(curso.idCurso)
+            )
+
+
+          const notasDoCurso =
+            notasAgrupadas.find(
+              item =>
+                Number(item.idCurso) ===
+                Number(curso.idCurso)
+            )
+
+
+          const frequenciasDoCurso =
+            frequenciasAgrupadas
+              .filter(
+                item =>
+                  Number(item.idCurso) ===
+                  Number(curso.idCurso)
+              )
+              .map(
+                item => ({
+                  status:
+                    item.status,
+
+                  total:
+                    Number(item.total)
+                })
+              )
+
+
           return {
 
             idCurso:
@@ -108,7 +277,49 @@ export async function consultarIndicadoresCursos(
             alunosCadastrados:
               alunosDoCurso
                 ? Number(alunosDoCurso.total)
-                : 0
+                : 0,
+
+            disciplinas:
+              disciplinasDoCurso
+                ? Number(disciplinasDoCurso.total)
+                : 0,
+
+            turmas:
+              turmasDoCurso
+                ? Number(turmasDoCurso.total)
+                : 0,
+
+            matriculasPorStatus:
+              matriculasAgrupadas
+                .filter(
+                  item =>
+                    Number(item.idCurso) ===
+                    Number(curso.idCurso)
+                )
+                .map(
+                  item => ({
+                    status:
+                      item.status,
+
+                    total:
+                      Number(item.total)
+                  })
+                ),
+
+            notasLancadas:
+              notasDoCurso
+                ? Number(notasDoCurso.total)
+                : 0,
+
+            frequenciasRegistradas:
+              frequenciasDoCurso.reduce(
+                (total, frequencia) =>
+                  total + frequencia.total,
+                0
+              ),
+
+            frequenciasPorStatus:
+              frequenciasDoCurso
 
           }
 
