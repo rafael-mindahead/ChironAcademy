@@ -9,6 +9,7 @@ import {
 
 import {
   ArrowLeft,
+  ArrowRight,
   BookOpen,
   CalendarCheck,
   CircleAlert,
@@ -71,11 +72,16 @@ function IndicadorCard({
 
     <article
       className="
+        h-full
         rounded-xl
         border
         border-border
-        bg-background
+        bg-card
         p-5
+        shadow-sm
+        transition
+        hover:border-primary/40
+        sm:p-6
       "
     >
 
@@ -203,10 +209,11 @@ function GraficoStatus({
 
     <section
       className="
+        h-full
         rounded-2xl
         border
         border-border
-        bg-background
+        bg-card
         p-5
         shadow-sm
         sm:p-7
@@ -396,6 +403,13 @@ function DashboardGestor() {
 
 
   const [
+    periodos,
+    setPeriodos
+  ] =
+    useState([])
+
+
+  const [
     indicadores,
     setIndicadores
   ] =
@@ -405,6 +419,13 @@ function DashboardGestor() {
   const [
     idCursoSelecionado,
     setIdCursoSelecionado
+  ] =
+    useState('')
+
+
+  const [
+    idPeriodoSelecionado,
+    setIdPeriodoSelecionado
   ] =
     useState('')
 
@@ -471,7 +492,8 @@ function DashboardGestor() {
 
           const resposta =
             await consultarIndicadoresCursos(
-              idCursoSelecionado || null
+              idCursoSelecionado || null,
+              idPeriodoSelecionado || null
             )
 
 
@@ -482,6 +504,10 @@ function DashboardGestor() {
 
           setCursos(
             resposta.cursos || []
+          )
+
+          setPeriodos(
+            resposta.periodos || []
           )
 
 
@@ -534,6 +560,7 @@ function DashboardGestor() {
     },
     [
       idCursoSelecionado,
+      idPeriodoSelecionado,
       tentativa
     ]
   )
@@ -545,6 +572,14 @@ function DashboardGestor() {
         String(curso.idCurso) ===
         idCursoSelecionado
     )?.nomeCurso
+
+
+  const nomePeriodoSelecionado =
+    periodos.find(
+      periodo =>
+        String(periodo.idPeriodo) ===
+        idPeriodoSelecionado
+    )?.nomePeriodo
 
 
   const linhasMatriculas =
@@ -576,7 +611,15 @@ function DashboardGestor() {
 
 
   function selecionarCurso(evento) {
+    setIdPeriodoSelecionado('')
     setIdCursoSelecionado(
+      evento.target.value
+    )
+  }
+
+
+  function selecionarPeriodo(evento) {
+    setIdPeriodoSelecionado(
       evento.target.value
     )
   }
@@ -584,125 +627,183 @@ function DashboardGestor() {
 
   return (
 
-    <AreaInterna>
+    <AreaInterna mostrarResumoUsuario={false}>
 
       <div className="space-y-8">
 
         <div
           className="
-            flex
-            flex-col
-            gap-4
-            sm:flex-row
-            sm:items-center
-            sm:justify-between
+            grid
+            gap-6
+            rounded-2xl
+            border
+            border-border
+            bg-card
+            p-5
+            shadow-sm
+            sm:p-7
+            lg:grid-cols-[minmax(0,1fr)_minmax(400px,1.05fr)]
+            lg:items-center
           "
         >
 
           <div>
 
-            <button
-              type="button"
-              onClick={() =>
-                navigate('/sistema/gestor')
+            <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
+              <button
+                type="button"
+                onClick={() =>
+                  navigate('/sistema/gestor')
+                }
+                className="
+                  inline-flex
+                  items-center
+                  gap-2
+                  text-sm
+                  text-muted-foreground
+                  transition
+                  hover:text-foreground
+                "
+              >
+                <ArrowLeft className="size-4" />
+                Gestão acadêmica
+              </button>
+
+              {
+                (idCursoSelecionado || idPeriodoSelecionado) &&
+                (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setIdPeriodoSelecionado('')
+                      setIdCursoSelecionado('')
+                    }}
+                    className="text-sm font-medium text-primary transition hover:text-foreground"
+                  >
+                    Limpar filtros
+                  </button>
+                )
               }
-              className="
-                mb-4
-                inline-flex
-                items-center
-                gap-2
-                text-sm
-                text-muted-foreground
-                transition
-                hover:text-foreground
-              "
-            >
-              <ArrowLeft className="size-4" />
-              Voltar para gestão acadêmica
-            </button>
+            </div>
 
-            <p
-              className="
-                text-sm
-                font-medium
-                uppercase
-                tracking-[0.16em]
-                text-primary
-              "
-            >
-              Visão institucional
-            </p>
-
-            <h1
-              className="
-                mt-2
-                font-[family-name:var(--font-display)]
-                text-3xl
-                font-semibold
-              "
-            >
-              Indicadores dos cursos
-            </h1>
-
-            <p
-              className="
-                mt-2
-                max-w-2xl
-                text-sm
-                leading-relaxed
-                text-muted-foreground
-              "
-            >
-              Contagens acadêmicas registradas no sistema. Os dados não representam médias nem taxas oficiais.
-            </p>
+            <div className="flex items-start gap-4">
+              <span className="hidden size-12 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary sm:flex">
+                <GraduationCap className="size-6" />
+              </span>
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary">
+                  Visão institucional
+                </p>
+                <h1
+                  className="
+                    mt-2
+                    font-[family-name:var(--font-display)]
+                    text-3xl
+                    font-semibold
+                    tracking-tight
+                    sm:text-4xl
+                  "
+                >
+                  Indicadores dos cursos
+                </h1>
+                <p className="mt-3 max-w-xl text-sm leading-relaxed text-muted-foreground">
+                  Explore matrículas, notas e frequências registradas. Os números são contagens reais, não médias ou taxas estimadas.
+                </p>
+              </div>
+            </div>
 
           </div>
 
 
-          <label
+          <div
             className="
-              block
+              grid
               w-full
-              sm:max-w-xs
+              gap-3
+              sm:grid-cols-2
             "
           >
+            <div className="sm:col-span-2">
+              <p className="text-sm font-semibold">Filtros da análise</p>
+              <p className="mt-1 text-xs text-muted-foreground">
+                Escolha um curso para detalhar ou compare todos na visão geral.
+              </p>
+            </div>
 
-            <span
-              className="
-                mb-2
-                block
-                text-sm
-                font-medium
-              "
-            >
-              Detalhar curso
-            </span>
+            <label className="block w-full">
+              <span className="mb-2 block text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                Detalhar curso
+              </span>
 
-            <select
-              className="campo"
-              value={idCursoSelecionado}
-              onChange={selecionarCurso}
-              disabled={carregando || cursos.length === 0}
-            >
-              <option value="">
-                Visão de todos os cursos
-              </option>
+              <select
+                className="campo bg-background"
+                value={idCursoSelecionado}
+                onChange={selecionarCurso}
+                disabled={carregando || cursos.length === 0}
+              >
+                <option value="">
+                  Visão de todos os cursos
+                </option>
 
-              {
-                cursos.map(
-                  curso => (
-                    <option
-                      key={curso.idCurso}
-                      value={curso.idCurso}
-                    >
-                      {curso.nomeCurso}
-                    </option>
+                {
+                  cursos.map(
+                    curso => (
+                      <option
+                        key={curso.idCurso}
+                        value={curso.idCurso}
+                      >
+                        {curso.nomeCurso}
+                      </option>
+                    )
                   )
-                )
-              }
-            </select>
+                }
+              </select>
+            </label>
 
-          </label>
+            <label className="block w-full">
+              <span className="mb-2 block text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                Filtrar por período curricular
+              </span>
+
+              <select
+                className="campo bg-background"
+                value={idPeriodoSelecionado}
+                onChange={selecionarPeriodo}
+                disabled={
+                  carregando ||
+                  !idCursoSelecionado ||
+                  periodos.length === 0
+                }
+              >
+                <option value="">
+                  Todos os períodos do curso
+                </option>
+
+                {
+                  periodos.map(
+                    periodo => (
+                      <option
+                        key={periodo.idPeriodo}
+                        value={periodo.idPeriodo}
+                      >
+                        {periodo.nomePeriodo}
+                      </option>
+                    )
+                  )
+                }
+              </select>
+              <p className="mt-1 text-xs text-muted-foreground">
+                {
+                  !idCursoSelecionado
+                    ? 'Selecione um curso para filtrar por período.'
+                    : periodos.length === 0
+                      ? 'Este curso não possui períodos cadastrados.'
+                      : 'Os indicadores serão limitados às disciplinas e matrículas deste período.'
+                }
+              </p>
+            </label>
+
+          </div>
 
         </div>
 
@@ -842,26 +943,37 @@ function DashboardGestor() {
 
                                       <section
                                         className="
-                                          rounded-xl
+                                          flex
+                                          flex-col
+                                          gap-4
+                                          rounded-2xl
                                           border
                                           border-border
-                                          bg-background
+                                          bg-card
                                           p-5
+                                          shadow-sm
+                                          sm:flex-row
+                                          sm:items-center
+                                          sm:justify-between
                                           sm:p-6
                                         "
                                       >
-                                        <p className="text-sm text-muted-foreground">
-                                          Curso selecionado
-                                        </p>
-                                        <h2
-                                          className="
-                                            mt-1
-                                            text-2xl
-                                            font-semibold
-                                          "
-                                        >
-                                          {nomeCursoSelecionado || indicadorSelecionado.nomeCurso}
-                                        </h2>
+                                        <div className="flex items-center gap-4">
+                                          <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                                            <School className="size-5" />
+                                          </span>
+                                          <div>
+                                            <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                                              Curso em análise
+                                            </p>
+                                            <h2 className="mt-1 text-xl font-semibold tracking-tight sm:text-2xl">
+                                              {nomeCursoSelecionado || indicadorSelecionado.nomeCurso}
+                                            </h2>
+                                          </div>
+                                        </div>
+                                        <span className="w-fit rounded-full border border-border bg-background px-3 py-1.5 text-sm font-medium text-muted-foreground">
+                                          {nomePeriodoSelecionado || indicadorSelecionado.nomePeriodo || 'Todos os períodos'}
+                                        </span>
                                       </section>
 
 
@@ -877,7 +989,11 @@ function DashboardGestor() {
                                         <IndicadorCard
                                           titulo="Alunos cadastrados"
                                           valor={indicadorSelecionado.alunosCadastrados}
-                                          descricao="Alunos associados ao curso."
+                                          descricao={
+                                            idPeriodoSelecionado
+                                              ? 'Alunos com matrícula em disciplinas deste período, sem duplicar registros.'
+                                              : 'Alunos associados ao curso.'
+                                          }
                                           Icone={UsersRound}
                                         />
 
@@ -891,7 +1007,11 @@ function DashboardGestor() {
                                         <IndicadorCard
                                           titulo="Turmas"
                                           valor={indicadorSelecionado.turmas}
-                                          descricao="Turmas cadastradas para o curso."
+                                          descricao={
+                                            idPeriodoSelecionado
+                                              ? 'Turmas com matrículas em disciplinas deste período.'
+                                              : 'Turmas cadastradas para o curso.'
+                                          }
                                           Icone={School}
                                         />
 
@@ -912,44 +1032,45 @@ function DashboardGestor() {
                                       </section>
 
 
-                                      <GraficoStatus
-                                        titulo="Matrículas por status"
-                                        descricao="Quantidade e participação de cada status no total de matrículas do curso."
-                                        linhas={[
-                                          {
-                                            id: indicadorSelecionado.idCurso,
-                                            nome: indicadorSelecionado.nomeCurso,
-                                            status: matriculasPorStatus
-                                          }
-                                        ]}
-                                        statusDisponiveis={[
-                                          'CURSANDO',
-                                          'APROVADO',
-                                          'REPROVADO',
-                                          'TRANCADO',
-                                          'JUSTIFICADO'
-                                        ]}
-                                        nomesStatus={nomesStatusMatricula}
-                                      />
+                                      <div className="grid gap-6 xl:grid-cols-2">
+                                        <GraficoStatus
+                                          titulo="Matrículas por status"
+                                          descricao="Quantidade e participação de cada status no total de matrículas do curso."
+                                          linhas={[
+                                            {
+                                              id: indicadorSelecionado.idCurso,
+                                              nome: indicadorSelecionado.nomeCurso,
+                                              status: matriculasPorStatus
+                                            }
+                                          ]}
+                                          statusDisponiveis={[
+                                            'CURSANDO',
+                                            'APROVADO',
+                                            'REPROVADO',
+                                            'TRANCADO',
+                                            'JUSTIFICADO'
+                                          ]}
+                                          nomesStatus={nomesStatusMatricula}
+                                        />
 
-
-                                      <GraficoStatus
-                                        titulo="Frequências registradas por status"
-                                        descricao="Quantidade e participação de cada status entre as marcações registradas no curso."
-                                        linhas={[
-                                          {
-                                            id: indicadorSelecionado.idCurso,
-                                            nome: indicadorSelecionado.nomeCurso,
-                                            status: frequenciasPorStatus
-                                          }
-                                        ]}
-                                        statusDisponiveis={[
-                                          'PRESENTE',
-                                          'FALTA',
-                                          'JUSTIFICADA'
-                                        ]}
-                                        nomesStatus={nomesStatusFrequencia}
-                                      />
+                                        <GraficoStatus
+                                          titulo="Frequências registradas por status"
+                                          descricao="Quantidade e participação de cada status entre as marcações registradas no curso."
+                                          linhas={[
+                                            {
+                                              id: indicadorSelecionado.idCurso,
+                                              nome: indicadorSelecionado.nomeCurso,
+                                              status: frequenciasPorStatus
+                                            }
+                                          ]}
+                                          statusDisponiveis={[
+                                            'PRESENTE',
+                                            'FALTA',
+                                            'JUSTIFICADA'
+                                          ]}
+                                          nomesStatus={nomesStatusFrequencia}
+                                        />
+                                      </div>
 
                                     </>
                                   )
@@ -973,9 +1094,12 @@ function DashboardGestor() {
                         : (
                             <>
 
+                              <div className="flex flex-col gap-8">
+
+                              <div className="order-2 grid gap-6 xl:grid-cols-2">
                               <GraficoStatus
                                 titulo="Matrículas — todos os cursos"
-                                descricao="Distribuição consolidada por status. A lista ao lado mostra a quantidade e a participação no total."
+                                descricao="Distribuição consolidada por status entre as matrículas registradas."
                                 linhas={linhasMatriculas}
                                 statusDisponiveis={[
                                   'CURSANDO',
@@ -986,7 +1110,6 @@ function DashboardGestor() {
                                 ]}
                                 nomesStatus={nomesStatusMatricula}
                               />
-
 
                               <GraficoStatus
                                 titulo="Frequências — todos os cursos"
@@ -999,15 +1122,15 @@ function DashboardGestor() {
                                 ]}
                                 nomesStatus={nomesStatusFrequencia}
                               />
+                              </div>
 
-
-                              <section>
+                              <section className="order-1">
                                 <div className="mb-4">
-                                  <h2 className="text-lg font-semibold">
+                                  <h2 className="text-xl font-semibold tracking-tight">
                                     Resumo por curso
                                   </h2>
                                   <p className="mt-1 text-sm text-muted-foreground">
-                                    Selecione um curso acima para consultar os indicadores detalhados.
+                                    Escolha um curso para abrir seus indicadores detalhados.
                                   </p>
                                 </div>
 
@@ -1024,28 +1147,48 @@ function DashboardGestor() {
                                             )
                                           }
                                           className="
-                                            rounded-xl
+                                            group
+                                            rounded-2xl
                                             border
                                             border-border
-                                            bg-background
+                                            bg-card
                                             p-5
                                             text-left
+                                            shadow-sm
                                             transition
+                                            hover:-translate-y-0.5
                                             hover:border-primary/50
-                                            hover:bg-secondary/50
+                                            hover:shadow-md
+                                            sm:p-6
                                           "
                                         >
-                                          <span className="font-semibold">
-                                            {indicador.nomeCurso}
+                                          <span className="flex items-start justify-between gap-4">
+                                            <span className="flex min-w-0 items-center gap-3">
+                                              <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                                                <School className="size-5" />
+                                              </span>
+                                              <span className="min-w-0">
+                                                <span className="block text-xs font-medium uppercase tracking-wide text-muted-foreground">
+                                                  Curso
+                                                </span>
+                                                <span className="mt-1 block truncate font-semibold">
+                                                  {indicador.nomeCurso}
+                                                </span>
+                                              </span>
+                                            </span>
+                                            <ArrowRight className="mt-1 size-4 shrink-0 text-muted-foreground transition group-hover:translate-x-1 group-hover:text-primary" />
                                           </span>
 
                                           <span
                                             className="
-                                              mt-4
+                                              mt-5
                                               grid
                                               grid-cols-2
                                               gap-x-4
                                               gap-y-3
+                                              border-t
+                                              border-border
+                                              pt-4
                                               text-sm
                                               sm:grid-cols-3
                                             "
@@ -1097,6 +1240,8 @@ function DashboardGestor() {
                                   }
                                 </div>
                               </section>
+
+                              </div>
 
                             </>
                           )
