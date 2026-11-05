@@ -239,6 +239,8 @@ CREATE TABLE IF NOT EXISTS Avaliacao (
 
     valorMaximo DECIMAL(5,2) NOT NULL DEFAULT 10.00,
 
+    pesoAvaliacao DECIMAL(5,2),
+
     idProfessorTurma INT NOT NULL,
 
     createdAt TIMESTAMP NOT NULL
