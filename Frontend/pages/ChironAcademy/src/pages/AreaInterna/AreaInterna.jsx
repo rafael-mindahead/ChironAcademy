@@ -20,7 +20,10 @@ import {
 } from '../../services/authService'
 
 
-function AreaInterna({ children }) {
+function AreaInterna({
+  children,
+  mostrarResumoUsuario = true
+}) {
 
   const navigate =
     useNavigate()
@@ -255,140 +258,145 @@ function AreaInterna({ children }) {
       >
 
         <div
-          className="
-            rounded-xl
-            border
-            border-border
-            bg-card
-            p-8
-          "
+          className={
+            mostrarResumoUsuario
+              ? 'rounded-xl border border-border bg-card p-8'
+              : 'space-y-8'
+          }
         >
 
-          {/* ====================================================
-              INFORMAÇÕES DO USUÁRIO
-          ==================================================== */}
+          {
+            mostrarResumoUsuario &&
+            (
+              <>
+                {/* ====================================================
+                    INFORMAÇÕES DO USUÁRIO
+                ==================================================== */}
 
-          <div
-            className="
-              flex
-              items-center
-              gap-4
-            "
-          >
+                <div
+                  className="
+                    flex
+                    items-center
+                    gap-4
+                  "
+                >
 
-            <div
-              className="
-                flex
-                size-12
-                items-center
-                justify-center
-                rounded-full
-                bg-primary/10
-                text-primary
-              "
-            >
+                  <div
+                    className="
+                      flex
+                      size-12
+                      items-center
+                      justify-center
+                      rounded-full
+                      bg-primary/10
+                      text-primary
+                    "
+                  >
 
-              <UserRound className="size-6" />
+                    <UserRound className="size-6" />
 
-            </div>
-
-
-            <div>
-
-              <p
-                className="
-                  text-sm
-                  text-muted-foreground
-                "
-              >
-                Usuário autenticado
-              </p>
+                  </div>
 
 
-              <h1
-                className="
-                  mt-1
-                  text-2xl
-                  font-semibold
-                "
-              >
-                Bem-vindo ao ChironAcademy
-              </h1>
+                  <div>
 
-            </div>
-
-          </div>
+                    <p
+                      className="
+                        text-sm
+                        text-muted-foreground
+                      "
+                    >
+                      Usuário autenticado
+                    </p>
 
 
-          {/* ====================================================
-              DADOS DO USUÁRIO
-          ==================================================== */}
+                    <h1
+                      className="
+                        mt-1
+                        text-2xl
+                        font-semibold
+                      "
+                    >
+                      Bem-vindo ao ChironAcademy
+                    </h1>
 
-          <div
-            className="
-              mt-8
-              grid
-              gap-4
-              border-t
-              border-border
-              pt-6
-              md:grid-cols-2
-            "
-          >
+                  </div>
 
-            <div>
-
-              <p
-                className="
-                  text-xs
-                  uppercase
-                  tracking-wider
-                  text-muted-foreground
-                "
-              >
-                E-mail
-              </p>
+                </div>
 
 
-              <p className="mt-2 text-sm">
+                {/* ====================================================
+                    DADOS DO USUÁRIO
+                ==================================================== */}
 
-                {usuario.email}
+                <div
+                  className="
+                    mt-8
+                    grid
+                    gap-4
+                    border-t
+                    border-border
+                    pt-6
+                    md:grid-cols-2
+                  "
+                >
 
-              </p>
+                  <div>
 
-            </div>
-
-
-            <div>
-
-              <p
-                className="
-                  text-xs
-                  uppercase
-                  tracking-wider
-                  text-muted-foreground
-                "
-              >
-                Perfil
-              </p>
+                    <p
+                      className="
+                        text-xs
+                        uppercase
+                        tracking-wider
+                        text-muted-foreground
+                      "
+                    >
+                      E-mail
+                    </p>
 
 
-              <p
-                className="
-                  mt-2
-                  text-sm
-                  text-primary
-                "
-              >
+                    <p className="mt-2 text-sm">
 
-                {usuario.perfil}
+                      {usuario.email}
 
-              </p>
+                    </p>
 
-            </div>
+                  </div>
 
-          </div>
 
+                  <div>
+
+                    <p
+                      className="
+                        text-xs
+                        uppercase
+                        tracking-wider
+                        text-muted-foreground
+                      "
+                    >
+                      Perfil
+                    </p>
+
+
+                    <p
+                      className="
+                        mt-2
+                        text-sm
+                        text-primary
+                      "
+                    >
+
+                      {usuario.perfil}
+
+                    </p>
+
+                  </div>
+
+                </div>
+
+              </>
+            )
+          }
 
           {/* ====================================================
               CONTEÚDO ESPECÍFICO DA ÁREA
@@ -396,7 +404,7 @@ function AreaInterna({ children }) {
 
           {children ? (
 
-            <div className="mt-8">
+            <div className={mostrarResumoUsuario ? 'mt-8' : ''}>
 
               {children}
 
