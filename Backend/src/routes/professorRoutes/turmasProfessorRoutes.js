@@ -36,6 +36,11 @@ import {
   autorizarPerfis
 } from '../../middlewares/authorizationMiddleware.js'
 
+import {
+  listarDesempenhoTurma,
+  consultarDesempenhoAluno
+} from '../../controllers/professorControllers/desempenhoProfessorController.js'
+
 
 const router =
   express.Router()
@@ -160,6 +165,22 @@ router.delete(
 router.get(
   '/',
   listarMinhasTurmas
+)
+
+
+// ======================================================
+// DESEMPENHO DOS ALUNOS
+// ======================================================
+
+router.get(
+  '/:idProfessorTurma/desempenho',
+  listarDesempenhoTurma
+)
+
+
+router.get(
+  '/:idProfessorTurma/alunos/:idMatricula/desempenho',
+  consultarDesempenhoAluno
 )
 
 

@@ -73,6 +73,18 @@ import FrequenciaProfessorPage
 import ChamadaFrequenciaPage
   from './pages/AreaProfessor/ChamadaFrequenciaPage.jsx'
 
+import DesempenhoDisciplinaAlunoPage
+  from './pages/AreaAluno/DesempenhoDisciplinaAlunoPage.jsx'
+
+import EvolucaoAlunoPage
+  from './pages/AreaAluno/EvolucaoAlunoPage.jsx'
+
+import DesempenhoTurmaProfessorPage
+  from './pages/AreaProfessor/DesempenhoTurmaProfessorPage.jsx'
+
+import DesempenhoAlunoProfessorPage
+  from './pages/AreaProfessor/DesempenhoAlunoProfessorPage.jsx'
+
 
 function App() {
 
@@ -151,6 +163,7 @@ function App() {
 
         <Route
           path="/sistema/aluno"
+          
 
           element={
 
@@ -161,6 +174,41 @@ function App() {
             >
 
               <AreaAluno />
+
+            </ProtectedRoute>
+
+          }
+        />
+        <Route
+          path="/sistema/aluno/disciplinas/:idMatricula/desempenho"
+
+          element={
+
+            <ProtectedRoute
+              perfisPermitidos={[
+                'ALUNO'
+              ]}
+            >
+
+              <DesempenhoDisciplinaAlunoPage />
+
+            </ProtectedRoute>
+
+          }
+        />
+
+        <Route
+          path="/sistema/aluno/evolucao/:idPeriodo"
+
+          element={
+
+            <ProtectedRoute
+              perfisPermitidos={[
+                'ALUNO'
+              ]}
+            >
+
+              <EvolucaoAlunoPage />
 
             </ProtectedRoute>
 
@@ -227,34 +275,82 @@ function App() {
 
           }
         />
+
+
         <Route
-            path="/sistema/professor/turmas/:idProfessorTurma/frequencia"
+          path="/sistema/professor/turmas/:idProfessorTurma/frequencia"
 
-            element={
-              <ProtectedRoute
-                perfisPermitidos={[
-                  'PROFESSOR'
-                ]}
-              >
-                <FrequenciaProfessorPage />
-              </ProtectedRoute>
-            }
-          />
+          element={
+
+            <ProtectedRoute
+              perfisPermitidos={[
+                'PROFESSOR'
+              ]}
+            >
+
+              <FrequenciaProfessorPage />
+
+            </ProtectedRoute>
+
+          }
+        />
 
 
-          <Route
-            path="/sistema/professor/turmas/:idProfessorTurma/aulas/:idAula/frequencia"
+        <Route
+          path="/sistema/professor/turmas/:idProfessorTurma/aulas/:idAula/frequencia"
 
-            element={
-              <ProtectedRoute
-                perfisPermitidos={[
-                  'PROFESSOR'
-                ]}
-              >
-                <ChamadaFrequenciaPage />
-              </ProtectedRoute>
-            }
-          />
+          element={
+
+            <ProtectedRoute
+              perfisPermitidos={[
+                'PROFESSOR'
+              ]}
+            >
+
+              <ChamadaFrequenciaPage />
+
+            </ProtectedRoute>
+
+          }
+        />
+
+
+        <Route
+          path="/sistema/professor/turmas/:idProfessorTurma/desempenho"
+
+          element={
+
+            <ProtectedRoute
+              perfisPermitidos={[
+                'PROFESSOR'
+              ]}
+            >
+
+              <DesempenhoTurmaProfessorPage />
+
+            </ProtectedRoute>
+
+          }
+        />
+
+
+        <Route
+          path="/sistema/professor/turmas/:idProfessorTurma/alunos/:idMatricula/desempenho"
+
+          element={
+
+            <ProtectedRoute
+              perfisPermitidos={[
+                'PROFESSOR'
+              ]}
+            >
+
+              <DesempenhoAlunoProfessorPage />
+
+            </ProtectedRoute>
+
+          }
+        />
 
 
         {/* =============================================
