@@ -4,7 +4,8 @@ const API_URL =
 
 
 export async function consultarIndicadoresCursos(
-  idCurso = null
+  idCurso = null,
+  idPeriodo = null
 ) {
 
   const token =
@@ -34,6 +35,18 @@ export async function consultarIndicadoresCursos(
     parametros.set(
       'idCurso',
       idCurso
+    )
+
+  }
+
+  if (
+    idPeriodo !== null &&
+    idPeriodo !== undefined
+  ) {
+
+    parametros.set(
+      'idPeriodo',
+      idPeriodo
     )
 
   }
