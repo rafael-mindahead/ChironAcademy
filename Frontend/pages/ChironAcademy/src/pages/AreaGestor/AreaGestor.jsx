@@ -1,8 +1,90 @@
 import {
+  ArrowRight,
+  BookOpen,
+  CalendarDays,
+  ClipboardList,
+  GraduationCap,
+  Layers3,
+  School,
+  UserRound,
+  UsersRound
+} from 'lucide-react'
+
+import {
   useNavigate
 } from 'react-router-dom'
 
 import AreaInterna from '../AreaInterna/AreaInterna.jsx'
+
+
+const gruposGestor = [
+  {
+    titulo: 'Estrutura acadêmica',
+    descricao: 'Organize a oferta acadêmica.',
+    opcoes: [
+      {
+        titulo: 'Cursos',
+        descricao: 'Cadastre e organize os cursos da instituição.',
+        rota: '/sistema/gestor/cursos',
+        Icone: GraduationCap
+      },
+      {
+        titulo: 'Períodos',
+        descricao: 'Gerencie os períodos de cada curso.',
+        rota: '/sistema/gestor/periodos',
+        Icone: CalendarDays
+      },
+      {
+        titulo: 'Disciplinas',
+        descricao: 'Organize as disciplinas da matriz curricular.',
+        rota: '/sistema/gestor/disciplinas',
+        Icone: BookOpen
+      },
+      {
+        titulo: 'Turmas',
+        descricao: 'Cadastre e acompanhe as turmas ofertadas.',
+        rota: '/sistema/gestor/turmas',
+        Icone: School
+      }
+    ]
+  },
+  {
+    titulo: 'Operação acadêmica',
+    descricao: 'Mantenha as relações acadêmicas.',
+    opcoes: [
+      {
+        titulo: 'Vínculos',
+        descricao: 'Associe professores, turmas e disciplinas.',
+        rota: '/sistema/gestor/vinculos',
+        Icone: Layers3
+      },
+      {
+        titulo: 'Matrículas',
+        descricao: 'Matricule alunos em turmas e disciplinas.',
+        rota: '/sistema/gestor/matriculas',
+        Icone: ClipboardList
+      }
+    ]
+  },
+  {
+    titulo: 'Pessoas',
+    descricao: 'Acesse os cadastros da comunidade.',
+    opcoes: [
+      {
+        titulo: 'Alunos',
+        descricao: 'Consulte e mantenha os cadastros de alunos.',
+        rota: '/sistema/gestor/alunos',
+        Icone: UsersRound
+      },
+      {
+        titulo: 'Professores',
+        descricao: 'Consulte e mantenha os cadastros de professores.',
+        rota: '/sistema/gestor/professores',
+        Icone: UserRound
+      }
+    ]
+  }
+]
 
 
 function AreaGestor() {
@@ -13,443 +95,157 @@ function AreaGestor() {
 
   return (
 
-    <AreaInterna>
+    <AreaInterna mostrarResumoUsuario={false}>
 
-      <div>
+      <div className="space-y-9">
 
-        <h2
-          className="
-            text-xl
-            font-semibold
-            text-foreground
-          "
-        >
-          Gestão acadêmica
-        </h2>
+        <section className="flex items-start gap-4 px-1 py-2 sm:items-center">
+          <div className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
+            <School className="size-5" />
+          </div>
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary">
+              Área do gestor
+            </p>
+            <h1
+              className="
+                mt-1
+                font-[family-name:var(--font-display)]
+                text-3xl
+                font-semibold
+                tracking-tight
+                sm:text-4xl
+              "
+            >
+              Gestão acadêmica
+            </h1>
+            <p className="mt-2 max-w-2xl text-sm leading-relaxed text-muted-foreground">
+              Indicadores e ferramentas para administrar a vida acadêmica da instituição.
+            </p>
+          </div>
+        </section>
 
-
-        <div
-          className="
-            mt-6
-            grid
-            gap-4
-            md:grid-cols-2
-            lg:grid-cols-3
-          "
-        >
-
+        <section aria-labelledby="indicadores-heading">
           <button
             type="button"
-
             onClick={() =>
               navigate('/sistema/gestor/indicadores')
             }
-
             className="
-              rounded-xl
-              border
-              border-primary/40
-              bg-primary/5
-              p-5
+              group
+              relative
+              flex
+              min-h-48
+              w-full
+              items-center
+              justify-between
+              gap-5
+              overflow-hidden
+              rounded-2xl
+              border border-border
+              bg-card
+              p-6
               text-left
-              shadow-sm
               transition
-              hover:bg-primary/10
+              hover:border-primary/50 hover:bg-secondary/30
+              sm:p-8
             "
           >
-
-            <h3
-              className="
-                font-semibold
-                text-foreground
-              "
-            >
-              Indicadores dos cursos
-            </h3>
-
-
-            <p
-              className="
-                mt-1
-                text-sm
-                text-muted-foreground
-              "
-            >
-              Consultar dados acadêmicos consolidados por curso.
-            </p>
-
+            <span className="relative flex min-w-0 items-center gap-4 sm:gap-6">
+              <span className="flex size-14 shrink-0 items-center justify-center rounded-2xl border border-primary/20 bg-primary/10 text-primary sm:size-16">
+                <GraduationCap className="size-7" />
+              </span>
+              <span className="min-w-0">
+                <span className="block text-xs font-semibold uppercase tracking-[0.15em] text-primary">
+                  Visão institucional
+                </span>
+                <span
+                  id="indicadores-heading"
+                  className="mt-1 block text-xl font-semibold tracking-tight text-foreground sm:text-2xl"
+                >
+                  Indicadores dos cursos
+                </span>
+                <span className="mt-2 block max-w-2xl text-sm leading-relaxed text-muted-foreground">
+                  Explore matrículas, notas e frequências registradas. Compare cursos ou filtre por curso e período.
+                </span>
+              </span>
+            </span>
+            <span className="relative flex shrink-0 items-center gap-2 rounded-lg border border-border px-3 py-2 text-sm font-medium text-muted-foreground transition group-hover:border-primary/40 group-hover:text-primary sm:px-4 sm:py-3">
+              Abrir painel
+              <ArrowRight className="size-5" />
+            </span>
           </button>
+        </section>
 
+        <div className="grid items-stretch gap-6 lg:grid-cols-3">
+            {
+              gruposGestor.map(
+                grupo => (
+                  <section
+                    key={grupo.titulo}
+                    aria-labelledby={`grupo-${grupo.titulo}`}
+                    className="h-full rounded-2xl border border-border bg-card p-5 shadow-sm sm:p-6"
+                  >
+                    <div className="mb-5">
+                      <h2
+                        id={`grupo-${grupo.titulo}`}
+                        className="text-lg font-semibold tracking-tight"
+                      >
+                        {grupo.titulo}
+                      </h2>
+                      <p className="mt-1 text-sm text-muted-foreground">
+                        {grupo.descricao}
+                      </p>
+                    </div>
 
-          {/* ====================================================
-              CURSOS
-          ==================================================== */}
-
-          <button
-            type="button"
-
-            onClick={() =>
-              navigate('/sistema/gestor/cursos')
+                    <div className="grid gap-4">
+                      {
+                        grupo.opcoes.map(
+                          ({ titulo, descricao, rota, Icone }) => (
+                            <button
+                              key={rota}
+                              type="button"
+                              onClick={() =>
+                                navigate(rota)
+                              }
+                              className="
+                                group
+                                flex
+                                w-full
+                                items-start
+                                gap-3
+                                rounded-xl
+                                border border-border
+                                bg-background/60
+                                p-3
+                                text-left
+                                transition hover:border-primary/40 hover:bg-secondary/50
+                                focus-visible:outline-none
+                                focus-visible:ring-2
+                                focus-visible:ring-ring
+                              "
+                            >
+                              <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-secondary text-muted-foreground transition group-hover:bg-primary/10 group-hover:text-primary">
+                                <Icone className="size-4" />
+                              </span>
+                              <span className="min-w-0 flex-1">
+                                <span className="block text-sm font-semibold text-foreground">
+                                  {titulo}
+                                </span>
+                                <span className="mt-1 block text-xs leading-relaxed text-muted-foreground">
+                                  {descricao}
+                                </span>
+                              </span>
+                              <ArrowRight className="mt-1 size-4 shrink-0 text-muted-foreground transition group-hover:translate-x-0.5 group-hover:text-primary" />
+                            </button>
+                          )
+                        )
+                      }
+                    </div>
+                  </section>
+                )
+              )
             }
-
-            className="
-              rounded-xl
-              border
-              border-border
-              bg-background
-              p-5
-              text-left
-              transition
-              hover:bg-secondary
-            "
-          >
-
-            <h3
-              className="
-                font-semibold
-                text-foreground
-              "
-            >
-              Cursos
-            </h3>
-
-
-            <p
-              className="
-                mt-1
-                text-sm
-                text-muted-foreground
-              "
-            >
-              Cadastrar e gerenciar cursos.
-            </p>
-
-          </button>
-
-
-          {/* ====================================================
-              PERÍODOS ACADÊMICOS
-          ==================================================== */}
-
-          <button
-            type="button"
-
-            onClick={() =>
-              navigate('/sistema/gestor/periodos')
-            }
-
-            className="
-              rounded-xl
-              border
-              border-border
-              bg-background
-              p-5
-              text-left
-              transition
-              hover:bg-secondary
-            "
-          >
-
-            <h3
-              className="
-                font-semibold
-                text-foreground
-              "
-            >
-              Períodos acadêmicos
-            </h3>
-
-
-            <p
-              className="
-                mt-1
-                text-sm
-                text-muted-foreground
-              "
-            >
-              Cadastrar e gerenciar períodos dos cursos.
-            </p>
-
-          </button>
-
-
-          {/* ====================================================
-              ALUNOS
-          ==================================================== */}
-
-          <button
-            type="button"
-
-            onClick={() =>
-              navigate('/sistema/gestor/alunos')
-            }
-
-            className="
-              rounded-xl
-              border
-              border-border
-              bg-background
-              p-5
-              text-left
-              transition
-              hover:bg-secondary
-            "
-          >
-
-            <h3
-              className="
-                font-semibold
-                text-foreground
-              "
-            >
-              Alunos
-            </h3>
-
-
-            <p
-              className="
-                mt-1
-                text-sm
-                text-muted-foreground
-              "
-            >
-              Cadastrar e gerenciar alunos.
-            </p>
-
-          </button>
-
-
-          {/* ====================================================
-              PROFESSORES
-          ==================================================== */}
-
-          <button
-            type="button"
-
-            onClick={() =>
-              navigate('/sistema/gestor/professores')
-            }
-
-            className="
-              rounded-xl
-              border
-              border-border
-              bg-background
-              p-5
-              text-left
-              transition
-              hover:bg-secondary
-            "
-          >
-
-            <h3
-              className="
-                font-semibold
-                text-foreground
-              "
-            >
-              Professores
-            </h3>
-
-
-            <p
-              className="
-                mt-1
-                text-sm
-                text-muted-foreground
-              "
-            >
-              Cadastrar e gerenciar professores.
-            </p>
-
-          </button>
-
-
-          {/* ====================================================
-              DISCIPLINAS
-          ==================================================== */}
-
-          <button
-            type="button"
-
-            onClick={() =>
-              navigate('/sistema/gestor/disciplinas')
-            }
-
-            className="
-              rounded-xl
-              border
-              border-border
-              bg-background
-              p-5
-              text-left
-              transition
-              hover:bg-secondary
-            "
-          >
-
-            <h3
-              className="
-                font-semibold
-                text-foreground
-              "
-            >
-              Disciplinas
-            </h3>
-
-
-            <p
-              className="
-                mt-1
-                text-sm
-                text-muted-foreground
-              "
-            >
-              Cadastrar e gerenciar as disciplinas atreladas aos cursos.
-            </p>
-
-          </button>
-
-
-          {/* ====================================================
-              TURMAS
-          ==================================================== */}
-
-          <button
-            type="button"
-
-            onClick={() =>
-              navigate('/sistema/gestor/turmas')
-            }
-
-            className="
-              rounded-xl
-              border
-              border-border
-              bg-background
-              p-5
-              text-left
-              transition
-              hover:bg-secondary
-            "
-          >
-
-            <h3
-              className="
-                font-semibold
-                text-foreground
-              "
-            >
-              Turmas
-            </h3>
-
-
-            <p
-              className="
-                mt-1
-                text-sm
-                text-muted-foreground
-              "
-            >
-              Cadastrar e gerenciar turmas.
-            </p>
-
-          </button>
-
-
-          {/* ====================================================
-              VÍNCULOS
-          ==================================================== */}
-
-          <button
-            type="button"
-
-            onClick={() =>
-              navigate('/sistema/gestor/vinculos')
-            }
-
-            className="
-              rounded-xl
-              border
-              border-border
-              bg-background
-              p-5
-              text-left
-              shadow-sm
-              transition
-              hover:bg-secondary
-            "
-          >
-
-            <h3
-              className="
-                font-semibold
-                text-foreground
-              "
-            >
-              Vínculos
-            </h3>
-
-
-            <p
-              className="
-                mt-1
-                text-sm
-                text-muted-foreground
-              "
-            >
-              Vincular professores, turmas e disciplinas.
-            </p>
-
-          </button>
-          {/* ====================================================
-    MATRÍCULAS
-==================================================== */}
-
-<button
-  type="button"
-
-  onClick={() =>
-    navigate(
-      '/sistema/gestor/matriculas'
-    )
-  }
-
-  className="
-    rounded-xl
-    border-2
-    border-primary
-    bg-primary/5
-    p-5
-    text-left
-    shadow-sm
-    transition
-    hover:bg-primary/10
-  "
->
-
-  <h3
-    className="
-      font-semibold
-      text-foreground
-    "
-  >
-    Matrículas
-  </h3>
-
-
-  <p
-    className="
-      mt-1
-      text-sm
-      text-muted-foreground
-    "
-  >
-    Matricular alunos em turmas e disciplinas.
-  </p>
-
-</button>
-
         </div>
 
       </div>
