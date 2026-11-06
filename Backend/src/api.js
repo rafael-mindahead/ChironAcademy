@@ -44,6 +44,8 @@ import disciplinasAlunoRoutes
 import evolucaoAlunoRoutes
   from './routes/alunoRoutes/evolucaoAlunoRoutes.js'
 
+import indicadoresCursoRoutes
+  from './routes/gestorRoutes/indicadoresCursoRoutes.js'
 
 dotenv.config()
 
@@ -118,6 +120,11 @@ app.use(
 app.use(
   '/api/matriculas',
   matriculaFormRoutes
+)
+
+app.use(
+  '/api/gestor/indicadores/cursos',
+  indicadoresCursoRoutes
 )
 
 

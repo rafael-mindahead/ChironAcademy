@@ -297,6 +297,11 @@ function DesempenhoAlunoProfessorPage() {
       ?.desempenho
       ?.frequencia
 
+  const rendimento =
+    dados
+      ?.desempenho
+      ?.rendimento
+
 
   const notasRegistradas =
     notas.filter(
@@ -521,7 +526,7 @@ function DesempenhoAlunoProfessorPage() {
             grid
             gap-4
             sm:grid-cols-2
-            lg:grid-cols-4
+            lg:grid-cols-3
           "
         >
 
@@ -571,7 +576,97 @@ function DesempenhoAlunoProfessorPage() {
             }
           />
 
+          <ResumoCard
+            titulo="Frequência considerada"
+            valor={
+              rendimento?.percentualFrequencia === null ||
+              rendimento?.percentualFrequencia === undefined
+                ? 'Indisponível'
+                : `${rendimento.percentualFrequencia.toLocaleString('pt-BR', { maximumFractionDigits: 1 })}%`
+            }
+            icone={
+              TrendingUp
+            }
+          />
+
+          <ResumoCard
+            titulo="Média final ponderada"
+            valor={
+              rendimento?.notaFinalDisponivel
+                ? rendimento.notaFinalPonderada.toLocaleString('pt-BR', {
+                    minimumFractionDigits: 1,
+                    maximumFractionDigits: 2
+                  })
+                : rendimento?.abaixoNota === true
+                  ? `Máx. ${rendimento.notaMaximaPossivel.toLocaleString('pt-BR', {
+                      minimumFractionDigits: 1,
+                      maximumFractionDigits: 2
+                    })}`
+                  : 'Indisponível'
+            }
+            icone={
+              GraduationCap
+            }
+          />
+
         </section>
+
+        {
+          !rendimento?.pesosConfigurados
+            ? (
+                <p className="mt-4 rounded-lg border border-dashed border-border p-4 text-sm text-muted-foreground">
+                  Média final indisponível: os pesos das avaliações devem estar configurados e totalizar 100% (total atual: {
+                    Number(rendimento?.totalPesoAvaliacao || 0).toLocaleString('pt-BR', {
+                      maximumFractionDigits: 2
+                    })
+                  }%).
+                </p>
+              )
+            : rendimento.notasPendentes > 0
+              ? (
+                  <p className="mt-4 rounded-lg border border-dashed border-border p-4 text-sm text-muted-foreground">
+                    Há {rendimento.notasPendentes} avaliação(ões) sem nota. A média final só é exibida quando todos os lançamentos necessários estiverem disponíveis.
+                  </p>
+                )
+              : null
+        }
+
+        {
+          rendimento?.baixoRendimento
+            ? (
+                <section className="mt-5 rounded-xl border border-destructive/40 bg-destructive/5 p-5">
+                  <h2 className="font-semibold text-destructive">
+                    Indicadores abaixo dos critérios
+                  </h2>
+                  <ul className="mt-3 list-disc space-y-1 pl-5 text-sm">
+                    {
+                      rendimento.abaixoFrequencia === true &&
+                      (
+                        <li>
+                          Frequência de {rendimento.percentualFrequencia.toLocaleString('pt-BR', { maximumFractionDigits: 1 })}% — mínimo de 75%.
+                        </li>
+                      )
+                    }
+                    {
+                      rendimento.abaixoNota === true &&
+                      (
+                        <li>
+                          {
+                            rendimento.notaFinalDisponivel
+                              ? `Média final ponderada ${rendimento.notaFinalPonderada.toLocaleString('pt-BR', { minimumFractionDigits: 1, maximumFractionDigits: 2 })} — mínimo de 7.`
+                              : `Mesmo com as avaliações pendentes na nota máxima, o resultado não alcança 7 (máximo possível: ${rendimento.notaMaximaPossivel.toLocaleString('pt-BR', { minimumFractionDigits: 1, maximumFractionDigits: 2 })}).`
+                          }
+                        </li>
+                      )
+                    }
+                  </ul>
+                  <p className="mt-3 text-xs text-muted-foreground">
+                    Frequência = presenças ÷ (presenças + faltas); registros justificados e aulas sem marcação são excluídos. A nota pondera cada avaliação por seu peso e normaliza a nota pelo valor máximo.
+                  </p>
+                </section>
+              )
+            : null
+        }
 
 
         {/* ===========================================
@@ -704,6 +799,14 @@ function DesempenhoAlunoProfessorPage() {
                                     )
                                   }
 
+                                  {' • '}
+                                  Peso {
+                                    nota.pesoAvaliacao === null ||
+                                    nota.pesoAvaliacao === undefined
+                                      ? 'pendente'
+                                      : `${Number(nota.pesoAvaliacao).toLocaleString('pt-BR')}%`
+                                  }
+
                                 </p>
 
                                 {
@@ -764,6 +867,25 @@ function DesempenhoAlunoProfessorPage() {
                                             ).toFixed(2)
                                           }
                                         </p>
+                                        {
+                                          nota.pesoAvaliacao !== null &&
+                                          nota.pesoAvaliacao !== undefined &&
+                                          (
+                                            <p className="mt-1 text-xs text-muted-foreground">
+                                              Contribuição: {
+                                                (
+                                                  Number(nota.valor) /
+                                                  Number(nota.valorMaximo) *
+                                                  Number(nota.pesoAvaliacao) /
+                                                  10
+                                                ).toLocaleString('pt-BR', {
+                                                  minimumFractionDigits: 2,
+                                                  maximumFractionDigits: 2
+                                                })
+                                              } pontos
+                                            </p>
+                                          )
+                                        }
 
                                       </div>
 

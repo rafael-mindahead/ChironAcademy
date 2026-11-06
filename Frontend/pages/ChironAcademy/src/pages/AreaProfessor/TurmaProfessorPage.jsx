@@ -54,7 +54,8 @@ const formularioVazio = {
   titulo: '',
   descricao: '',
   dataAvaliacao: '',
-  valorMaximo: '10'
+  valorMaximo: '10',
+  pesoAvaliacao: ''
 }
 
 
@@ -328,7 +329,13 @@ function TurmaProfessorPage() {
       valorMaximo:
         String(
           avaliacao.valorMaximo
-        )
+        ),
+
+      pesoAvaliacao:
+        avaliacao.pesoAvaliacao === null ||
+        avaliacao.pesoAvaliacao === undefined
+          ? ''
+          : String(avaliacao.pesoAvaliacao)
 
     })
 
@@ -367,11 +374,12 @@ function TurmaProfessorPage() {
     if (
       !formulario.titulo ||
       !formulario.dataAvaliacao ||
-      !formulario.valorMaximo
+      !formulario.valorMaximo ||
+      !formulario.pesoAvaliacao
     ) {
 
       setErro(
-        'Título, data e valor máximo são obrigatórios.'
+        'Título, data, valor máximo e peso percentual são obrigatórios.'
       )
 
       return
@@ -393,6 +401,11 @@ function TurmaProfessorPage() {
       valorMaximo:
         Number(
           formulario.valorMaximo
+        ),
+
+      pesoAvaliacao:
+        Number(
+          formulario.pesoAvaliacao
         )
 
     }
@@ -708,6 +721,33 @@ function TurmaProfessorPage() {
     )
 
   }
+
+  const pesosForaDaEdicao =
+    avaliacoes
+      .filter(
+        avaliacao =>
+          Number(avaliacao.idAvaliacao) !==
+          Number(avaliacaoEmEdicao?.idAvaliacao)
+      )
+      .reduce(
+        (total, avaliacao) =>
+          total + Number(avaliacao.pesoAvaliacao || 0),
+        0
+      )
+
+  const totalPesosConfigurados =
+    avaliacoes.reduce(
+      (total, avaliacao) =>
+        total + Number(avaliacao.pesoAvaliacao || 0),
+      0
+    )
+
+  const avaliacoesSemPeso =
+    avaliacoes.filter(
+      avaliacao =>
+        avaliacao.pesoAvaliacao === null ||
+        avaliacao.pesoAvaliacao === undefined
+    ).length
 
 
   // ====================================================
@@ -1252,6 +1292,35 @@ function TurmaProfessorPage() {
 
                 </Campo>
 
+                <Campo
+                  titulo="Peso na média final (%)"
+                >
+                  <input
+                    required
+                    type="number"
+                    min="0.01"
+                    max={Math.max(0, 100 - pesosForaDaEdicao)}
+                    step="0.01"
+                    value={formulario.pesoAvaliacao}
+                    onChange={
+                      event =>
+                        campo(
+                          'pesoAvaliacao',
+                          event.target.value
+                        )
+                    }
+                    className="campo"
+                    placeholder="Ex.: 25"
+                  />
+                  <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
+                    Os pesos das avaliações da turma devem totalizar 100%. Pesos já atribuídos: {
+                      pesosForaDaEdicao.toLocaleString('pt-BR', {
+                        maximumFractionDigits: 2
+                      })
+                    }%.
+                  </p>
+                </Campo>
+
 
                 {/* DESCRIÇÃO */}
 
@@ -1441,7 +1510,21 @@ function TurmaProfessorPage() {
                 {
                   avaliacoes.length
                 } registro(s)
+                {' • '}
+                {
+                  totalPesosConfigurados.toLocaleString('pt-BR', {
+                    maximumFractionDigits: 2
+                  })
+                }% de 100%
               </p>
+              {
+                avaliacoesSemPeso > 0 &&
+                (
+                  <p className="mt-1 text-xs text-amber-600">
+                    {avaliacoesSemPeso} avaliação(ões) antiga(s) ainda sem peso; edite-as para habilitar o cálculo da média.
+                  </p>
+                )
+              }
 
             </div>
 
@@ -1577,6 +1660,18 @@ function TurmaProfessorPage() {
                               </span>
 
                             </div>
+
+                            <p className="mt-3 text-sm text-muted-foreground">
+                              Peso na média:{' '}
+                              <span className="font-medium text-foreground">
+                                {
+                                  avaliacao.pesoAvaliacao === null ||
+                                  avaliacao.pesoAvaliacao === undefined
+                                    ? 'pendente'
+                                    : `${Number(avaliacao.pesoAvaliacao).toLocaleString('pt-BR')}%`
+                                }
+                              </span>
+                            </p>
 
 
                             {/* DATA */}

@@ -570,7 +570,6 @@ export async function excluirCurso(req, res) {
 
     }
 
-
     // EXCLUIR CURSO
 
     await database.execute(

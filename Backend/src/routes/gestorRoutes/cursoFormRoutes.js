@@ -21,7 +21,11 @@ const router = express.Router()
 
 
 // ======================================================
-// CADASTRAR CURSO
+// CADASTRAR CURSO COM A REQUISIÇÃO POST
+//
+// primeiro ele autentica se o token da sessão é valida
+// depois verifica se o usuario acessando a rota tem o perfil de GESTOR
+// e só então roda a função cadastrarCurso
 // ======================================================
 
 router.post(

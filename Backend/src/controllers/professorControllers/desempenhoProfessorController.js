@@ -1,4 +1,7 @@
 import database from '../../config/database.js'
+import {
+  calcularIndicadoresRendimento
+} from '../../services/rendimentoService.js'
 
 // Sprint 2 | Consultar desempenho dos alunos
 
@@ -248,43 +251,9 @@ export async function listarDesempenhoTurma(
         `
           SELECT
             m.idMatricula,
-
             a.idAluno,
             a.nome,
-            a.numeroMatricula,
-            a.email,
-
-            COUNT(
-              DISTINCT n.idNota
-            ) AS totalNotas,
-
-            COUNT(
-              DISTINCT f.idFrequencia
-            ) AS totalFrequencias,
-
-            SUM(
-              CASE
-                WHEN f.statusFrequencia = 'PRESENTE'
-                THEN 1
-                ELSE 0
-              END
-            ) AS presentes,
-
-            SUM(
-              CASE
-                WHEN f.statusFrequencia = 'FALTA'
-                THEN 1
-                ELSE 0
-              END
-            ) AS faltas,
-
-            SUM(
-              CASE
-                WHEN f.statusFrequencia = 'JUSTIFICADA'
-                THEN 1
-                ELSE 0
-              END
-            ) AS justificadas
+            a.numeroMatricula
 
           FROM Matricula m
 
@@ -292,27 +261,11 @@ export async function listarDesempenhoTurma(
             ON a.idAluno =
                m.idAluno
 
-          LEFT JOIN Nota n
-            ON n.idMatricula =
-               m.idMatricula
-
-          LEFT JOIN Frequencia f
-            ON f.idMatricula =
-               m.idMatricula
-
           WHERE m.idTurma = ?
 
             AND m.codDisciplina = ?
 
             AND m.statusMatricula = 'CURSANDO'
-
-          GROUP BY
-            m.idMatricula,
-
-            a.idAluno,
-            a.nome,
-            a.numeroMatricula,
-            a.email
 
           ORDER BY
             a.nome ASC
@@ -323,44 +276,132 @@ export async function listarDesempenhoTurma(
         ]
       )
 
+    const [avaliacoes] =
+      await database.execute(
+        `
+          SELECT
+            idAvaliacao,
+            valorMaximo,
+            pesoAvaliacao
+
+          FROM Avaliacao
+
+          WHERE idProfessorTurma = ?
+        `,
+        [
+          idProfessorTurma
+        ]
+      )
+
+    const [notas] =
+      await database.execute(
+        `
+          SELECT
+            n.idMatricula,
+            n.idAvaliacao,
+            n.valor
+
+          FROM Nota n
+
+          INNER JOIN Avaliacao av
+            ON av.idAvaliacao =
+               n.idAvaliacao
+
+          INNER JOIN Matricula m
+            ON m.idMatricula =
+               n.idMatricula
+
+          WHERE av.idProfessorTurma = ?
+
+            AND m.idTurma = ?
+
+            AND m.codDisciplina = ?
+
+            AND m.statusMatricula = 'CURSANDO'
+        `,
+        [
+          idProfessorTurma,
+          vinculo.idTurma,
+          vinculo.codDisciplina
+        ]
+      )
+
+    const [frequencias] =
+      await database.execute(
+        `
+          SELECT
+            f.idMatricula,
+            f.statusFrequencia,
+            COUNT(*) AS total
+
+          FROM Frequencia f
+
+          INNER JOIN Aula au
+            ON au.idAula =
+               f.idAula
+
+          INNER JOIN Matricula m
+            ON m.idMatricula =
+               f.idMatricula
+
+           AND m.idTurma = ?
+
+           AND m.codDisciplina = ?
+
+           AND m.statusMatricula = 'CURSANDO'
+
+          WHERE au.idProfessorTurma = ?
+
+          GROUP BY
+            f.idMatricula,
+            f.statusFrequencia
+        `,
+        [
+          vinculo.idTurma,
+          vinculo.codDisciplina,
+          idProfessorTurma
+        ]
+      )
 
     const alunosNormalizados =
       alunos.map(
-        aluno => ({
-
-          ...aluno,
-
-          totalNotas:
-            Number(
-              aluno.totalNotas ||
-              0
-            ),
-
-          totalFrequencias:
-            Number(
-              aluno.totalFrequencias ||
-              0
-            ),
-
-          presentes:
-            Number(
-              aluno.presentes ||
-              0
-            ),
-
-          faltas:
-            Number(
-              aluno.faltas ||
-              0
-            ),
-
-          justificadas:
-            Number(
-              aluno.justificadas ||
-              0
+        aluno => {
+          const notasDoAluno =
+            notas.filter(
+              nota =>
+                Number(nota.idMatricula) ===
+                Number(aluno.idMatricula)
             )
 
-        })
+          const frequenciasDoAluno =
+            frequencias.filter(
+              frequencia =>
+                Number(frequencia.idMatricula) ===
+                Number(aluno.idMatricula)
+            )
+
+          const rendimento =
+            calcularIndicadoresRendimento(
+              avaliacoes,
+              notasDoAluno,
+              frequenciasDoAluno
+            )
+
+          return {
+            ...aluno,
+            totalNotas: notasDoAluno.length,
+            totalFrequencias:
+              frequenciasDoAluno.reduce(
+                (total, item) =>
+                  total + Number(item.total),
+                0
+              ),
+            presentes: rendimento.presentes,
+            faltas: rendimento.faltas,
+            justificadas: rendimento.justificadas,
+            rendimento
+          }
+        }
       )
 
 
@@ -496,6 +537,7 @@ export async function consultarDesempenhoAluno(
             av.descricao,
             av.dataAvaliacao,
             av.valorMaximo,
+            av.pesoAvaliacao,
 
             n.idNota,
             n.valor,
@@ -585,6 +627,57 @@ export async function consultarDesempenhoAluno(
           'JUSTIFICADA'
       ).length
 
+    const rendimento =
+      calcularIndicadoresRendimento(
+        notas
+          .map(
+            item => ({
+              idAvaliacao: item.idAvaliacao,
+              valorMaximo: item.valorMaximo,
+              pesoAvaliacao: item.pesoAvaliacao
+            })
+          ),
+        notas
+          .filter(
+            item =>
+              item.idNota !== null
+          )
+          .map(
+            item => ({
+              idAvaliacao: item.idAvaliacao,
+              valor: item.valor
+            })
+          ),
+        frequencias
+          .filter(
+            item =>
+              item.idFrequencia !== null
+          )
+          .reduce(
+            (agrupadas, item) => {
+              const existente =
+                agrupadas.find(
+                  status =>
+                    status.statusFrequencia ===
+                    item.statusFrequencia
+                )
+
+              if (existente) {
+                existente.total += 1
+              } else {
+                agrupadas.push({
+                  statusFrequencia:
+                    item.statusFrequencia,
+                  total: 1
+                })
+              }
+
+              return agrupadas
+            },
+            []
+          )
+      )
+
 
     return res.status(200).json({
 
@@ -599,6 +692,8 @@ export async function consultarDesempenhoAluno(
       desempenho: {
 
         notas,
+
+        rendimento,
 
         frequencia: {
 

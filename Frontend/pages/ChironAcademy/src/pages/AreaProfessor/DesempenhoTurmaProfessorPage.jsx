@@ -5,10 +5,12 @@ import {
 
 import {
   ArrowLeft,
+  BadgeAlert,
   BookOpen,
   CheckCircle2,
   CircleAlert,
   GraduationCap,
+  Percent,
   TrendingUp,
   UserRound,
   XCircle
@@ -62,6 +64,33 @@ function DesempenhoTurmaProfessorPage() {
     setErro
   ] =
     useState('')
+
+
+  const alunosBaixoRendimento =
+    alunos.filter(
+      aluno =>
+        aluno.rendimento?.baixoRendimento
+    )
+
+  const alunosComIndicadores =
+    alunos.filter(
+      aluno =>
+        (
+          aluno.rendimento?.percentualFrequencia !== null &&
+          aluno.rendimento?.percentualFrequencia !== undefined
+        ) ||
+        aluno.rendimento?.notaFinalDisponivel ||
+        aluno.rendimento?.abaixoNota === true
+    )
+
+  const alunosComDadosPendentes =
+    alunos.filter(
+      aluno =>
+        !aluno.rendimento?.pesosConfigurados ||
+        aluno.rendimento?.notasPendentes > 0 ||
+        aluno.rendimento?.percentualFrequencia === null ||
+        aluno.rendimento?.percentualFrequencia === undefined
+    )
 
 
   useEffect(
@@ -168,6 +197,11 @@ function DesempenhoTurmaProfessorPage() {
             rounded-xl
             border
             border-border
+            ${
+              aluno.rendimento?.baixoRendimento
+                ? 'border-destructive/50'
+                : ''
+            }
             bg-card
             p-8
           "
@@ -370,6 +404,116 @@ function DesempenhoTurmaProfessorPage() {
 
         </section>
 
+        <section
+          className={`
+            mt-8
+            rounded-2xl
+            border
+            p-6
+            sm:p-8
+            ${
+              alunosBaixoRendimento.length > 0
+                ? 'border-destructive/40 bg-destructive/5'
+                : 'border-border bg-card'
+            }
+          `}
+          aria-labelledby="titulo-rendimento"
+        >
+          <div className="flex items-start gap-3">
+            {
+              alunosBaixoRendimento.length > 0
+                ? (
+                    <BadgeAlert className="mt-0.5 size-5 shrink-0 text-destructive" />
+                  )
+                : (
+                    <CheckCircle2 className="mt-0.5 size-5 shrink-0 text-primary" />
+                  )
+            }
+            <div className="min-w-0 flex-1">
+              <h2 id="titulo-rendimento" className="text-lg font-semibold">
+                Acompanhamento de rendimento
+              </h2>
+              <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
+                Critérios: frequência abaixo de 75% ou média final ponderada abaixo de 7. Justificadas e aulas sem marcação não entram no cálculo; notas parciais só geram alerta se nem a pontuação máxima restante alcançar 7.
+              </p>
+
+              {
+                alunosBaixoRendimento.length > 0
+                  ? (
+                      <div className="mt-5 space-y-3">
+                        <p className="text-sm font-medium text-destructive">
+                          {alunosBaixoRendimento.length} aluno(s) abaixo de pelo menos um critério.
+                        </p>
+                        {
+                          alunosBaixoRendimento.map(
+                            aluno => (
+                              <div
+                                key={aluno.idMatricula}
+                                className="flex flex-col gap-3 rounded-xl border border-destructive/20 bg-background p-4 sm:flex-row sm:items-center sm:justify-between"
+                              >
+                                <div>
+                                  <p className="font-medium">
+                                    {aluno.nome}
+                                  </p>
+                                  <p className="mt-1 text-sm text-muted-foreground">
+                                    {
+                                      [
+                                        aluno.rendimento.abaixoFrequencia === true &&
+                                          `Frequência ${aluno.rendimento.percentualFrequencia.toLocaleString('pt-BR', { maximumFractionDigits: 1 })}%`,
+                                        aluno.rendimento.abaixoNota === true &&
+                                          (
+                                            aluno.rendimento.notaFinalDisponivel
+                                              ? `Média ponderada ${aluno.rendimento.notaFinalPonderada.toLocaleString('pt-BR', { minimumFractionDigits: 1, maximumFractionDigits: 2 })}`
+                                              : `Máximo possível ${aluno.rendimento.notaMaximaPossivel.toLocaleString('pt-BR', { minimumFractionDigits: 1, maximumFractionDigits: 2 })}`
+                                          )
+                                      ]
+                                        .filter(Boolean)
+                                        .join(' • ')
+                                    }
+                                  </p>
+                                </div>
+                                <button
+                                  type="button"
+                                  onClick={() =>
+                                    navigate(
+                                      `/sistema/professor/turmas/${idProfessorTurma}/alunos/${aluno.idMatricula}/desempenho`
+                                    )
+                                  }
+                                  className="shrink-0 rounded-md border border-primary/30 px-4 py-2 text-sm font-medium text-primary transition hover:bg-primary/10"
+                                >
+                                  Ver indicadores
+                                </button>
+                              </div>
+                            )
+                          )
+                        }
+                      </div>
+                    )
+                  : alunos.length === 0
+                    ? (
+                        <p className="mt-5 rounded-lg border border-dashed border-border p-4 text-sm text-muted-foreground">
+                          Não há alunos com matrícula ativa nesta turma para avaliar.
+                        </p>
+                      )
+                    : alunosComIndicadores.length > 0
+                    ? (
+                        <p className="mt-5 rounded-lg border border-primary/20 bg-primary/5 p-4 text-sm">
+                          Não foram identificadas situações abaixo dos critérios nos indicadores disponíveis.
+                          {
+                            alunosComDadosPendentes.length > 0 &&
+                            ` ${alunosComDadosPendentes.length} aluno(s) ainda têm indicadores incompletos.`
+                          }
+                        </p>
+                      )
+                    : (
+                        <p className="mt-5 rounded-lg border border-dashed border-border p-4 text-sm text-muted-foreground">
+                          Ainda não há dados suficientes de frequência ou avaliações ponderadas para classificar os alunos.
+                        </p>
+                      )
+              }
+            </div>
+          </div>
+        </section>
 
         <section
           className="
@@ -480,13 +624,18 @@ function DesempenhoTurmaProfessorPage() {
                             key={
                               aluno.idMatricula
                             }
-                            className="
+                            className={`
                               rounded-xl
                               border
                               border-border
+                              ${
+                                aluno.rendimento?.baixoRendimento
+                                  ? 'border-destructive/50'
+                                  : ''
+                              }
                               bg-card
                               p-5
-                            "
+                            `}
                           >
 
                             <div
@@ -566,7 +715,8 @@ function DesempenhoTurmaProfessorPage() {
                                 border-t
                                 border-border
                                 pt-5
-                                sm:grid-cols-4
+                                sm:grid-cols-3
+                                xl:grid-cols-6
                               "
                             >
 
@@ -610,7 +760,48 @@ function DesempenhoTurmaProfessorPage() {
                                 }
                               />
 
+                              <Indicador
+                                titulo="Frequência"
+                                valor={
+                                  aluno.rendimento?.percentualFrequencia === null
+                                    ? '—'
+                                    : `${aluno.rendimento?.percentualFrequencia.toLocaleString('pt-BR', { maximumFractionDigits: 1 })}%`
+                                }
+                                icone={
+                                  Percent
+                                }
+                              />
+
+                              <Indicador
+                                titulo="Média ponderada"
+                                valor={
+                                  aluno.rendimento?.notaFinalDisponivel
+                                    ? aluno.rendimento.notaFinalPonderada.toLocaleString('pt-BR', {
+                                        minimumFractionDigits: 1,
+                                        maximumFractionDigits: 2
+                                      })
+                                    : aluno.rendimento?.abaixoNota === true
+                                      ? `Máx. ${aluno.rendimento.notaMaximaPossivel.toLocaleString('pt-BR', {
+                                          minimumFractionDigits: 1,
+                                          maximumFractionDigits: 2
+                                        })}`
+                                      : 'Pendente'
+                                }
+                                icone={
+                                  TrendingUp
+                                }
+                              />
+
                             </div>
+
+                            {
+                              aluno.rendimento?.baixoRendimento &&
+                              (
+                                <p className="mt-4 rounded-md bg-destructive/10 px-3 py-2 text-sm font-medium text-destructive">
+                                  Situação abaixo do critério institucional.
+                                </p>
+                              )
+                            }
 
 
                             <button
@@ -691,12 +882,7 @@ function Indicador({
           font-semibold
         "
       >
-        {
-          Number(
-            valor ||
-            0
-          )
-        }
+        {valor ?? '—'}
       </p>
 
       <p

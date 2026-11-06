@@ -130,6 +130,11 @@ function validarDados(body) {
       body.valorMaximo
     )
 
+  const pesoAvaliacao =
+    Number(
+      body.pesoAvaliacao
+    )
+
 
   if (!titulo) {
 
@@ -217,6 +222,20 @@ function validarDados(body) {
 
   }
 
+  if (
+    !Number.isFinite(pesoAvaliacao) ||
+    pesoAvaliacao <= 0 ||
+    pesoAvaliacao > 100 ||
+    Math.abs(pesoAvaliacao * 100 - Math.round(pesoAvaliacao * 100)) > 1e-8
+  ) {
+
+    return {
+      erro:
+        'O peso deve ser maior que zero e informado com no máximo duas casas decimais, sem ultrapassar 100%.'
+    }
+
+  }
+
 
   return {
 
@@ -226,9 +245,54 @@ function validarDados(body) {
 
     dataAvaliacao,
 
-    valorMaximo
+    valorMaximo,
+
+    pesoAvaliacao
 
   }
+
+}
+
+
+async function validarTotalPesos(
+  idProfessorTurma,
+  pesoAvaliacao,
+  idAvaliacao = null
+) {
+
+  const condicaoAtual =
+    idAvaliacao === null
+      ? ''
+      : 'AND idAvaliacao <> ?'
+
+  const parametros =
+    idAvaliacao === null
+      ? [idProfessorTurma]
+      : [idProfessorTurma, idAvaliacao]
+
+  const [avaliacoes] =
+    await database.execute(
+      `
+        SELECT
+          COALESCE(SUM(pesoAvaliacao), 0) AS totalPesos
+
+        FROM Avaliacao
+
+        WHERE idProfessorTurma = ?
+
+          ${condicaoAtual}
+      `,
+      parametros
+    )
+
+  const totalAtual =
+    Number(avaliacoes[0].totalPesos || 0)
+
+  if (totalAtual + pesoAvaliacao > 100.00001) {
+    return 'A soma dos pesos das avaliações da turma não pode ultrapassar 100%.'
+  }
+
+  return null
 
 }
 
@@ -305,6 +369,7 @@ export async function listarAvaliacoes(
             descricao,
             dataAvaliacao,
             valorMaximo,
+            pesoAvaliacao,
             idProfessorTurma,
             createdAt,
             updatedAt
@@ -431,6 +496,18 @@ export async function criarAvaliacao(
 
     }
 
+    const erroPesos =
+      await validarTotalPesos(
+        idProfessorTurma,
+        dados.pesoAvaliacao
+      )
+
+    if (erroPesos) {
+      return res.status(400).json({
+        message: erroPesos
+      })
+    }
+
 
     const [resultado] =
       await database.execute(
@@ -441,16 +518,18 @@ export async function criarAvaliacao(
             descricao,
             dataAvaliacao,
             valorMaximo,
+            pesoAvaliacao,
             idProfessorTurma
           )
 
-          VALUES (?, ?, ?, ?, ?)
+          VALUES (?, ?, ?, ?, ?, ?)
         `,
         [
           dados.titulo,
           dados.descricao,
           dados.dataAvaliacao,
           dados.valorMaximo,
+          dados.pesoAvaliacao,
           idProfessorTurma
         ]
       )
@@ -465,6 +544,7 @@ export async function criarAvaliacao(
             descricao,
             dataAvaliacao,
             valorMaximo,
+            pesoAvaliacao,
             idProfessorTurma,
             createdAt,
             updatedAt
@@ -630,6 +710,19 @@ export async function atualizarAvaliacao(
 
     }
 
+    const erroPesos =
+      await validarTotalPesos(
+        idProfessorTurma,
+        dados.pesoAvaliacao,
+        idAvaliacao
+      )
+
+    if (erroPesos) {
+      return res.status(400).json({
+        message: erroPesos
+      })
+    }
+
 
     await database.execute(
       `
@@ -639,7 +732,8 @@ export async function atualizarAvaliacao(
           titulo = ?,
           descricao = ?,
           dataAvaliacao = ?,
-          valorMaximo = ?
+          valorMaximo = ?,
+          pesoAvaliacao = ?
 
         WHERE idAvaliacao = ?
 
@@ -650,6 +744,7 @@ export async function atualizarAvaliacao(
         dados.descricao,
         dados.dataAvaliacao,
         dados.valorMaximo,
+        dados.pesoAvaliacao,
         idAvaliacao,
         idProfessorTurma
       ]
@@ -665,6 +760,7 @@ export async function atualizarAvaliacao(
             descricao,
             dataAvaliacao,
             valorMaximo,
+            pesoAvaliacao,
             idProfessorTurma,
             createdAt,
             updatedAt
