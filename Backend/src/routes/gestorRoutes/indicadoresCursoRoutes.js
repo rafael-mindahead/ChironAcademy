@@ -5,6 +5,10 @@ import {
 } from '../../controllers/gestorControllers/indicadoresCursoController.js'
 
 import {
+  consultarAnaliseRendimento
+} from '../../controllers/gestorControllers/analiseRendimentoController.js'
+
+import {
   autenticarToken
 } from '../../middlewares/authMiddleware.js'
 
@@ -26,6 +30,12 @@ router.use(
   autorizarPerfis(
     'GESTOR'
   )
+)
+
+
+router.get(
+  '/rendimento',
+  consultarAnaliseRendimento
 )
 
 
