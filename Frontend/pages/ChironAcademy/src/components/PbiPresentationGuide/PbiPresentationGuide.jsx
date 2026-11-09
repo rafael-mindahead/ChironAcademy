@@ -203,6 +203,20 @@ const telas = [
         titulo: 'Filtrar indicadores por período'
       }
     ]
+  },
+  {
+    corresponde: caminho =>
+      caminho === '/sistema/gestor/rendimento',
+    pbis: [
+      {
+        numero: '20',
+        titulo: 'Comparar cursos e disciplinas'
+      },
+      {
+        numero: '21',
+        titulo: 'Mapear cursos de alto e baixo rendimento'
+      }
+    ]
   }
 ]
 

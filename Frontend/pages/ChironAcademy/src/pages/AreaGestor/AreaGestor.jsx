@@ -125,7 +125,10 @@ function AreaGestor() {
           </div>
         </section>
 
-        <section aria-labelledby="indicadores-heading">
+        <section
+          aria-labelledby="indicadores-heading"
+          className="grid gap-4 lg:grid-cols-2"
+        >
           <button
             type="button"
             onClick={() =>
@@ -172,6 +175,53 @@ function AreaGestor() {
             </span>
             <span className="relative flex shrink-0 items-center gap-2 rounded-lg border border-border px-3 py-2 text-sm font-medium text-muted-foreground transition group-hover:border-primary/40 group-hover:text-primary sm:px-4 sm:py-3">
               Abrir painel
+              <ArrowRight className="size-5" />
+            </span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() =>
+              navigate('/sistema/gestor/rendimento')
+            }
+            className="
+              group
+              relative
+              flex
+              min-h-48
+              w-full
+              items-center
+              justify-between
+              gap-5
+              overflow-hidden
+              rounded-2xl
+              border border-border
+              bg-card
+              p-6
+              text-left
+              transition
+              hover:border-primary/50 hover:bg-secondary/30
+              sm:p-8
+            "
+          >
+            <span className="relative flex min-w-0 items-center gap-4 sm:gap-6">
+              <span className="flex size-14 shrink-0 items-center justify-center rounded-2xl border border-primary/20 bg-primary/10 text-primary sm:size-16">
+                <GraduationCap className="size-7" />
+              </span>
+              <span className="min-w-0">
+                <span className="block text-xs font-semibold uppercase tracking-[0.15em] text-primary">
+                  PBIs 20 e 21
+                </span>
+                <span className="mt-1 block text-xl font-semibold tracking-tight text-foreground sm:text-2xl">
+                  Análise de rendimento
+                </span>
+                <span className="mt-2 block max-w-2xl text-sm leading-relaxed text-muted-foreground">
+                  Compare cursos e disciplinas e identifique cenários de alto ou baixo rendimento.
+                </span>
+              </span>
+            </span>
+            <span className="relative flex shrink-0 items-center gap-2 rounded-lg border border-border px-3 py-2 text-sm font-medium text-muted-foreground transition group-hover:border-primary/40 group-hover:text-primary sm:px-4 sm:py-3">
+              Abrir análise
               <ArrowRight className="size-5" />
             </span>
           </button>

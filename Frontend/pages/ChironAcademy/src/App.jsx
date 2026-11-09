@@ -88,6 +88,9 @@ import DesempenhoAlunoProfessorPage
 import DashboardGestor
   from './pages/AreaGestor/DashboardGestor.jsx'
 
+import AnaliseRendimentoGestor
+  from './pages/AreaGestor/AnaliseRendimentoGestor.jsx'
+
 import PbiPresentationGuide
   from './components/PbiPresentationGuide/PbiPresentationGuide.jsx'
 
@@ -546,6 +549,25 @@ function App() {
             >
 
               <DashboardGestor />
+
+            </ProtectedRoute>
+
+          }
+        />
+
+
+        <Route
+          path="/sistema/gestor/rendimento"
+
+          element={
+
+            <ProtectedRoute
+              perfisPermitidos={[
+                'GESTOR'
+              ]}
+            >
+
+              <AnaliseRendimentoGestor />
 
             </ProtectedRoute>
 
