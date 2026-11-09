@@ -768,3 +768,93 @@ WHERE prof.email = 'prof.demo@chiron.com'
 -- Engenharia de Computação permanece deliberadamente
 -- sem notas/frequências para demonstrar "dados insuficientes".
 
+-- =====================================================
+-- NORMALIZAÇÃO DOS DADOS DEMO
+-- Corrige textos que possam ter sido gravados com
+-- encoding incorreto em execuções anteriores no Windows.
+-- =====================================================
+
+UPDATE Curso
+SET nomeCurso = CONVERT(
+    0x4369C3AA6E63696120646120436F6D70757461C3A7C3A36F
+    USING utf8mb4
+)
+WHERE idCurso = 5
+   OR nomeCurso LIKE 'Ci?n%';
+
+UPDATE Curso
+SET nomeCurso = CONVERT(
+    0x53697374656D617320646520496E666F726D61C3A7C3A36F
+    USING utf8mb4
+)
+WHERE idCurso = 6
+   OR nomeCurso LIKE 'Sistemas de Informa%';
+
+UPDATE Curso
+SET nomeCurso = CONVERT(
+    0x456E67656E686172696120646520436F6D70757461C3A7C3A36F
+    USING utf8mb4
+)
+WHERE idCurso = 7
+   OR nomeCurso LIKE 'Engenharia de Computa%';
+
+
+UPDATE Periodo p
+INNER JOIN Curso c
+    ON c.idCurso = p.idCurso
+SET p.nomePeriodo = CONVERT(
+    0x31C2BA20506572C3AD6F646F
+    USING utf8mb4
+)
+WHERE p.numeroPeriodo = 1
+  AND c.nomeCurso IN (
+      CONVERT(
+          0x4369C3AA6E63696120646120436F6D70757461C3A7C3A36F
+          USING utf8mb4
+      ),
+      CONVERT(
+          0x53697374656D617320646520496E666F726D61C3A7C3A36F
+          USING utf8mb4
+      ),
+      CONVERT(
+          0x456E67656E686172696120646520436F6D70757461C3A7C3A36F
+          USING utf8mb4
+      )
+  );
+
+
+UPDATE Disciplina
+SET nomeDisciplina = CONVERT(
+    0x416C676F7269746D6F7320652045737472757475726173206465204461646F73
+    USING utf8mb4
+)
+WHERE codDisciplina = 'CC-ALG-01';
+
+UPDATE Disciplina
+SET nomeDisciplina = CONVERT(
+    0x417271756974657475726120646520436F6D70757461646F726573
+    USING utf8mb4
+)
+WHERE codDisciplina = 'CC-ARQ-01';
+
+UPDATE Disciplina
+SET nomeDisciplina = CONVERT(
+    0x42616E636F206465204461646F73
+    USING utf8mb4
+)
+WHERE codDisciplina = 'SI-BD-01';
+
+UPDATE Disciplina
+SET nomeDisciplina = CONVERT(
+    0x446573656E766F6C76696D656E746F20576562
+    USING utf8mb4
+)
+WHERE codDisciplina = 'SI-WEB-01';
+
+UPDATE Disciplina
+SET nomeDisciplina = CONVERT(
+    0x436972637569746F73204469676974616973
+    USING utf8mb4
+)
+WHERE codDisciplina = 'EC-CIR-01';
+
