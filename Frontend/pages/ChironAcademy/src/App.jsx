@@ -88,12 +88,17 @@ import DesempenhoAlunoProfessorPage
 import DashboardGestor
   from './pages/AreaGestor/DashboardGestor.jsx'
 
+import PbiPresentationGuide
+  from './components/PbiPresentationGuide/PbiPresentationGuide.jsx'
+
 
 function App() {
 
   return (
 
     <BrowserRouter>
+
+      <PbiPresentationGuide />
 
       <Routes>
 
